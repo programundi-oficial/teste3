@@ -1,0 +1,59 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "C:\\Users\\RODRIGO\\Desktop\\mauricio\\Cordova-Plugin-Bluetooth-Printer-master",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "C:\\Users\\RODRIGO\\Desktop\\mauricio\\Cordova-Plugin-Bluetooth-Printer-master",
+        "spec": "C:\\Users\\RODRIGO\\Desktop\\mauricio\\Cordova-Plugin-Bluetooth-Printer-master",
+        "type": "directory"
+      },
+      "C:\\Users\\RODRIGO\\Desktop\\PROGRAMUNDI\\CORDOVA\\PROJETOS\\tt1\\node_modules"
+    ]
+  ],
+  "_from": "..\\..\\..\\..\\mauricio\\Cordova-Plugin-Bluetooth-Printer-master",
+  "_id": "BluetoothPrinter@0.0.1",
+  "_inCache": true,
+  "_location": "/BluetoothPrinter",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "C:\\Users\\RODRIGO\\Desktop\\mauricio\\Cordova-Plugin-Bluetooth-Printer-master",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "C:\\Users\\RODRIGO\\Desktop\\mauricio\\Cordova-Plugin-Bluetooth-Printer-master",
+    "spec": "C:\\Users\\RODRIGO\\Desktop\\mauricio\\Cordova-Plugin-Bluetooth-Printer-master",
+    "type": "directory"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "file:..\\..\\..\\..\\mauricio\\Cordova-Plugin-Bluetooth-Printer-master",
+  "_shasum": "baf3d633edc197c1c08488a86b16c997ece0a054",
+  "_shrinkwrap": null,
+  "_spec": "C:\\Users\\RODRIGO\\Desktop\\mauricio\\Cordova-Plugin-Bluetooth-Printer-master",
+  "_where": "C:\\Users\\RODRIGO\\Desktop\\PROGRAMUNDI\\CORDOVA\\PROJETOS\\tt1\\node_modules",
+  "author": {
+    "name": "Rodrigo"
+  },
+  "dependencies": {},
+  "description": "An Ionic project",
+  "devDependencies": {},
+  "homepage": "https://github.com/srehanuddin/Cordova-Plugin-Bluetooth-Printer/",
+  "name": "BluetoothPrinter",
+  "optionalDependencies": {},
+  "private": true,
+  "readme": "# Cordova-Plugin-Bluetooth-Printer\nA cordova plugin for bluetooth printer for android platform, which support text printing and POS printing.\n\n##Support\n- Text\n- POS Commands\n- Image Printing (todo)\n- Barcode Printing (todo)\n\n##Install\nUsing the Cordova CLI and NPM, run:\n\n```\ncordova plugin add https://github.com/srehanuddin/Cordova-Plugin-Bluetooth-Printer.git\n```\n\n\n\n##Usage\nGet list of paired bluetooth printers\n\n```\nBTPrinter.list(function(data){\n        console.log(\"Success\");\n        console.log(data); //list of printer in data array\n    },function(err){\n        console.log(\"Error\");\n        console.log(err);\n    })\n```\n\n\nConnect printer\n\n```\nBTPrinter.connect(function(data){\n\tconsole.log(\"Success\");\n\tconsole.log(data)\n},function(err){\n\tconsole.log(\"Error\");\n\tconsole.log(err)\n}, \"PrinterName\")\n```\n\n\nDisconnect printer\n\n```\nBTPrinter.disconnect(function(data){\n\tconsole.log(\"Success\");\n\tconsole.log(data)\n},function(err){\n\tconsole.log(\"Error\");\n\tconsole.log(err)\n}, \"PrinterName\")\n```\n\n\nDisconnect printer\n\n```\nBTPrinter.disconnect(function(data){\n\tconsole.log(\"Success\");\n\tconsole.log(data)\n},function(err){\n\tconsole.log(\"Error\");\n\tconsole.log(err)\n})\n```\n\n\nPrint simple string\n\n```\nBTPrinter.printText(function(data){\n    console.log(\"Success\");\n    console.log(data)\n},function(err){\n    console.log(\"Error\");\n    console.log(err)\n}, \"String to Print\")\n```\n\n\nPrint image\n\n```\nBTPrinter.printText(function(data){\n    console.log(\"Success\");\n    console.log(data)\n},function(err){\n    console.log(\"Error\");\n    console.log(err)\n}, \"Image Base64 String\")\n```\n\n```\nBTPrinter.print(function(data){\n    console.log(\"Success\");\n    console.log(data)\n},function(err){\n    console.log(\"Error\");\n    console.log(err)\n}, \"Base64 String of Image\")\n```\n\n\nPOS printing\n\n```\nBTPrinter.printPOSCommand(function(data){\n    console.log(\"Success\");\n    console.log(data)\n},function(err){\n    console.log(\"Error\");\n    console.log(err)\n}, \"0C\")\n//OC is a POS command for page feed\n```",
+  "readmeFilename": "README.md",
+  "scripts": {
+    "build": "ionic-app-scripts build",
+    "clean": "ionic-app-scripts clean",
+    "ionic:build": "ionic-app-scripts build",
+    "ionic:serve": "ionic-app-scripts serve",
+    "lint": "ionic-app-scripts lint"
+  },
+  "version": "0.0.1"
+}
