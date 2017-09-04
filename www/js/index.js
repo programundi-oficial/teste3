@@ -117,3 +117,19 @@ function conect_bb(aparelho){
 		alert(err)
 	}, aparelho);
 }
+function printt_texto(ttexto){
+	alert("FUNCTION PRINTT");
+	BTPrinter.printText(function(data){
+		alert("Successo impressao");
+		alert(data);
+	},function(err){
+		alert("Error");
+		alert(err);
+	}, ttexto);
+}
+function imprimir_tt(){
+	alert("btn ii");
+	var element_t = document.getElementById('textoex');
+	alert("btn ii value "+element_t);
+	printt_texto(element_t);
+}
