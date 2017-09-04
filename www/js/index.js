@@ -96,7 +96,7 @@ function nottof(idpassado){
 			alert("Success");
 			alert(data);
 			var element = document.getElementById('geolocation');
-			element.innerHTML = "<div onclick='conect_bb("+data+")'>"+data+"</div>";
+			element.innerHTML = "<div onclick='conect_bb(\""+data+"\")'>"+data+"</div>";
 			console.log("Success");
 			console.log(data); //list of printer in data array
 		},function(err){
@@ -108,6 +108,7 @@ function nottof(idpassado){
 	}
 }
 function conect_bb(aparelho){
+	alert("f conect");
 	BTPrinter.connect(function(data){
 		alert("Successo");
 		alert(data)
