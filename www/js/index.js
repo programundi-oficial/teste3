@@ -77,6 +77,19 @@ function nottof(idpassado){
                             '<hr />'      + element.innerHTML;
 			alert('Latitude: '  + position.coords.latitude);
     }
+	
+    // onError Callback receives a PositionError object
+    //
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+              'message: ' + error.message + '\n');
+    }
+
+    // Options: throw an error if no update is received every 30 seconds.
+    //
+    var watchID = navigator.geolocation.getCurrentPosition(onSuccess, onError);
+		//navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
+	}
 	if(idpassado==4){
 		alert("entrou");
 		BTPrinter.list(function(data){
@@ -90,17 +103,5 @@ function nottof(idpassado){
 			console.log("Error");
 			console.log(err);
 		});
-	}
-    // onError Callback receives a PositionError object
-    //
-    function onError(error) {
-        alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
-    }
-
-    // Options: throw an error if no update is received every 30 seconds.
-    //
-    var watchID = navigator.geolocation.getCurrentPosition(onSuccess, onError);
-		//navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
 	}
 }
