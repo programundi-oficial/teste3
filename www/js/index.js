@@ -125,7 +125,7 @@ function printt_texto(ttexto){
 	},function(err){
 		alert("Error");
 		alert(err);
-	}, ttexto);
+	}, "teste rodrigo");
 }
 function imprimir_tt(){
 	alert("btn ii");
