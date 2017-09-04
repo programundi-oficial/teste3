@@ -119,20 +119,20 @@ function conect_bb(aparelho){
 }
 function printt_texto(ttexto){
 	alert("FUNCTION PRINTT");
-	/*BTPrinter.printText(function(data){
+	BTPrinter.printText(function(data){
 		alert("Successo impressao");
 		alert(data);
 	},function(err){
 		alert("Error");
 		alert(err);
-	}, "teste rodrigo");*/
-	BTPrinter.printPOSCommand(function(data){
+	}, ttexto);
+	/*BTPrinter.printPOSCommand(function(data){
 		alert("Successo imp");
 		alert(data)
 	},function(err){
 		alert("Error");
 		alert(err)
-	}, "0C")
+	}, "0C")*/
 }
 function imprimir_tt(){
 	alert("btn ii");
