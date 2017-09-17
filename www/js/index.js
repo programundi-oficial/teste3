@@ -48,7 +48,8 @@ function nottof(idpassado){
 			var element = document.getElementById('geolocation');
 			alert(data);
 			lista = data.split(","); 
-			for (var i = 0; i < lista.length; i++) {				
+			for (var i = 0; i < lista.length; i++) {	
+				alert(lista[i]);
 				element.innerHTML = "<div onclick='conect_bb(\""+lista[i]+"\")'>"+lista[i]+"</div>";
 			}			
 		},
