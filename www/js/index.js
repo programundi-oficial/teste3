@@ -4538,7 +4538,8 @@ function list_blutoo(){
 	alert("aqui listt");
 	BTPrinter.list(function(data){
 		$("#config_print_list").html("");
-		alert(data);
+		alert("conta "+data.length+" data "+data);
+		data=data+"";
 		lista = data.split(","); 
 		for (var i = 0; i < lista.length; i++) {				
 			$("#config_print_list").append("<li onclick='conect_bb(\""+lista[i]+"\")'>"+lista[i]+"</li>");
