@@ -1,0 +1,13 @@
+.logo_rodape{
+	display:none !important;
+}
+.img_head{
+	width: 90% !important;
+    height: initial !important;
+}
+#head_templ_01 .col-lg-2{
+	display:none !important;
+}
+.logoutmobile{
+	display:initial !important;
+}
