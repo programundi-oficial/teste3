@@ -64,6 +64,7 @@ function nottof(idpassado){
 		
 		BTPrinter.list(function(data){			
 			var element = document.getElementById('geolocation');
+			alert(data);
 			lista = data.split(","); 
 			for (var i = 0; i < lista.length; i++) {				
 				element.innerHTML = "<div onclick='conect_bb(\""+lista[i]+"\")'>"+lista[i]+"</div>";
@@ -251,6 +252,7 @@ function btn_add(idd){
 	}	
 	if(idd==10){
 		$("#modal_conect_impressora").modal("show");
+		list_blutoo();
 		return false;
 	}
 }
@@ -1140,6 +1142,7 @@ function direcionar(linkd){
 function list_blutoo(){
 	BTPrinter.list(function(data){
 		$("#config_print_list").html("");
+		alert(data);
 		lista = data.split(","); 
 		for (var i = 0; i < lista.length; i++) {				
 			$("#config_print_list").append("<li onclick='conect_bb(\""+lista[i]+"\")'>"+lista[i]+"</li>");
