@@ -70,8 +70,8 @@ function conect_bb(aparelho){
 }
 function printt_texto(ttexto){	
 	BTPrinter.printText(function(data){
-		alert("Successo impressao");
-		alert(data);
+		alert("Sucesso impressao");
+		//alert(data);
 	},function(err){
 		alert("Error");
 		alert(err);
@@ -977,7 +977,9 @@ function list_prod_por_categ_tl_caixa(idcatg,descateg){
     });
 }
 function add_prod_get_qtd_categ(cod_barras,desc_p,valor,iddp,qtd_composicao){
+	alert("entrou");
 	if(qtd_composicao == "0"){
+		alert("zero "+desc_p);
 		$("#title_qtd_categ_cax").text(desc_p);	
 		$("#qtd_prod_pesq_categ_cx").attr("cod_barras",cod_barras);
 		$("#qtd_prod_pesq_categ_cx").attr("valor",valor);
@@ -4535,10 +4537,9 @@ function direcionar(linkd){
 	location.href=linkd;
 }
 function list_blutoo(){
-	alert("aqui listt");
+	
 	BTPrinter.list(function(data){
-		$("#config_print_list").html("");
-		alert("conta "+data.length+" data "+data);		
+		$("#config_print_list").html("");				
 		for (var i = 0; i < data.length; i++) {				
 			$("#config_print_list").append("<li onclick='conect_bb(\""+data[i]+"\")'>"+data[i]+"</li>");
 		}			
