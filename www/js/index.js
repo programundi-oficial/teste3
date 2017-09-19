@@ -910,7 +910,8 @@ function list_prod_caixa(){
         $("#list_notta").html("");
         sval=0;
         for (var i = 0; i < dados.length; i++) {
-            sval = parseFloat(sval)+parseFloat(dados[i].valor*dados[i].qtd);            
+            sval = parseFloat(sval)+parseFloat(dados[i].valor*dados[i].qtd);  
+			alert(sval);
 			$("#list_notta").append("<tr class='td_super_pgato'><td>"+("000"+(parseInt(i)+parseInt(1))).slice(-3)+"</td><td colspan='2'>"+dados[i].codbarras+"</td><td colspan='2'><div>"+dados[i].descprod+"</div></td></tr>");
 			$("#list_notta").append("<tr class='td_botton_pgato'><td class='text-center'>"+dados[i].qtd+"</td><td class='text-center'>und</td><td class='text-center'>"+convert_banco_moeda(dados[i].valor)+"</td><td class='text-center'>=</td><td class='text-right'>"+convert_banco_moeda(parseFloat(dados[i].valor)*dados[i].qtd)+"</td></tr>"); 
         }
@@ -981,8 +982,7 @@ function add_prod_get_qtd_categ_tt(){
 }
 function add_prod_get_qtd_categ(cod_barras,desc_p,valor,iddp,qtd_composicao){
 	alert("entrou");
-	if(qtd_composicao == "0"){
-		alert("zero "+desc_p);
+	if(qtd_composicao == "0"){		
 		$("#title_qtd_categ_cax").text(desc_p);	
 		$("#qtd_prod_pesq_categ_cx").attr("cod_barras",cod_barras);
 		$("#qtd_prod_pesq_categ_cx").attr("valor",valor);
