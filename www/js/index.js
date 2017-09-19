@@ -901,7 +901,7 @@ function add_produto_caixa_memoria(codbarras,descprod,valor,qtd,id_item){
 }
 function list_prod_caixa(){
 	var dados = localStorage.getItem("mmlistprodcx");
-    
+    $("#subtotal_title").html("0,00");
     if(dados == null){
                 
     }
@@ -1051,7 +1051,7 @@ function get_next_composi_cx_pedido(seq_compos){
 				$("#title_compos_pord_caix").text(listt_comp[i].desc);
 				$("#desc_prod_comp_caix").text("Selecione os complemento desejados. Mínimo: 0 / Máximo:"+listt_comp[i].qtd_n);
 				for (var i2 = 0; i2 < listt_comp[i].list_n.length; i2++) {					
-					$("#list_composicao_modal_cx").append("<li><div class='col-lg-8 col-md-8 col-sm-8' style='padding: 0'>"+listt_comp[i].list_n[i2].desc.toUpperCase()+"</div><div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0;text-align: right'><button type='button' onclick='set_acomp(1,"+listt_comp[i].id_composicao+","+listt_comp[i].list_n[i2].id_composicao_item+","+listt_comp[i].qtd_n+",1);' class='btn btn-primary btn-xs cor_vermelho'>-</button><input class='acomp_number_"+listt_comp[i].list_n[i2].id_composicao_item+"' name='acomp_n_"+listt_comp[i].id_composicao+"' type='text' disabled style='width: 30px;margin: 0 5px;text-align: center' value='0'><button type='button' onclick='set_acomp(2,"+listt_comp[i].id_composicao+","+listt_comp[i].list_n[i2].id_composicao_item+","+listt_comp[i].qtd_n+",1);' class='btn btn-primary btn-xs cor_verd'>+</button></div><div class='brack'></div></li>");
+					$("#list_composicao_modal_cx").append("<li><div class='col-lg-8 col-md-8 col-sm-8' style='padding: 0'>"+listt_comp[i].list_n[i2].desc.toUpperCase()+"</div><div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0;text-align: right'><button type='button' onclick='set_acomp(1,"+listt_comp[i].id_composicao+","+listt_comp[i].list_n[i2].id_composicao_item+","+listt_comp[i].qtd_n+",1);' class='cor_vermelho'>-</button><input class='acomp_number_"+listt_comp[i].list_n[i2].id_composicao_item+"' name='acomp_n_"+listt_comp[i].id_composicao+"' type='text' disabled style='width: 30px;margin: 0 5px;text-align: center' value='0'><button type='button' onclick='set_acomp(2,"+listt_comp[i].id_composicao+","+listt_comp[i].list_n[i2].id_composicao_item+","+listt_comp[i].qtd_n+",1);' class='cor_verd'>+</button></div><div class='brack'></div></li>");
 				}	
 				if(listt_comp[i].qtd_e == "0"){
 					$("#contener_extra_caixa_compost").hide();
@@ -1061,7 +1061,7 @@ function get_next_composi_cx_pedido(seq_compos){
 					$("#title_compos_pord_caix_ex").text("Opções Extras");
 					$("#desc_prod_comp_caix_ex").text("Selecione os complemento desejados. Mínimo: 0 / Máximo:"+listt_comp[i].qtd_e);
 					for (var i2 = 0; i2 < listt_comp[i].list_e.length; i2++) {
-						$("#list_composicao_modal_cx_ex").append("<li><div class='col-lg-6 col-md-6 col-sm-6 col-xd-6' style='padding: 0'>"+listt_comp[i].list_e[i2].desc.toUpperCase()+"</div><div class='col-lg-3 col-md-3 col-sm-3 col-xd-3' style='padding-right: 0;text-align: right'>R$ "+convert_banco_moeda(listt_comp[i].list_e[i2].valor)+"</div><div class='col-lg-3 col-md-3 col-sm-3' style='padding-right: 0;text-align: right'><button type='button' onclick='set_acomp(1,"+listt_comp[i].id_composicao+","+listt_comp[i].list_e[i2].id_composicao_item+","+listt_comp[i].qtd_e+",2);' class='btn btn-primary btn-xs cor_vermelho'>-</button><input class='acomp_number_e_"+listt_comp[i].list_e[i2].id_composicao_item+"' name='acomp_e_"+listt_comp[i].id_composicao+"' type='text' disabled style='width: 30px;margin: 0 5px;text-align: center' value='0'><button type='button' onclick='set_acomp(2,"+listt_comp[i].id_composicao+","+listt_comp[i].list_e[i2].id_composicao_item+","+listt_comp[i].qtd_e+",2);' class='btn btn-primary btn-xs cor_verd'>+</button></div><div class='brack'></div></li>");
+						$("#list_composicao_modal_cx_ex").append("<li><div class='col-lg-6 col-md-6 col-sm-6 col-xd-6' style='padding: 0'>"+listt_comp[i].list_e[i2].desc.toUpperCase()+"</div><div class='col-lg-3 col-md-3 col-sm-3 col-xd-3' style='padding-right: 0;text-align: right'>R$ "+convert_banco_moeda(listt_comp[i].list_e[i2].valor)+"</div><div class='col-lg-3 col-md-3 col-sm-3' style='padding-right: 0;text-align: right'><button type='button' onclick='set_acomp(1,"+listt_comp[i].id_composicao+","+listt_comp[i].list_e[i2].id_composicao_item+","+listt_comp[i].qtd_e+",2);' class='cor_vermelho'>-</button><input class='acomp_number_e_"+listt_comp[i].list_e[i2].id_composicao_item+"' name='acomp_e_"+listt_comp[i].id_composicao+"' type='text' disabled style='width: 30px;margin: 0 5px;text-align: center' value='0'><button type='button' onclick='set_acomp(2,"+listt_comp[i].id_composicao+","+listt_comp[i].list_e[i2].id_composicao_item+","+listt_comp[i].qtd_e+",2);' class='cor_verd'>+</button></div><div class='brack'></div></li>");
 					}	
 				}
 				

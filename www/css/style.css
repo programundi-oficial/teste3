@@ -265,9 +265,13 @@ table {
 }
 .cor_vermelho{
 	background: #990000 !important;
+	color: #fff;
+    border: 1px solid #a5a3a3;
 }
 .cor_verd{
 	background: #014901  !important;
+	color: #fff;
+    border: 1px solid #a5a3a3;
 }
 .contener_01 {
 	width: 100%;
