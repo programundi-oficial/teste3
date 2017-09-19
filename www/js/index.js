@@ -968,7 +968,7 @@ function list_prod_por_categ_tl_caixa(idcatg,descateg){
 					return false;
 				}
 				$("#title_vend_categ_caixa").text("Categoria: "+descateg);
-				$("#list_categoria_tela_cx").append("<li><div class='col-lg-8 col-md-8 col-sm-8' style='padding: 0;overflow: auto;'>"+j[i].nome.toUpperCase()+"</div><div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0;text-align: right'><button type='button' class='btn btn-primary btn-xs' onclick='add_prod_get_qtd_categ(\""+j[i].cod_barras+"\",\""+j[i].nome.toUpperCase()+"\",\""+j[i].valor+"\",\""+j[i].idd+"\",\""+j[i].qtd_composicao+"\");'>ADD PRODUTO</button><button type='button' class='btn btn-primary btn-xs' onclick='add_prod_get_qtd_categ_tt()'>ADD PRODUTO2</button><button type='button' class='btn btn-primary btn-xs' onclick='btn_add(10)'>ADD PRODUTO3</button></div><div class='brack'></div></li>");			
+				$("#list_categoria_tela_cx").append("<li><div class='col-lg-8 col-md-8 col-sm-8' style='padding: 0;overflow: auto;'>"+j[i].nome.toUpperCase()+"</div><div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0;text-align: right'><button type='button' class='btn btn-primary btn-xs' onclick='add_prod_get_qtd_categ(\""+j[i].cod_barras+"\",\""+j[i].nome.toUpperCase()+"\",\""+j[i].valor+"\",\""+j[i].idd+"\",\""+j[i].qtd_composicao+"\");'>ADD PRODUTO</button><button type='button' class='btn btn-primary btn-xs' onclick='add_prod_get_qtd_categ_tt()'>ADD PRODUTO2</button><div class='btn btn-primary btn-xs' onclick='btn_add(10)'>ADD PRODUTO3</div></div><div class='brack'></div></li>");			
 			}			
         },
 		error: function(XMLHttpRequest, textStatus, errorThrown) {			
@@ -1129,14 +1129,11 @@ function set_acomp(tp,vlg,vli,max_v,tp2){
 function direcionar(linkd){
 	location.href=linkd;
 }
-function list_blutoo(){
-	alert("aqui");
+function list_blutoo(){	
 	BTPrinter.list(function(data){
-		$("#config_print_list").html("");
-		alert(data);
-		lista = data.split(","); 
-		for (var i = 0; i < lista.length; i++) {				
-			$("#config_print_list").append("<li onclick='conect_bb(\""+lista[i]+"\")'>"+lista[i]+"</li>");
+		$("#config_print_list").html("");		
+		for (var i = 0; i < data.length; i++) {				
+			$("#config_print_list").append("<li onclick='conect_bb(\""+data[i]+"\")'>"+data[i]+"</li>");
 		}			
 	},
 	function(err){			
