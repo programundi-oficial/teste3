@@ -968,7 +968,7 @@ function list_prod_por_categ_tl_caixa(idcatg,descateg){
 					return false;
 				}
 				$("#title_vend_categ_caixa").text("Categoria: "+descateg);
-				$("#list_categoria_tela_cx").append("<li><div class='col-lg-8 col-md-8 col-sm-8' style='padding: 0;overflow: auto;'>"+j[i].nome.toUpperCase()+"</div><div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0;text-align: right'><button type='button' class='btn btn-primary btn-xs' onclick='add_prod_get_qtd_categ(\""+j[i].cod_barras+"\",\""+j[i].nome.toUpperCase()+"\",\""+j[i].valor+"\",\""+j[i].idd+"\",\""+j[i].qtd_composicao+"\");'>ADD PRODUTO</button><button type='button' class='btn btn-primary btn-xs' onclick='add_prod_get_qtd_categ_tt()'>ADD PRODUTO2</button><div class='btn btn-primary btn-xs' onclick='btn_add(10)'>ADD PRODUTO3</div></div><div class='brack'></div></li>");			
+				$("#list_categoria_tela_cx").append("<li><div class='col-lg-8 col-md-8 col-sm-8' style='padding: 0;overflow: auto;'>"+j[i].nome.toUpperCase()+"</div><div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0;text-align: right'><button type='button' class='btn btn-primary btn-xs' onclick='add_prod_get_qtd_categ(\""+j[i].cod_barras+"\",\""+j[i].nome.toUpperCase()+"\",\""+j[i].valor+"\",\""+j[i].idd+"\",\""+j[i].qtd_composicao+"\");'>ADD PRODUTO</button></div><div class='brack'></div></li>");			
 			}			
         },
 		error: function(XMLHttpRequest, textStatus, errorThrown) {			
@@ -981,8 +981,7 @@ function add_prod_get_qtd_categ_tt(){
 }
 function add_prod_get_qtd_categ(cod_barras,desc_p,valor,iddp,qtd_composicao){
 	alert("entrou");
-	$("#modal_get_unid_pesqcateg_caixa").modal("show");
-	/*if(qtd_composicao == "0"){
+	if(qtd_composicao == "0"){
 		alert("zero "+desc_p);
 		$("#title_qtd_categ_cax").text(desc_p);	
 		$("#qtd_prod_pesq_categ_cx").attr("cod_barras",cod_barras);
@@ -995,7 +994,7 @@ function add_prod_get_qtd_categ(cod_barras,desc_p,valor,iddp,qtd_composicao){
 	}
 	if(qtd_composicao !== "0"){		
 		get_prod_composto_caixa(iddp);
-	}	*/
+	}
 }
 function add_prod_memory_categ_caixa(){
 	codbarras=$("#qtd_prod_pesq_categ_cx").attr("cod_barras");
