@@ -1140,3 +1140,7 @@ function list_blutoo(){
 		console.log(err);
 	});
 }
+function cancel_compra_caixa(){
+	localStorage.setItem("mmlistprodcx", "[]");
+	list_prod_caixa();
+}
