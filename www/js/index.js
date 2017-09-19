@@ -261,7 +261,7 @@ function down_tr_prod(vr){
 	}
 }
 function addlinecomposicaoprod(){
-	var vrvcon= '<tr><td><input id="desc_additenl_extra" value="DESCRIÇÃO" type="text" class="form-control"></td><td colspan="2"><div class="col-lg-10" style="padding:0;max-width: 250px;"><div class="form-group"><select id="list_acompadd" multiple class="form-control"></select></div></div><div class="col-lg-2" style="padding-right:0"><div class="form-group"><input id="qtd_additenl" type="number" class="form-control"></div></div><div class="brack"></div></td><td colspan="2"><div class="col-lg-10" style="padding:0;max-width: 250px;"><div class="form-group"><select multiple id="list_acompadd_extra" class="form-control"></select></div></div><div class="col-lg-2" style="padding-right:0"><div class="form-group"><input id="qtd_additenl_extra" type="number" class="form-control"></div></div><div class="brack"></div></td><td class="text-right"><button type="button" class="btn btn-xs btn-primary btn_icon" onclick="addlistcriatprodcompost();"><img src="../img/save.png"></button></td></tr>  '
+	var vrvcon= '<tr><td><input id="desc_additenl_extra" value="DESCRIÇÃO" type="text" class="form-control"></td><td colspan="2"><div class="col-lg-10" style="padding:0;max-width: 250px;"><div class="form-group"><select id="list_acompadd" multiple class="form-control"></select></div></div><div class="col-lg-2" style="padding-right:0"><div class="form-group"><input id="qtd_additenl" type="number" class="form-control"></div></div><div class="brack"></div></td><td colspan="2"><div class="col-lg-10" style="padding:0;max-width: 250px;"><div class="form-group"><select multiple id="list_acompadd_extra" class="form-control"></select></div></div><div class="col-lg-2" style="padding-right:0"><div class="form-group"><input id="qtd_additenl_extra" type="number" class="form-control"></div></div><div class="brack"></div></td><td class="text-right"><button type="button" class="btn btn-sm btn-primary btn_icon" onclick="addlistcriatprodcompost();"><img src="../img/save.png"></button></td></tr>  '
 	$("#list_comp_cad_prod").html(vrvcon);
 	list_acompanhamentos();
 	list_acompanhamentos_extra();
@@ -413,7 +413,7 @@ function list_categoria(){
             el4="#liscategpgprod";
             $(el4).html("");             
             for (var i = 0; i < j.length; i++) {                               
-            	$(el4).append('<tr><td id="desc_categ_'+j[i].id+'">'+j[i].descricao+'</td><td class="text_c">??</td><td class="text-right"><button style="display:none" type="button" class="btn_cate_list_edition2 btn btn-xs btn-primary btn_icon" onClick=""><img src="../img/up-arrow.png"></button><button style="margin-left: 3px;display:none" type="button" class="btn_cate_list_edition2 btn btn-xs btn-primary btn_icon" onClick=""><img src="../img/arrow-down.png"></button><button type="button" class="btn_cate_list_edition1 btn btn-xs btn-primary btn_icon" onClick="edit_cate_but('+j[i].id+');"><img src="../img/edit.png"></button><button style="margin-left: 3px;" type="button" class="btn_cate_list_edition1 btn btn-xs btn-danger btn_icon" onClick=""><img src="../img/trash.png"></button><button style="margin-left: 3px;display:none" title="SALVAR ALTERAÇÃO" type="button" class="btn_cate_list_edition2 btn btn-xs btn-primary btn_icon" onclick="save_categ_prod('+j[i].id+');"><img src="../img/save.png"></button><button style="margin-left: 3px;display:none" type="button" id="line_btn_dell_item_prod_'+j[i].id+'" title="CANCELAR OPERAÇÃO" class="btn_cate_list_edition2 btn btn-xs btn-danger btn_icon" onclick="list_categoria();"><img src="../img/close.png"></button></td></tr>');				               
+            	$(el4).append('<tr><td id="desc_categ_'+j[i].id+'">'+j[i].descricao+'</td><td class="text_c">??</td><td class="text-right"><button style="display:none" type="button" class="btn_cate_list_edition2 btn btn-sm btn-primary btn_icon" onClick=""><img src="../img/up-arrow.png"></button><button style="margin-left: 3px;display:none" type="button" class="btn_cate_list_edition2 btn btn-sm btn-primary btn_icon" onClick=""><img src="../img/arrow-down.png"></button><button type="button" class="btn_cate_list_edition1 btn btn-sm btn-primary btn_icon" onClick="edit_cate_but('+j[i].id+');"><img src="../img/edit.png"></button><button style="margin-left: 3px;" type="button" class="btn_cate_list_edition1 btn btn-sm btn-danger btn_icon" onClick=""><img src="../img/trash.png"></button><button style="margin-left: 3px;display:none" title="SALVAR ALTERAÇÃO" type="button" class="btn_cate_list_edition2 btn btn-sm btn-primary btn_icon" onclick="save_categ_prod('+j[i].id+');"><img src="../img/save.png"></button><button style="margin-left: 3px;display:none" type="button" id="line_btn_dell_item_prod_'+j[i].id+'" title="CANCELAR OPERAÇÃO" class="btn_cate_list_edition2 btn btn-sm btn-danger btn_icon" onclick="list_categoria();"><img src="../img/close.png"></button></td></tr>');				               
             }            
         }
     });
@@ -535,10 +535,10 @@ function list_produto_tladdprod(){
 					vrl+="<td>"+j[i].idprod_item+"</td>";
 					vrl+="<td>"+j[i].desc_tipo+"</td>";
 					vrl+="<td class='text-right'>";
-						vrl+="<button type='button' class='btn btn-xs btn-primary btn_icon' onclick='down_tr_prod(\""+j[i].idprod_item+"\");'><img src='../img/up-arrow.png'></button>";
-						vrl+="<button type='button' class='btn btn-xs btn-primary btn_icon' onclick='new_tr_prod(\""+j[i].idprod_item+"\");'><img src='../img/arrow-down.png'></button>";
-						vrl+="<button type='button' class='btn btn-xs btn-primary btn_icon' onclick='btn_add(\""+j[i].idprod_item+"\");'><img src='../img/edit.png'></button>";
-						vrl+="<button type='button' iid='line_btndelladd_"+j[i].idprod_item+"' class='btn btn-xs btn-danger btn_icon' onclick='btn_dell_prod_cad(\""+j[i].idprod_item+"\");'><img src='../img/trash.png'></button>";
+						vrl+="<button type='button' class='btn btn-sm btn-primary btn_icon' onclick='down_tr_prod(\""+j[i].idprod_item+"\");'><img src='../img/up-arrow.png'></button>";
+						vrl+="<button type='button' class='btn btn-sm btn-primary btn_icon' onclick='new_tr_prod(\""+j[i].idprod_item+"\");'><img src='../img/arrow-down.png'></button>";
+						vrl+="<button type='button' class='btn btn-sm btn-primary btn_icon' onclick='btn_add(\""+j[i].idprod_item+"\");'><img src='../img/edit.png'></button>";
+						vrl+="<button type='button' iid='line_btndelladd_"+j[i].idprod_item+"' class='btn btn-sm btn-danger btn_icon' onclick='btn_dell_prod_cad(\""+j[i].idprod_item+"\");'><img src='../img/trash.png'></button>";
 					vrl+="</td>";
 				vrl+="</tr>";            								  				               
             }  
@@ -645,7 +645,7 @@ function list_acompanhamentos_list_add(){
             el3b="#lis_item_prod";
             $(el3b).html("");             
             for (var i = 0; i < j.length; i++) {                               
-            	$(el3b).append("<tr><td id=desc_edit_item_p_"+j[i].id+">"+j[i].descricao+"</td><td class='text_r' id=vl_edit_item_p_"+j[i].id+">"+convert_banco_moeda(j[i].valor)+"</td><td  class='text_c'>??</td><td class='text-right'><button type='button' class='btn_edition_itep1 btn btn-xs btn-primary btn_icon' onclick='edit_item_prod(\""+j[i].id+"\");'><img src='../img/edit.png'></button><button style='margin-left: 3px;' type='button' id='line_btn_dell_item_prod_"+j[i].id+"' class='btn_edition_itep1 btn btn-xs btn-danger btn_icon' onclick='btn_dell_item_prod_cad(\""+j[i].id+"\");'><img src='../img/trash.png'></button><button style='display:none' type='button' class='btn_edition_itep2 btn btn-xs btn-primary btn_icon' id='btn_edit_item_prod_"+j[i].id+"' onclick='save_item_prod(\""+j[i].id+"\");'><img src='../img/save.png'></button><button style='margin-left: 3px;display:none' type='button' id='line_btn_dell_item_prod_"+j[i].id+"' class='btn_edition_itep2 btn btn-xs btn-danger btn_icon' onclick='list_acompanhamentos_list_add();'><img src='../img/close.png'></button></td></tr>");                
+            	$(el3b).append("<tr><td id=desc_edit_item_p_"+j[i].id+">"+j[i].descricao+"</td><td class='text_r' id=vl_edit_item_p_"+j[i].id+">"+convert_banco_moeda(j[i].valor)+"</td><td  class='text_c'>??</td><td class='text-right'><button type='button' class='btn_edition_itep1 btn btn-sm btn-primary btn_icon' onclick='edit_item_prod(\""+j[i].id+"\");'><img src='../img/edit.png'></button><button style='margin-left: 3px;' type='button' id='line_btn_dell_item_prod_"+j[i].id+"' class='btn_edition_itep1 btn btn-sm btn-danger btn_icon' onclick='btn_dell_item_prod_cad(\""+j[i].id+"\");'><img src='../img/trash.png'></button><button style='display:none' type='button' class='btn_edition_itep2 btn btn-sm btn-primary btn_icon' id='btn_edit_item_prod_"+j[i].id+"' onclick='save_item_prod(\""+j[i].id+"\");'><img src='../img/save.png'></button><button style='margin-left: 3px;display:none' type='button' id='line_btn_dell_item_prod_"+j[i].id+"' class='btn_edition_itep2 btn btn-sm btn-danger btn_icon' onclick='list_acompanhamentos_list_add();'><img src='../img/close.png'></button></td></tr>");                
             }           
         }
     });
@@ -934,7 +934,7 @@ function listar_categorias_tela_caixa(){
 			$("#list_categoria_tela_cx").html("");			
 			for (var i = 0; i < j.length; i++) { 
 				$("#title_vend_categ_caixa").text("Vendas Por Categoria");
-				$("#list_categoria_tela_cx").append("<li><div class='col-lg-8 col-md-8 col-sm-8' style='padding: 0'>"+j[i].descricao.toUpperCase()+"</div><div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0;text-align: right'><button type='button' class='btn btn-primary btn-xs' onclick='list_prod_por_categ_tl_caixa("+j[i].id+",\""+j[i].descricao.toUpperCase()+"\")'>"+j[i].qtd_prod+" PRODUTOS</button></div><div class='brack'></div></li>");								
+				$("#list_categoria_tela_cx").append("<li><div class='col-lg-8 col-md-8 col-sm-8' style='padding: 0'>"+j[i].descricao.toUpperCase()+"</div><div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0;text-align: right'><button type='button' class='btn btn-primary btn-sm' onclick='list_prod_por_categ_tl_caixa("+j[i].id+",\""+j[i].descricao.toUpperCase()+"\")'>"+j[i].qtd_prod+" PRODUTOS</button></div><div class='brack'></div></li>");								
 			}			
         },
 		error: function(XMLHttpRequest, textStatus, errorThrown) {			
@@ -967,8 +967,8 @@ function list_prod_por_categ_tl_caixa(idcatg,descateg){
 					alert("PRODUTO NÃO LOCALIZADO");					
 					return false;
 				}
-				$("#title_vend_categ_caixa").html("<button type='button' onclick='set_tipo_consulta_caixa(2);' class='btn btn-primary btn-xs'>VOLTAR</button> Categoria: "+descateg);
-				$("#list_categoria_tela_cx").append("<li><div class='col-lg-8 col-md-8 col-sm-8' style='padding: 0;overflow: auto;'>"+j[i].nome.toUpperCase()+"</div><div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0;text-align: right'><button type='button' class='btn btn-primary btn-xs' onclick='add_prod_get_qtd_categ(\""+j[i].cod_barras+"\",\""+j[i].nome.toUpperCase()+"\",\""+j[i].valor+"\",\""+j[i].idd+"\",\""+j[i].qtd_composicao+"\");'>ADD PRODUTO</button></div><div class='brack'></div></li>");			
+				$("#title_vend_categ_caixa").html("<button type='button' onclick='set_tipo_consulta_caixa(2);' class='btn btn-primary btn-sm'>VOLTAR</button> Categoria: "+descateg);
+				$("#list_categoria_tela_cx").append("<li><div class='col-lg-8 col-md-8 col-sm-8' style='padding: 0;overflow: auto;'>"+j[i].nome.toUpperCase()+"</div><div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0;text-align: right'><button type='button' class='btn btn-primary btn-sm' onclick='add_prod_get_qtd_categ(\""+j[i].cod_barras+"\",\""+j[i].nome.toUpperCase()+"\",\""+j[i].valor+"\",\""+j[i].idd+"\",\""+j[i].qtd_composicao+"\");'>ADD PRODUTO</button></div><div class='brack'></div></li>");			
 			}			
         },
 		error: function(XMLHttpRequest, textStatus, errorThrown) {			
@@ -1065,7 +1065,7 @@ function get_next_composi_cx_pedido(seq_compos){
 					}	
 				}
 				
-				$("#list_composicao_modal_cx_butn_next").html("<li onclick='netx_acomp("+listt_comp[i].id_composicao+");' class='btn btn-primary btn-xs'>PRÓXIMO</li>");
+				$("#list_composicao_modal_cx_butn_next").html("<li onclick='netx_acomp("+listt_comp[i].id_composicao+");' class='btn btn-primary btn-sm'>PRÓXIMO</li>");
 			}		 
         }        
     }
