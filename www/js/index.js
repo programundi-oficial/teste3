@@ -978,7 +978,8 @@ function list_prod_por_categ_tl_caixa(idcatg,descateg){
 }
 function add_prod_get_qtd_categ(cod_barras,desc_p,valor,iddp,qtd_composicao){
 	alert("entrou");
-	if(qtd_composicao == "0"){
+	$("#modal_get_unid_pesqcateg_caixa").modal("show");
+	/*if(qtd_composicao == "0"){
 		alert("zero "+desc_p);
 		$("#title_qtd_categ_cax").text(desc_p);	
 		$("#qtd_prod_pesq_categ_cx").attr("cod_barras",cod_barras);
@@ -991,7 +992,7 @@ function add_prod_get_qtd_categ(cod_barras,desc_p,valor,iddp,qtd_composicao){
 	}
 	if(qtd_composicao !== "0"){		
 		get_prod_composto_caixa(iddp);
-	}	
+	}	*/
 }
 function add_prod_memory_categ_caixa(){
 	codbarras=$("#qtd_prod_pesq_categ_cx").attr("cod_barras");
