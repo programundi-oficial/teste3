@@ -910,8 +910,7 @@ function list_prod_caixa(){
         $("#list_notta").html("");
         sval=0;
         for (var i = 0; i < dados.length; i++) {
-            sval = parseFloat(sval)+parseFloat(dados[i].valor*dados[i].qtd);  
-			alert(sval);
+            sval = parseFloat(sval)+parseFloat(dados[i].valor*dados[i].qtd);			
 			$("#list_notta").append("<tr class='td_super_pgato'><td>"+("000"+(parseInt(i)+parseInt(1))).slice(-3)+"</td><td colspan='2'>"+dados[i].codbarras+"</td><td colspan='2'><div>"+dados[i].descprod+"</div></td></tr>");
 			$("#list_notta").append("<tr class='td_botton_pgato'><td class='text-center'>"+dados[i].qtd+"</td><td class='text-center'>und</td><td class='text-center'>"+convert_banco_moeda(dados[i].valor)+"</td><td class='text-center'>=</td><td class='text-right'>"+convert_banco_moeda(parseFloat(dados[i].valor)*dados[i].qtd)+"</td></tr>"); 
         }
@@ -945,7 +944,7 @@ function listar_categorias_tela_caixa(){
 }
 function list_prod_por_categ_tl_caixa(idcatg,descateg){
 	$("#list_categoria_tela_cx").html("");
-	$("#title_vend_categ_caixa").text("");
+	$("#title_vend_categ_caixa").html("");
 	on_load_carga("on","#codbbarras");
 	$.ajax({            
         url: xurlq,
@@ -968,7 +967,7 @@ function list_prod_por_categ_tl_caixa(idcatg,descateg){
 					alert("PRODUTO NÃO LOCALIZADO");					
 					return false;
 				}
-				$("#title_vend_categ_caixa").text("Categoria: "+descateg);
+				$("#title_vend_categ_caixa").html("<button type='button' onclick='set_tipo_consulta_caixa(2);' class='btn btn-primary btn-xs'>VOLTAR</button> Categoria: "+descateg);
 				$("#list_categoria_tela_cx").append("<li><div class='col-lg-8 col-md-8 col-sm-8' style='padding: 0;overflow: auto;'>"+j[i].nome.toUpperCase()+"</div><div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0;text-align: right'><button type='button' class='btn btn-primary btn-xs' onclick='add_prod_get_qtd_categ(\""+j[i].cod_barras+"\",\""+j[i].nome.toUpperCase()+"\",\""+j[i].valor+"\",\""+j[i].idd+"\",\""+j[i].qtd_composicao+"\");'>ADD PRODUTO</button></div><div class='brack'></div></li>");			
 			}			
         },
@@ -977,11 +976,7 @@ function list_prod_por_categ_tl_caixa(idcatg,descateg){
 		}
     });
 }
-function add_prod_get_qtd_categ_tt(){
-	alert("entrou tt");
-}
-function add_prod_get_qtd_categ(cod_barras,desc_p,valor,iddp,qtd_composicao){
-	alert("entrou");
+function add_prod_get_qtd_categ(cod_barras,desc_p,valor,iddp,qtd_composicao){	
 	if(qtd_composicao == "0"){		
 		$("#title_qtd_categ_cax").text(desc_p);	
 		$("#qtd_prod_pesq_categ_cx").attr("cod_barras",cod_barras);
@@ -1141,6 +1136,13 @@ function list_blutoo(){
 	});
 }
 function cancel_compra_caixa(){
-	localStorage.setItem("mmlistprodcx", "[]");
-	list_prod_caixa();
+	var r = confirm("DESEJA CANCELAR A COMPRA?");       
+     
+    if(r == false) {
+        return false;  
+    }
+    if (r == true) {
+		localStorage.setItem("mmlistprodcx", "[]");
+		list_prod_caixa();
+	}
 }
