@@ -44,8 +44,8 @@ table {
     padding: 6px 8px;
 }
 #list_prod_card img{
-	max-height:150px;
-	max-width:150px;
+	max-height:100px;
+	max-width:100px;
 }
 .divisoria_10{
 	width:100%;
@@ -388,12 +388,20 @@ table {
 	padding: 1%;
 	border: 1px solid #ddd;
 	border-bottom: 0;
+	cursor: pointer;
+}
+.listulmenu li:hover {
+	background: #c7c7c7;
 }
 .listulmenu li:last-child {
 	border-bottom: 1px solid #ddd;
 }
 .btn_menu_princ{
 	background: #fff;
+	cursor: pointer;
+}
+.btn_menu_princ:hover{
+	background: #c7c7c7;
 }
 .btn_menu_princ ul{
 	padding: 2% 0;
@@ -410,4 +418,28 @@ table {
 	display: block;
 	float: right;
     margin: 0 2%;
+}
+.lista_lateral{
+	padding: 0;
+	background: #fff;
+}
+.lista_lateral li{
+	display: block;
+    font-size: 16px;
+    border: 1px solid #858585;
+	border-bottom: 0;
+    padding: 6px;
+	cursor: pointer;
+}
+.lista_lateral li:hover{
+	background: #c7c7c7;
+}
+.lista_lateral li:last-child{	
+	border-bottom: 1px solid #858585;
+}
+.ativo_contener_cad{
+	background: #c7c7c7;
+}
+#list_prod_card tr:nth-child(odd){
+	background: #b1b1b1;
 }

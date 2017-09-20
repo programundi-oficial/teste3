@@ -293,7 +293,7 @@ function list_acompanhamentos(p){
             	$(el3).append("<option value='"+json[i].id+"'>"+json[i].descricao+" - 0,00</option>");                
             }
             if(p !== undefined){$(el3).val(p);}
-            ligar_pesq_select(el3,"NÃO LOCALIZADA");
+            //ligar_pesq_select(el3,"NÃO LOCALIZADA");
         }
     });
 }
@@ -314,7 +314,7 @@ function list_acompanhamentos_extra(p){
             	$(el3).append("<option value='"+json[i].id+"'>"+json[i].descricao+" - "+convert_banco_moeda(json[i].valor)+"</option>");                
             }
             if(p !== undefined){$(el3).val(p);}
-            ligar_pesq_select(el3,"NÃO LOCALIZADA");
+            //ligar_pesq_select(el3,"NÃO LOCALIZADA");
         }
     });
 }
