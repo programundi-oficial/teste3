@@ -1146,3 +1146,39 @@ function cancel_compra_caixa(){
 		list_prod_caixa();
 	}
 }
+function set_contener_cad(idcontt){
+	$(".lista_lateral li").removeClass("ativo_contener_cad"); 
+	$(".marcador_conter_js_cad").hide();
+	$("#contener_cadastro_"+idcontt).show();
+	$("#li_set_cont_"+idcontt).addClass("ativo_contener_cad");
+	if(idcontt==1){
+		list_produto_tladdprod();
+	}
+}
+function list_produto_tladdprod(){
+	el2="#list_prod_card";
+    $(el2).html("BUSCANDO LISTA");
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "",
+            s: "2"
+        },
+        dataType: "json",
+        type: "POST",
+        success: function(j) {  
+			vrl="";
+            for (var i = 0; i < j.length; i++) {       
+				vrl+="<tr class='tr_table_prod' idx='"+i+"' id='tr_prod_"+j[i].idprod_item+"'>";
+					vrl+="<td><img src='"+j[i].img_logo+"'></td>";
+					vrl+="<td>"+j[i].nome.toUpperCase()+"</td>";
+					vrl+="<td>"+j[i].cod_barras+"</td>";
+					vrl+="<td>R$ "+convert_banco_moeda(j[i].valor)+"</td>";
+					vrl+="<td>"+j[i].desc_cat+"</td>";				
+				vrl+="</tr>";            								  				               
+            }  
+			$(el2).html(vrl);
+        }
+    });
+}
