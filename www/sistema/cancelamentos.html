@@ -1,0 +1,206 @@
+<!doctype html>
+<html><!-- InstanceBegin template="/Templates/APP_VENDAS_ADM.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta charset="utf-8">
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>Cadastro</title>
+<!-- InstanceEndEditable -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="../css/chosen.css" rel="stylesheet">
+<link href="../css/bootstrap.css" rel="stylesheet">
+<link href="../css/style.css" rel="stylesheet">
+<script src="../js/jquery-2.1.1.min.js"></script>
+<script src="../js/bootstrap.js"></script>
+<script src="../js/chosen.jquery.js" type="text/javascript"></script>
+<script src="../js/important.js"></script>
+<script type="text/javascript" src="../cordova.js"></script>
+<script src="../js/index.js"></script>
+<!-- InstanceBeginEditable name="head" -->
+<!-- InstanceEndEditable -->
+</head>
+
+<body>
+<div class="contener_01" >
+<ul class="ul_menu_super vertical_alinha">	
+	<li><div onClick="btn_add(4)" class="icon_settins"></div></li>
+	<li><div onClick="btn_add()" class="icon_delivry_b"></div></li>
+	<li><div onClick="btn_add(10)" class="icon_print"></div></li>	
+</ul> 
+</div>
+<div class="contener_02">
+  <div class="divisoria"></div>
+  <!-- InstanceBeginEditable name="CONTENER_CENTRO" -->
+	<div class="col-lg-3 col-md-3 col-sm-3">
+		<ul class="lista_lateral">
+			<li id="li_set_cont_1" onClick="set_contener_cad(1)" class="ativo_contener_cad">Estornos</li>
+						
+		</ul>
+	</div>	
+	<div class="col-lg-9 col-md-9 col-sm-9" style="height: 92%;overflow: auto;">
+	<div style="background: #f8f8f8;padding: 15px;">
+		<div id="contener_cadastro_1" class="marcador_conter_js_cad">
+			<h4 class="modal-title">Estornos</h4>		
+		</div>
+		<div id="contener_cadastro_2" class="marcador_conter_js_cad" style="display: none">
+			<h4 class="modal-title">Item Produto</h4>
+		</div>
+		<div id="contener_cadastro_3" class="marcador_conter_js_cad" style="display: none">
+			<h4 class="modal-title">Categoria Produto</h4>
+		</div>
+		<div id="contener_cadastro_4" class="marcador_conter_js_cad" style="display: none">
+			<h4 class="modal-title">Marca Produto</h4>
+		</div>
+		<div id="contener_cadastro_5" class="marcador_conter_js_cad" style="display: none">
+			<h4 class="modal-title">Fornecedor</h4>
+		</div>
+		</div>
+	</div>	
+<!-- InstanceEndEditable -->
+  
+  <div class="brack"></div>
+</div>
+<div class="contener_03"></div>
+<script type="text/javascript"> app.initialize();</script>
+<!-- InstanceBeginEditable name="MODALS" -->
+<div id="modal_04" class="modal fade" data-backdrop="static" role="dialog" style="display: none;">
+  <div class="modal-dialog modal_larg_95">
+    <div class="modal-content">
+     <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">Menu</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-12">
+            <ul class="listulmenu">
+              <li onClick="direcionar('index.html');">Menu </li>              
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-lg-12">           	        
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">FECHAR</button>            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>	
+<div id="modal_02" class="modal fade" role="dialog" style="display: none;">
+  <div class="modal-dialog modal_larg_95">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">Cadastrar Produto</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-2">
+            <div class="form-group">
+              <label for="txtMovieTitle">Cód. Barras</label>
+              <input id="cod_barras_prod_add" type="number" class="form-control">
+            </div>
+          </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+              <label for="txtMovieTitle">Nome</label>
+              <input id="nome_prod_add" type="text" class="form-control">
+            </div>
+          </div>
+           <div class="col-lg-2">
+            <div class="form-group">
+              <label for="txtMovieTitle">Tipo</label>
+              <select id="tipoprodaddprod" class="form-control" onchange="selecedtipoaddprod()" onblur="selecedtipoaddprod()">
+              	<option value="-1">SELECIONE</option>
+                <option value="1">NORMAL</option>
+                <option value="2">COMPOSTO</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-2">
+            <div class="form-group">
+              <label for="txtMovieTitle">Categoria</label>
+              <select id="list_categori_addprod" class="form-control"></select>
+            </div>
+          </div>
+          <div class="col-lg-2">
+            <div class="form-group">
+              <label for="txtMovieTitle">Valor</label>
+              <input id="vl_prod_add" type="text" class="form-control" onkeypress=" return(MascaraMoeda(this,'.',',',event))" onblur="return(MascaraMoeda(this,'.',',',event))" onfocus=" return(MascaraMoeda(this,'.',',',event))">
+            </div>
+          </div>
+          <div class="brack"></div>        
+        <div class="divisoria_10"></div>
+           
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label for="txtMovieTitle">Descrição</label>
+              <textarea id="desc_prod_add" type="text" style="height: 90px;" class="form-control"></textarea>
+            </div>
+          </div>
+         
+          <div class="brack"></div>
+          <div class="divisoria_10"></div>
+          <div class="col-lg-12" id="contene_compsicaoaddprod" style="display:none">
+          <label for="txtMovieTitle">Composição</label><button type="button" id="" onclick="addlinecomposicaoprod();" class="btn btn-primary btn-xs">Adicionar</button>
+          <table style="width: 100%;white-space: nowrap;">
+          	<thead>
+            	<tr>
+               		<td>Descriçao</td>
+                	<td>Item de Produto</td>
+                   	<td>qtd</td>
+                    <td>Item Extra</td>
+                    <td>qtd</td>
+                    <td class="text-right">Ações</td>
+                </tr>
+            </thead>
+          	<tbody id="list_comp_cad_prod"></tbody>
+          </table>
+         
+         </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-lg-12">
+            <button type="button" id="btn_add_prod" onclick="add_prod();" class="btn btn-primary btn-sm">Cadastrar</button>
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>set_contener_cad(1);</script>
+<!-- InstanceEndEditable -->
+
+<div id="modal_conect_impressora" class="modal fade" data-backdrop="static" role="dialog" style="display: none;">
+  <div class="modal-dialog modal_larg_95">
+    <div class="modal-content">
+     <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">Configurar Impressora</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-12">
+            <ul class="listulmenu" id="config_print_list">
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-lg-12">           	        
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">FECHAR</button>            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<!-- InstanceEnd --></html>
