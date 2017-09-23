@@ -60,7 +60,6 @@ function nottof(idpassado){
 	}
 }
 function conect_bb(aparelho){	
-	alert("coont");
 	BTPrinter.connect(function(data){		
 		alert(data)
 	},
@@ -817,12 +816,9 @@ function set_tipo_consulta_caixa(idtipoconsulta){
 	}
 }
 function gerar_linhas_imprimir(){
-	info_emp=localStorage.getItem("info_empresa");
-	info_emp=JSON.parse(decode_text(info_emp));
 	
-	$("#list_json_descontos").html("");
-	
-	for (var i = 0; i < info_emp.length; i++) {		
+	for (var i = 0; i < info_emp.length; i++) {	
+		printt_texto
 		mostrar_print(formatar_texto(info_emp[i].nome,"c"));   
 		mostrar_print(formatar_texto(info_emp[i].municipio,"c")); 
 		mostrar_print(formatar_texto(info_emp[i].endereco,"e")); 
@@ -894,6 +890,8 @@ function add_produto_caixa_memoria(codbarras,descprod,valor,qtd,id_item){
 	a.valor = valor; 
 	a.qtd = qtd;
 	a.id_item = id_item;
+	a.is_composicao = false;
+	a.composicao = [];
 	dados.push(a);      
 	var b = JSON.stringify(dados, null, 0);
 	localStorage.setItem("mmlistprodcx", b);	
@@ -931,7 +929,10 @@ function listar_categorias_tela_caixa(){
 		dataType: "json",
         type: "POST",
         success: function(j) {							
-			$("#list_categoria_tela_cx").html("");			
+			$("#list_categoria_tela_cx").html("");		
+			if(j==null){
+				return false;
+			}
 			for (var i = 0; i < j.length; i++) { 
 				$("#title_vend_categ_caixa").text("Vendas Por Categoria");
 				$("#list_categoria_tela_cx").append("<li><div class='col-lg-8 col-md-8 col-sm-8' style='padding: 0'>"+j[i].descricao.toUpperCase()+"</div><div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0;text-align: right'><button type='button' class='btn btn-primary btn-sm' onclick='list_prod_por_categ_tl_caixa("+j[i].id+",\""+j[i].descricao.toUpperCase()+"\")'>"+j[i].qtd_prod+" PRODUTOS</button></div><div class='brack'></div></li>");								
@@ -1182,3 +1183,99 @@ function list_produto_tladdprod(){
         }
     });
 }
+function direct(){
+	log=$("#log").val();
+	senha=$("#pass").val();
+
+	$.ajax({            
+		url: xurlq,
+		 data: {
+			y: "",            
+			s: "13",
+			p1: log,
+			p2: senha
+		},
+		dataType: "json",
+		type: "POST",
+		success: function(json) {    
+			if(json!==null){
+				for (var i = 0; i < json.length; i++) {     
+					if(json[i].result !== "false"){	
+						localStorage.setItem("namee", encode_text(json[i].nome));						
+						localStorage.setItem("ide", json[i].id_banco);
+						location.href="sistema/index.html";					
+					} 
+					else{
+						alert("VERIFIQUE SEU LOGIN");
+					}
+				}
+			}
+			else{
+				alert("VERIFIQUE SEU LOGIN");
+			}
+		}
+	});		
+}
+function sair_sistema_web(){	
+	location.href='../';
+    localStorage.removeItem("ide"); 
+}
+function valid_login(){
+	vlo = localStorage.getItem("namee");  	
+	$("#empresas_log_user").html("<option value='"+decode_text(vlo)+"'>"+decode_text(vlo)+"</option>");
+	valid_login2();
+	setInterval(valid_login2,3000);
+}
+function valid_login2(){	
+	vlo2 = localStorage.getItem("ide"); 
+	if(vlo2==null){
+		sair_sistema_web();
+	}
+}
+function finalizar_compra_cx(){
+	p_list_p = localStorage.getItem("mmlistprodcx");
+	
+	on_load_carga("on","#btn_finaly_compra_cx");
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "1",
+            s: "14",
+			p1: p_list_p
+        },
+        dataType: "json",
+        type: "POST",
+        success: function(j) {	
+			
+            for (var i = 0; i < j.length; i++) {       
+				if(j[i].result=="true"){
+					on_load_carga("off","#btn_finaly_compra_cx");					
+					localStorage.removeItem("mmlistprodcx");
+					localStorage.removeItem("prod_composto_cx_listt");
+					$("#list_notta").html("");
+					$("#subtotal_title").html("0,00");
+					alert("COMPRA REALIZADA COM SUCESSO");
+					
+					for (var i2 = 0; i2 < j[i].p1.length; i2++) { 
+						for (var i3 = 0; i3 < j[i].p1[i2].list_itens.length; i3++) { 
+							/*
+							printt_texto
+							mostrar_print
+							*/						
+							printt_texto(formatar_texto(("000"+j[i].p1[i2].list_itens[i3].seq).slice(-3)+" "+j[i].p1[i2].list_itens[i3].cod_barras+" "+j[i].p1[i2].list_itens[i3].nome,"d")); 
+							printt_texto(formatar_texto(j[i].p1[i2].list_itens[i3].qtd+" unid "+convert_banco_moeda(j[i].p1[i2].list_itens[i3].valor)+" = "+convert_banco_moeda(j[i].p1[i2].list_itens[i3].vl_total),"e")); 
+						}
+						
+					}
+				}
+				
+            } 			
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            on_load_carga("off","#btn_finaly_compra_cx");
+			alert("ERROR TENTE NOVAMENTE");
+        }
+    });	
+}
+setTimeout(valid_login,500);
