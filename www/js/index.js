@@ -1264,19 +1264,24 @@ function finalizar_compra_cx(){
 					
 					for (var i2 = 0; i2 < j[i].p1.length; i2++) { 
 						printt_texto(formatar_texto(j[i].p1[i2].empresa.toUpperCase(),"c"));
+						printt_texto(formatar_texto(" ","c"));
 						printt_texto(formatar_texto(j[i].p1[i2].telefone,"c"));
 						printt_texto(formatar_texto(j[i].p1[i2].endereco+" "+j[i].p1[i2].numero,"c"));
 						printt_texto(formatar_texto(j[i].p1[i2].cidade+" "+j[i].p1[i2].uf,"c"));
-						printt_texto(formatar_texto(j[i].p1[i2].cidade+" "+j[i].p1[i2].data_hora,"c"));
+						printt_texto(formatar_texto(j[i].p1[i2].data_hora,"c"));
 						printt_texto(formatar_texto("--------------------------------","c"));
 						printt_texto(formatar_texto("COD: "+j[i].p1[i2].sequencia,"e"));
+						printt_texto(formatar_texto("--------------------------------","c"));
+						printt_texto(formatar_texto(" ","c"));
 						for (var i3 = 0; i3 < j[i].p1[i2].list_itens.length; i3++) { 
 													
 							printt_texto(formatar_texto(("000"+j[i].p1[i2].list_itens[i3].seq).slice(-3)+" "+j[i].p1[i2].list_itens[i3].cod_barras+" "+j[i].p1[i2].list_itens[i3].nome,"e")); 
 							printt_texto(formatar_texto(j[i].p1[i2].list_itens[i3].qtd+" unid "+convert_banco_moeda(j[i].p1[i2].list_itens[i3].valor)+" = "+convert_banco_moeda(j[i].p1[i2].list_itens[i3].vl_total),"e")); 
 						}
-						printt_texto(formatar_texto("TOTAL: "+convert_banco_moeda(j[i].p1[i2].valor_total),"e"));
+						printt_texto(formatar_texto("--------------------------------","c"));
+						printt_texto(formatar_texto("TOTAL: "+convert_banco_moeda(j[i].p1[i2].valor_total),"d"));
 					}
+					printt_texto(formatar_texto(" ","c"));
 					printt_texto(formatar_texto("VENDANEX.COM","c"));
 					printt_texto(formatar_texto(" ","c"));
 					printt_texto(formatar_texto(" ","c"));
