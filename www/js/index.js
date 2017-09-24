@@ -866,13 +866,13 @@ function print_qr(data){
     var justify_center = ' 1B 61 01';
     var justify_left   = ' 1B 61 00';
     var qr_model       = '\x32';          // 31 or 32
-    var qr_size        = '\x30';          // size
+    var qr_size        = '\x06';          // size
     var qr_eclevel     = '\x51';          // error correction level (30, 31, 32, 33 - higher)
     var qr_data        = data;
     var qr_pL          = String.fromCharCode((qr_data.length + 3) % 256);
     var qr_pH          = String.fromCharCode((qr_data.length + 3) / 256);
             
-    BTPrinter.printPOSCommand(function(data){
+    BTPrinter.print(function(data){
       alert('QR code ok');
     }, 
 	function(err){
