@@ -866,7 +866,7 @@ function print_qr(data){
     var justify_center = ' 1B 61 01';
     var justify_left   = ' 1B 61 00';
     var qr_model       = '\x32';          // 31 or 32
-    var qr_size        = '\x06';          // size
+    var qr_size        = '\x30';          // size
     var qr_eclevel     = '\x51';          // error correction level (30, 31, 32, 33 - higher)
     var qr_data        = data;
     var qr_pL          = String.fromCharCode((qr_data.length + 3) % 256);
@@ -883,7 +883,8 @@ function print_qr(data){
        '\x1D\x28\x6B' + qr_pL + qr_pH + '\x31\x50\x30' + qr_data + // Store data 
        '\x1D\x28\x6B\x03\x00\x31\x51\x30' +                        // Print
        '\n\n\n');
-  }
+}
+
 function preencher_vazio(qtdvazio){	
 	vazio_pp= " ";
 	resultado_pp="";
@@ -1287,7 +1288,7 @@ function finalizar_compra_cx(){
 					for (var i2 = 0; i2 < j[i].p1.length; i2++) { 
 						for (var i3 = 0; i3 < j[i].p1[i2].list_itens.length; i3++) { 
 													
-							printt_texto(formatar_texto(("000"+j[i].p1[i2].list_itens[i3].seq).slice(-3)+" "+j[i].p1[i2].list_itens[i3].cod_barras+" "+j[i].p1[i2].list_itens[i3].nome,"d")); 
+							printt_texto(formatar_texto(("000"+j[i].p1[i2].list_itens[i3].seq).slice(-3)+" "+j[i].p1[i2].list_itens[i3].cod_barras+" "+j[i].p1[i2].list_itens[i3].nome,"e")); 
 							printt_texto(formatar_texto(j[i].p1[i2].list_itens[i3].qtd+" unid "+convert_banco_moeda(j[i].p1[i2].list_itens[i3].valor)+" = "+convert_banco_moeda(j[i].p1[i2].list_itens[i3].vl_total),"e")); 
 						}
 						
