@@ -872,7 +872,7 @@ function print_qr(data){
     var qr_pL          = String.fromCharCode((qr_data.length + 3) % 256);
     var qr_pH          = String.fromCharCode((qr_data.length + 3) / 256);
             
-    BTPrinter.printText(function(data){
+    BTPrinter.printPOSCommand(function(data){
       alert('QR code ok');
     }, 
 	function(err){
