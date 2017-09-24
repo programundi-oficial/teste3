@@ -862,29 +862,6 @@ function formatar_texto(texto,alinhamento){
 	return (texto.toUpperCase());
 	
 }
-function print_qr(data){
-    var justify_center = ' 1B 61 01';
-    var justify_left   = ' 1B 61 00';
-    var qr_model       = '\x32';          // 31 or 32
-    var qr_size        = '\x06';          // size
-    var qr_eclevel     = '\x51';          // error correction level (30, 31, 32, 33 - higher)
-    var qr_data        = data;
-    var qr_pL          = String.fromCharCode((qr_data.length + 3) % 256);
-    var qr_pH          = String.fromCharCode((qr_data.length + 3) / 256);
-            
-    BTPrinter.print(function(data){
-      alert('QR code ok');
-    }, 
-	function(err){
-      alert('QR code ERROR');
-    }, '\x1D\x28\x6B\x04\x00\x31\x41' + qr_model + '\x00' +        // Select the model
-       '\x1D\x28\x6B\x03\x00\x31\x43' + qr_size +                  // Size of the model
-       '\x1D\x28\x6B\x03\x00\x31\x45' + qr_eclevel +               // Set n for error correction
-       '\x1D\x28\x6B' + qr_pL + qr_pH + '\x31\x50\x30' + qr_data + // Store data 
-       '\x1D\x28\x6B\x03\x00\x31\x51\x30' +                        // Print
-       '\n\n\n');
-}
-
 function preencher_vazio(qtdvazio){	
 	vazio_pp= " ";
 	resultado_pp="";
@@ -1283,7 +1260,7 @@ function finalizar_compra_cx(){
 					$("#list_notta").html("");
 					$("#subtotal_title").html("0,00");
 					alert("COMPRA REALIZADA COM SUCESSO");
-					print_qr("VENDANEX.COM");
+					
 					printt_texto(formatar_texto("VENDANEX.COM","c"));
 					for (var i2 = 0; i2 < j[i].p1.length; i2++) { 
 						for (var i3 = 0; i3 < j[i].p1[i2].list_itens.length; i3++) { 
