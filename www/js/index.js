@@ -832,6 +832,11 @@ function mostrar_print(vva){
 }
 function formatar_texto(texto,alinhamento){
 	tp_printt=localStorage.getItem("tp_impressora_t");
+	if(tp_printt==null){
+		localStorage.setItem("tp_impressora_t", 1);
+		formatar_texto(texto,alinhamento);
+		return false;
+	}
 	if(tp_printt=="1"){
 		tp_printt_caracter=32;
 	}
@@ -1259,11 +1264,7 @@ function finalizar_compra_cx(){
 					printt_texto("VENDANEX.COM");
 					for (var i2 = 0; i2 < j[i].p1.length; i2++) { 
 						for (var i3 = 0; i3 < j[i].p1[i2].list_itens.length; i3++) { 
-							/*
-							printt_texto
-							mostrar_print
-							*/	
-							
+													
 							printt_texto(formatar_texto(("000"+j[i].p1[i2].list_itens[i3].seq).slice(-3)+" "+j[i].p1[i2].list_itens[i3].cod_barras+" "+j[i].p1[i2].list_itens[i3].nome,"d")); 
 							printt_texto(formatar_texto(j[i].p1[i2].list_itens[i3].qtd+" unid "+convert_banco_moeda(j[i].p1[i2].list_itens[i3].valor)+" = "+convert_banco_moeda(j[i].p1[i2].list_itens[i3].vl_total),"e")); 
 						}
