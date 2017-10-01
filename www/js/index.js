@@ -1704,4 +1704,3 @@ $(document).keypress(function(e) {
 		}
     }
 });
-setTimeout(valid_login,500);
