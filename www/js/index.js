@@ -68,11 +68,10 @@ function conect_bb(aparelho){
 	}, aparelho);
 }
 function printt_texto(ttexto){	
-	BTPrinter.printText(function(data){
-		alert("Sucesso impressao");
+	BTPrinter.printText(function(data){		
 		//alert(data);
-	},function(err){
-		alert("Error");
+	},
+	function(err){		
 		alert(err);
 	}, ttexto);	
 }
@@ -412,7 +411,7 @@ function list_categoria(){
             el4="#liscategpgprod";
             $(el4).html("");             
             for (var i = 0; i < j.length; i++) {                               
-            	$(el4).append('<tr><td id="desc_categ_'+j[i].id+'">'+j[i].descricao+'</td><td class="text_c">??</td><td class="text-right"><button style="display:none" type="button" class="btn_cate_list_edition2 btn btn-sm btn-primary btn_icon" onClick=""><img src="../img/up-arrow.png"></button><button style="margin-left: 3px;display:none" type="button" class="btn_cate_list_edition2 btn btn-sm btn-primary btn_icon" onClick=""><img src="../img/arrow-down.png"></button><button type="button" class="btn_cate_list_edition1 btn btn-sm btn-primary btn_icon" onClick="edit_cate_but('+j[i].id+');"><img src="../img/edit.png"></button><button style="margin-left: 3px;" type="button" class="btn_cate_list_edition1 btn btn-sm btn-danger btn_icon" onClick=""><img src="../img/trash.png"></button><button style="margin-left: 3px;display:none" title="SALVAR ALTERAÇÃO" type="button" class="btn_cate_list_edition2 btn btn-sm btn-primary btn_icon" onclick="save_categ_prod('+j[i].id+');"><img src="../img/save.png"></button><button style="margin-left: 3px;display:none" type="button" id="line_btn_dell_item_prod_'+j[i].id+'" title="CANCELAR OPERAÇÃO" class="btn_cate_list_edition2 btn btn-sm btn-danger btn_icon" onclick="list_categoria();"><img src="../img/close.png"></button></td></tr>');				               
+            	$(el4).append('<tr><td id="desc_categ_'+j[i].id+'">'+j[i].descricao+'</td><td class="text_c">'+j[i].qtd_utilizando+'</td><td class="text-right"><button style="display:none" type="button" class="btn_cate_list_edition2 btn btn-sm btn-primary btn_icon" onClick=""><img src="../img/up-arrow.png"></button><button style="margin-left: 3px;display:none" type="button" class="btn_cate_list_edition2 btn btn-sm btn-primary btn_icon" onClick=""><img src="../img/arrow-down.png"></button><button type="button" class="btn_cate_list_edition1 btn btn-sm btn-primary btn_icon" onClick="edit_cate_but('+j[i].id+');"><img src="../img/edit.png"></button><button style="margin-left: 3px;" type="button" class="btn_cate_list_edition1 btn btn-sm btn-danger btn_icon" onClick=""><img src="../img/trash.png"></button><button style="margin-left: 3px;display:none" title="SALVAR ALTERAÇÃO" type="button" class="btn_cate_list_edition2 btn btn-sm btn-primary btn_icon" onclick="save_categ_prod('+j[i].id+');"><img src="../img/save.png"></button><button style="margin-left: 3px;display:none" type="button" id="line_btn_dell_item_prod_'+j[i].id+'" title="CANCELAR OPERAÇÃO" class="btn_cate_list_edition2 btn btn-sm btn-danger btn_icon" onclick="list_categoria();"><img src="../img/close.png"></button></td></tr>');				               
             }            
         }
     });
@@ -431,9 +430,8 @@ function list_categoria_add_prod(){
             el4a="#list_categori_addprod";
             $(el4a).html("<option value='-1'>SELECIONE</option>");             
             for (var i = 0; i < json.length; i++) {                               
-            	$(el4a).append("<option value="+json[i].id+">"+json[i].descricao+"</option>");							  				               
-            }  
-			ligar_pesq_select(el4a,"CATEGORIA NÃO LOCALIZADA");
+            	$(el4a).append("<option value="+json[i].id+">"+json[i].descricao.toUpperCase()+"</option>");							  				               
+            }			
         }
     });
 }
@@ -760,8 +758,30 @@ function add_new_categ(){
         }
     });
 }
-function save_categ_prod(){
-	
+function save_categ_prod(idd21){
+	descn=$("#desc_input_categ_"+idd21).val();
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "",
+            s: "21",
+			p1: idd21,
+			p2: descn
+        },
+        dataType: "json",
+        type: "POST",
+        success: function(json) {  
+			for (var i = 0; i < json.length; i++) { 
+				if(json[i].result !== "false"){
+					list_categoria();
+				}
+				else{					
+					alert("ERRO "+decode_text(json[i].pe));					
+				}
+			}
+		}
+	});	
 }
 function direciona_url(p_url){
 	location.href=p_url;
@@ -915,8 +935,10 @@ function list_prod_caixa(){
             sval = parseFloat(sval)+parseFloat(dados[i].valor*dados[i].qtd);			
 			$("#list_notta").append("<tr class='td_super_pgato'><td>"+("000"+(parseInt(i)+parseInt(1))).slice(-3)+"</td><td colspan='2'>"+dados[i].codbarras+"</td><td colspan='2'><div>"+dados[i].descprod+"</div></td></tr>");
 			$("#list_notta").append("<tr class='td_botton_pgato'><td class='text-center'>"+dados[i].qtd+"</td><td class='text-center'>und</td><td class='text-center'>"+convert_banco_moeda(dados[i].valor)+"</td><td class='text-center'>=</td><td class='text-right'>"+convert_banco_moeda(parseFloat(dados[i].valor)*dados[i].qtd)+"</td></tr>"); 
+			console.log(sval);
         }
         if(sval == 0){return false;}
+		
         $("#subtotal_title").html(convert_banco_moeda(sval));    
 		$('#scrol_list_prod').scrollTop($('#scrol_list_prod')[0].scrollHeight);
     }
@@ -988,6 +1010,7 @@ function add_prod_get_qtd_categ(cod_barras,desc_p,valor,iddp,qtd_composicao){
 		$("#qtd_prod_pesq_categ_cx").attr("valor",valor);
 		$("#qtd_prod_pesq_categ_cx").attr("iddp",iddp);
 		$("#qtd_prod_pesq_categ_cx").attr("descprod",desc_p);
+		$("#qtd_prod_pesq_categ_cx").val("1,000");
 		$("#modal_get_unid_pesqcateg_caixa").modal("show");
 		setTimeout(function(){$("#qtd_prod_pesq_categ_cx").focus();$("#qtd_prod_pesq_categ_cx").select();},600);
 		return false
@@ -1194,10 +1217,11 @@ function direct(){
 	$.ajax({            
 		url: xurlq,
 		 data: {
-			y: "",            
+			y: y,            
 			s: "13",
 			p1: log,
-			p2: senha
+			p2: senha,
+			p3: "false"
 		},
 		dataType: "json",
 		type: "POST",
@@ -1210,7 +1234,7 @@ function direct(){
 						location.href="sistema/index.html";					
 					} 
 					else{
-						alert("VERIFIQUE SEU LOGIN");
+						alert("VERIFIQUE SEU LOGIN "+decode_text(json[i].pe));
 					}
 				}
 			}
@@ -1221,7 +1245,7 @@ function direct(){
 	});		
 }
 function sair_sistema_web(){	
-	location.href='../';
+	location.href='../index.html';
     localStorage.removeItem("ide"); 
 }
 function valid_login(){
@@ -1237,7 +1261,65 @@ function valid_login2(){
 	}
 }
 function finalizar_compra_cx(){
-	p_list_p = localStorage.getItem("mmlistprodcx");
+	localStorage.setItem("formpagtocx", "[]");
+	$("#list_pagto_selectd").html("");
+	list_forma_pagamento_caixa();
+	list_cliente_tela_pagto_cx("xxx");
+	$("#modal_finalize_compra").modal("show");
+}
+function list_forma_pagamento_caixa(){
+	el16="#list_form_pagto_caixa";
+    $(el16).html("BUSCANDO LISTA");
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "",
+            s: "16"
+        },
+        dataType: "json",
+        type: "POST",
+        success: function(j) {  
+			$(el16).html("");
+            for (var i = 0; i < j.length; i++) {				
+				$(el16).append("<div class='col-lg-3 col-md-3 col-sm-3 col-xs-3'><div onclick='salve_vl_form_pagto_cx("+j[i].id_forma_pagamento+",\""+j[i].descricao+"\");' class='form-group text_c f_pagto'><img src='../img/"+j[i].img+"'><p>"+j[i].descricao+"</p></div></div>");
+            }		
+        }
+    });
+}
+function set_pagto_forma(idf_pagto,desc){
+	vlntsum=convert_moeda_banco($("#subtotal_title").text());
+	sumseld=sum_formpagto_seled_caixa();
+	console.log("p1-> "+vlntsum);
+	console.log("p2-> "+sumseld);
+	if(parseFloat(vlntsum) <= parseFloat(sumseld)){
+		console.log("aqui");
+		return false
+	}
+	add_tipo_form_pagto_memoria(idf_pagto,desc,(parseFloat(vlntsum)-parseFloat(sumseld)));
+}
+function is_existe_crediario(){	        
+	dadosisexit = JSON.parse(localStorage.getItem("formpagtocx"));	
+	for (var i = 0; i < dadosisexit.length; i++) {
+		if(dadosisexit[i].id == "2"){
+			return("true");
+		}				
+	}       
+	return("false");    
+}
+function finalizar_compra_cx2(){
+	p_list_p 			= localStorage.getItem("mmlistprodcx");
+	p_list_from_pagto	= localStorage.getItem("formpagtocx");
+	id_cliente			= $("#id_cliente_list_pagto_cx option:selected").val();
+	
+	valid_crediario=is_existe_crediario();
+	
+	if(valid_crediario=="true"){
+		if(id_cliente == "-1"){
+			alert("SELECIONE O CREDOR");
+			return false;
+		}		
+	}
 	
 	on_load_carga("on","#btn_finaly_compra_cx");
 	$.ajax({            
@@ -1246,12 +1328,13 @@ function finalizar_compra_cx(){
             y: y,
             u: "1",
             s: "14",
-			p1: p_list_p
+			p1: p_list_p,
+			p2: p_list_from_pagto,
+			p3: id_cliente
         },
         dataType: "json",
         type: "POST",
-        success: function(j) {	
-			
+        success: function(j) {			
             for (var i = 0; i < j.length; i++) {       
 				if(j[i].result=="true"){
 					on_load_carga("off","#btn_finaly_compra_cx");					
@@ -1259,8 +1342,7 @@ function finalizar_compra_cx(){
 					localStorage.removeItem("prod_composto_cx_listt");
 					$("#list_notta").html("");
 					$("#subtotal_title").html("0,00");
-					alert("COMPRA REALIZADA COM SUCESSO");
-					
+					alert("COMPRA REALIZADA COM SUCESSO");					
 					
 					for (var i2 = 0; i2 < j[i].p1.length; i2++) { 
 						printt_texto(formatar_texto(j[i].p1[i2].empresa.toUpperCase(),"c"));
@@ -1297,4 +1379,329 @@ function finalizar_compra_cx(){
         }
     });	
 }
+function list_all_vendas(){
+	elem_15="#list_all_vendas";
+	$(elem_15).html("BUSCANDO LISTA");
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "",
+            s: "15"
+        },
+		dataType: "json",
+        type: "POST",
+        success: function(j) {			
+			$(elem_15).html("");
+			ddiia="";
+			line_head=0;
+			soma_loop_15=0;
+			for (var i = 0; i < j.length; i++) { 
+				if(j[i].result=="false"){					
+					alert("ERRO");					
+					return false;
+				}		
+				if(ddiia !== j[i].dia){
+					ddiia = j[i].dia;
+					soma_loop_15=0;
+					line_head=parseInt(line_head)+parseInt(1);
+					
+					$(elem_15).append("<tr class='marq_line'><td></td><td></td><td class='text_c' style='font-weight: bold;'>"+j[i].dia+"</td><td></td><td style='font-weight: bold;' id='line_head_"+line_head+"' class='text_r'></td><td></td></tr>");
+				}
+				if(ddiia == j[i].dia){
+					soma_loop_15=parseFloat(soma_loop_15)+parseFloat(j[i].soma);					
+					$("#line_head_"+line_head).html(convert_banco_moeda(soma_loop_15));
+				}
+				$(elem_15).append("<tr><td>"+j[i].sequencia+"</td><td class='text_c'>"+j[i].situacao+"</td><td class='text_c'>"+j[i].data_hora+"</td><td class='text_c'>"+j[i].origem+"</td><td class='text_r'>"+convert_banco_moeda(j[i].soma)+"</td><td class='text_c'><button "+j[i].cod_barras+">DETALHE</button></td></tr>");	  			
+			}			
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {			
+			on_load_carga("off","#codbbarras");			
+		}
+    });
+}
+function add_tipo_form_pagto_memoria(iddform,descform,valorform){
+    var ddfpcx = localStorage.getItem("formpagtocx");
+	if(ddfpcx == null){
+		localStorage.setItem("formpagtocx", "[]");
+		return add_produto_caixa_memoria(iddform,descform,valorform);		
+	}        
+	dados = JSON.parse(ddfpcx);
+	var a = new Object();
+	a.id = iddform;
+	a.desc = descform;
+	a.valor = valorform; 	
+	dados.push(a);      
+	var b = JSON.stringify(dados, null, 0);
+	localStorage.setItem("formpagtocx", b);	
+	list_formpagto_seled_caixa();
+}
+function list_formpagto_seled_caixa(){
+	var dados = localStorage.getItem("formpagtocx");
+    
+    if(dados == null){
+                
+    }
+    else{
+        var dados = JSON.parse(dados);
+		elesel="#list_pagto_selectd";
+        $(elesel).html("");
+        sval3=0;
+        for (var i = 0; i < dados.length; i++) {
+            sval3 = parseFloat(sval3)+parseFloat(dados[i].valor);			
+			$(elesel).append("<tr><td>"+(parseInt(i)+parseInt(1))+"</td><td>"+dados[i].desc+"</td><td class='text_r' idform='"+dados[i].id+"' descform='"+dados[i].desc+"' id='line_pagto_form_pagto_"+i+"'>"+convert_banco_moeda(dados[i].valor)+"</td><td class='text_r'><button type='button' id='btn_salve_forma_pgto_"+i+"' onclick='salve_vl_form_pagto_cx1("+i+");' class='btn btn-primary btn-sm btnsavelistformpagto' style='margin-right: 6px;display:none;'>SALVAR</button><button type='button' onclick='edi_vl_form_pagto_cx("+i+");' class='btn btn-success btn-sm btnformpagtoocult' style='margin-right: 6px;'>EDITAR</button><button type='button' onclick='dell_list_form_pagto("+i+");' class='btn btn-danger btn-sm btnformpagtoocult'>CANCELAR</button></td></tr>");
+			
+			
+        }        
+        $(elesel).append("<tr class='marq_line'><td></td><td style='font-weight: bold;'>TOTAL</td><td style='font-weight: bold;' class='text_r'>R$ "+convert_banco_moeda(sval3)+"</td><td></td></tr>");  
+		vlnota_sum=$("#subtotal_title").text();
+		if(convert_banco_moeda(sval3) == vlnota_sum){
+			$("#btn_finliz_pagto_cxx").attr("disabled", false);
+		}
+		if(convert_banco_moeda(sval3) !== vlnota_sum){
+			$("#btn_finliz_pagto_cxx").attr("disabled", true);
+		}
+    }
+}
+function sum_formpagto_seled_caixa(pp){
+	var dados = localStorage.getItem("formpagtocx");
+    
+    if(dados == null){
+                
+    }
+    else{
+        var dados = JSON.parse(dados);		
+        sval=0;
+        for (var i = 0; i < dados.length; i++) {
+			if(pp == undefined){
+				sval = parseFloat(sval)+parseFloat(dados[i].valor);	
+			} 
+			if(pp !== undefined){
+				if(pp !== i){
+					sval = parseFloat(sval)+parseFloat(dados[i].valor);	
+				}				
+			} 
+        }        
+        return sval;
+    }
+}
+function edi_vl_form_pagto_cx(idform){	
+	$("#line_pagto_form_pagto_"+idform).html("<input indexx='"+idform+"' id='imput_line_pagto_form_pagto_"+idform+"' class='form-control text_r input_edit_vl_pagto' onkeypress=\" return(MascaraMoeda(this,'.',',',event))\" onblur=\"return(MascaraMoeda(this,'.',',',event))\" onfocus=\" return(MascaraMoeda(this,'.',',',event))\" type='text' value='"+$("#line_pagto_form_pagto_"+idform).text()+"'>");
+	
+	$("#btn_salve_forma_pgto_"+idform).css("display","");
+	$(".btnformpagtoocult").hide();
+	$("#imput_line_pagto_form_pagto_"+idform).select();
+}
+function salve_vl_form_pagto_cx1(idform2){	
+	sumlistatual	= sum_formpagto_seled_caixa(idform2);
+	input_edit		= $("#imput_line_pagto_form_pagto_"+idform2).val();
+	totalnt			= convert_moeda_banco($("#subtotal_title").text());
+	suminfos		= convert_banco_moeda(parseFloat(sumlistatual)+parseFloat(input_edit));
+	
+	
+	if(parseFloat(convert_moeda_banco(suminfos)) <= parseFloat(totalnt)){	
+		idformpagtto	=$("#line_pagto_form_pagto_"+idform2).attr("idform");
+		descformpagtto	=$("#line_pagto_form_pagto_"+idform2).attr("descform");
+		dell_list_form_pagto(idform2);	
+		
+		add_tipo_form_pagto_memoria(idformpagtto,descformpagtto,convert_moeda_banco(input_edit));
+	}
+}
+function salve_vl_form_pagto_cx(idform,desc){
+	sumlistatual	= sum_formpagto_seled_caixa();	
+	totalnt			= convert_moeda_banco($("#subtotal_title").text());
+	suminfos		= (parseFloat(totalnt)-parseFloat(sumlistatual));	
+	
+	if(suminfos==0){
+		return false;
+	}
+	
+	if(parseFloat(suminfos) <= parseFloat(totalnt)){	
+		add_tipo_form_pagto_memoria(idform,desc,suminfos);
+	}
+}
+function dell_list_form_pagto(id){    
+    var dados = localStorage.getItem("formpagtocx");
+    dados = JSON.parse(dados);    
+    delete dados[id];
+    var novoDados = [];
+    var j = 0;    
+    for (var i =0; i < dados.length; i++) {
+        if (dados[i] != null) {
+            novoDados[j] = dados[i];
+            j++;
+        }
+    }
+	novoDados = JSON.stringify(novoDados, null, 0);
+    localStorage.setItem("formpagtocx", novoDados);
+	list_formpagto_seled_caixa();
+    return true;    
+}
+function list_cliente_tela_pagto_cx(pp){
+	ele17="#id_cliente_list_pagto_cx";
+	$(ele17).html("");
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "",
+            s: "17"
+        },
+        dataType: "json",
+        type: "POST",
+        success: function(json) {               
+            $(ele17).html("<option value='-1'>SELECIONE</option>");  
+			if(json==null){
+				$(ele17).html("<option value='-1'>NÃO EXISTE CLIENTE</option>");
+				return false;
+			}
+            for (var i = 0; i < json.length; i++) {                               
+            	$(ele17).append("<option value='"+json[i].id+"'>"+json[i].nome+"</option>");        
+            } 
+			if(pp !== "xxx"){
+				$(ele17).val(pp);
+			}			
+        }
+    });
+}
+function add_cliente_pagto_cx(){
+	$("#modal_finalize_compra").modal("hide");
+	list_estado_generic("#estado_cliente_new");
+	list_cidade_generic("#cidade_cliente_new","xxx");
+	$("#modal_add_cliente").modal("show");
+}
+function mascaracpf_cnpj(o,f){
+    v_obj=o
+    v_fun=f
+    setTimeout('execmascara()',1)
+}
+function execmascara(){
+    v_obj.value=v_fun(v_obj.value)
+}
+function volta_tela_form_pagto_cx(){	
+	$("#modal_add_cliente").modal("hide");
+	$("#modal_finalize_compra").modal("show");
+}
+function cpfCnpj(a){
+    return a=a.replace(/\D/g,""),a.length<=12?(a=a.replace(/(\d{3})(\d)/,"$1.$2"),a=a.replace(/(\d{3})(\d)/,"$1.$2"),a=a.replace(/(\d{3})(\d{1,2})$/,"$1-$2")):(a=a.replace(/^(\d{2})(\d)/,"$1.$2"),a=a.replace(/^(\d{2})\.(\d{3})(\d)/,"$1.$2.$3"),a=a.replace(/\.(\d{3})(\d)/,".$1/$2"),a=a.replace(/(\d{4})(\d)/,"$1-$2")),a
+}
+function list_estado_generic(ele_g_18){	
+	$(ele_g_18).html("<option value='-1'>BUSCANDO LISTA</option>");
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "",
+            s: "18"
+        },
+        dataType: "json",
+        type: "POST",
+        success: function(json) {               
+            $(ele_g_18).html("<option value='-1'>SELECIONE</option>");  
+			if(json==null){
+				$(ele_g_18).html("<option value='-1'>NÃO EXISTE CLIENTE</option>");
+				return false;
+			}
+            for (var i = 0; i < json.length; i++) {                               
+            	$(ele_g_18).append("<option value='"+json[i].id+"' uf='"+json[i].uf+"'>"+json[i].nome+"</option>");      
+            }            
+        }
+    });
+}
+function list_cidade_generic(ele_g_19,filtr19){	
+	$(ele_g_19).html("<option value='-1'>BUSCANDO LISTA</option>");
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "",
+            s: "19"
+        },
+        dataType: "json",
+        type: "POST",
+        success: function(json) {               
+            $(ele_g_19).html("<option value='-1'>SELECIONE</option>");  
+			if(json==null){
+				$(ele_g_19).html("<option value='-1'>NÃO EXISTE CLIENTE</option>");
+				return false;
+			}
+            for (var i = 0; i < json.length; i++) {    
+				if(filtr19 !== "xxx" && filtr19 == json[i].uf){
+					$(ele_g_19).append("<option value='"+json[i].id+"' uf='"+json[i].uf+"'>"+json[i].nome+"</option>"); 
+				}
+				if(filtr19 == "xxx"){
+					$(ele_g_19).append("<option value='"+json[i].id+"' uf='"+json[i].uf+"'>"+json[i].nome+"</option>"); 
+				}            	     
+            }            
+        }
+    });
+}
+function sele_cid_generic(ttpec){
+	if(ttpec=="e"){		
+		ufselec=$(".estadds option:selected").attr("uf");
+		list_cidade_generic("#cidade_cliente_new",ufselec);
+	}
+	if(ttpec=="c"){
+		ufselec=$(".cidadds option:selected").attr("uf");		
+		$(".estadds option[uf='"+ufselec+"']").prop("selected", true);		
+	}
+}
+function save_new_cliente_cx(){
+	name_20		= $("#name_cliente_new").val();
+	cpf_20		= $("#cpf_cliente_new").val();
+	cep_20		= $("#cpe_cliente_new").val();
+	cidad_20	= $("#cidade_cliente_new option:selected").val();
+	enderenc_20	= $("#ender_cliente_new").val();
+	num_20		= $("#num_cliente_new").val();
+	obs_20		= $("#obs_cliente_new").val();
+	
+	on_load_carga("on","#btn_add_new_cliente_cxx");
+	
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "",
+            s: "20",
+			p1: name_20,
+			p2: cpf_20,
+			p3: cep_20,
+			p4: cidad_20,
+			p5: enderenc_20,
+			p6: num_20,
+			p7: obs_20
+        },
+        dataType: "json",
+        type: "POST",
+        success: function(json) {  
+			for (var i = 0; i < json.length; i++) { 
+				if(json[i].result !== "false"){
+					$("#name_cliente_new").val("");
+					$("#cpf_cliente_new").val("");
+					$("#cpe_cliente_new").val("");
+					$("#ender_cliente_new").val("");
+					$("#num_cliente_new").val("");
+					$("#obs_cliente_new").val("");
+					alert("ADICIONADO COM SUCESSO");
+					$("#modal_add_cliente").modal("hide");
+					$("#modal_finalize_compra").modal("show");
+					list_cliente_tela_pagto_cx(json[i].p1);
+					on_load_carga("off","#btn_add_new_cliente_cxx");
+				}
+				else{
+					on_load_carga("off","#btn_add_new_cliente_cxx");
+					alert("ERRO "+decode_text(json[i].pe));					
+				}
+			}
+		}
+	});		
+}
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+        if($(".input_edit_vl_pagto").val() !== undefined){		
+			console.log("aqui"+$("input.input_edit_vl_pagto").focus());
+			salve_vl_form_pagto_cx1(parseInt($(".input_edit_vl_pagto").attr("indexx")));
+		}
+    }
+});
 setTimeout(valid_login,500);

@@ -65,12 +65,9 @@
 		<div class="form-group">
 		  <label for="txtMovieTitle" id="title_vend_categ_caixa"></label>                         
 		</div>
-    	<ul id="list_categoria_tela_cx" class="listulmenu">
-    		
-    	</ul>
+    	<ul id="list_categoria_tela_cx" class="listulmenu"></ul>
     </div>
-    </div>
-     
+    </div>    
     <div class="divisoria"></div>
     <div>
     	<button type="button" id="" onclick="buscar_produto_app_caixa();" class="btn btn-primary btn-sm">CONSULTAR PRODUTO</button>
@@ -97,7 +94,128 @@
 <div class="contener_03"></div>
 <script type="text/javascript"> app.initialize();</script>
 <!-- InstanceBeginEditable name="MODALS" -->
-
+<div id="modal_add_cliente" class="modal fade" data-backdrop="static" role="dialog" style="display: none;">
+  <div class="modal-dialog modal_larg_95">
+    <div class="modal-content">
+     <div class="modal-header">
+        <button type="button" class="close" onClick="volta_tela_form_pagto_cx()">×</button>
+        <h4 class="modal-title">Cadastrar Cliente</h4>
+      </div>
+      <div class="modal-body">
+       <div class="row">
+       	<div class="col-lg-12 col-md-9 col-sm-9">
+		  <div class="form-group">
+			<label for="txtMovieTitle">Cliente</label>
+			<input id="name_cliente_new" type="text" class="form-control">
+		  </div>
+        </div>
+		<div class="col-lg-12 col-md-3 col-sm-3">
+		  <div class="form-group">
+			<label for="txtMovieTitle">CPF</label>
+			<input id="cpf_cliente_new" type="text" class="form-control cpf_cnpj" onkeypress="mascaracpf_cnpj(this,cpfCnpj)">
+		  </div>
+        </div>
+        
+        <div class="col-lg-6 col-md-3 col-sm-3">
+		  <div class="form-group">
+			<label for="txtMovieTitle">CEP</label>
+			<input id="cpe_cliente_new" type="text" class="form-control cep_masck">
+		  </div>
+        </div>
+        <div class="col-lg-6 col-md-4 col-sm-4">
+		  <div class="form-group">
+			<label for="txtMovieTitle">Estado</label>
+			<select id="estado_cliente_new" class="form-control estadds" onChange="sele_cid_generic('e');"></select>
+		  </div>
+        </div>
+        <div class="col-lg-6 col-md-5 col-sm-5">
+		  <div class="form-group">
+			<label for="txtMovieTitle">Cidade</label>
+			<select id="cidade_cliente_new" class="form-control cidadds" onChange="sele_cid_generic('c');"></select>
+		  </div>
+        </div>
+		<div class="col-lg-10 col-md-10 col-sm-10">
+		  <div class="form-group">
+			<label for="txtMovieTitle">Endereço</label>
+			<input id="ender_cliente_new" type="text" class="form-control">
+		  </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2">
+		  <div class="form-group">
+			<label for="txtMovieTitle">Nº</label>
+			<input id="num_cliente_new" type="text" class="form-control">
+		  </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+		  <div class="form-group">
+			<label for="txtMovieTitle">Descrição</label>
+			  <textarea id="obs_cliente_new"  class="form-control"></textarea>
+		  </div>
+        </div>
+       </div>        
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-lg-12">            
+           <button type="button" id="btn_add_new_cliente_cxx" onClick="save_new_cliente_cx();" class="btn btn-primary btn-sm">SALVAR</button>
+            <button type="button" class="btn btn-default btn-sm" onClick="volta_tela_form_pagto_cx()">FECHAR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="modal_finalize_compra" class="modal fade" data-backdrop="static" role="dialog" style="display: none;">
+  <div class="modal-dialog modal_larg_95">
+    <div class="modal-content">
+     <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">Formas de Pagamento</h4>
+      </div>
+      <div class="modal-body">
+       <div class="row">
+       	<div class="col-lg-12 col-md-6 col-sm-7">
+              <div class="form-group">
+                <label for="txtMovieTitle">Cliente</label>
+                <select id="id_cliente_list_pagto_cx" class="form-control"></select>
+              </div>
+        </div>
+		<div class="col-lg-12 col-md-6 col-sm-5">
+       <div class="form-group">       		
+           <button type="button" style="margin-top: 19px;" onClick="add_cliente_pagto_cx();" class="btn btn-primary btn-sm">CADASTRAR CLIENTE</button>
+              </div>       
+		   </div>
+       </div>
+        <div class="divisoria_15"></div>
+        <div class="row" id="list_form_pagto_caixa">        
+        </div>
+        <div class="divisoria_15"></div>
+        <table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Tipo Pagamento</th>
+					<th class="text_r">Valor</th>
+					<th></th>
+				</tr>
+			</thead>
+        	<tbody id="list_pagto_selectd">
+        		
+        	</tbody>
+        </table>
+        <div class="divisoria_15"></div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-lg-12">            
+           <button type="button" disabled id="btn_finliz_pagto_cxx" onClick="finalizar_compra_cx2();" class="btn btn-primary btn-sm">FINALIZAR PAGAMENTO</button>
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">FECHAR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div id="modal_pesquisa_caixa" class="modal fade" data-backdrop="static" role="dialog" style="display: none;">
   <div class="modal-dialog modal_larg_95">
     <div class="modal-content">
@@ -157,7 +275,7 @@
           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
            <label for="txtMovieTitle">Quantidade</label>  
             <div class="form-group">              
-				<input type="number" id="qtd_prod_pesq_categ_cx" value="1" class="form-control">				
+				<input type="text" id="qtd_prod_pesq_categ_cx" value="1" class="form-control qtd_itens_masck">				
             </div>
           </div>          
         </div>
@@ -215,16 +333,15 @@
         <div class="row">
           <div class="col-xs-12">
             <ul class="listulmenu">
-              <li onClick="direcionar('index.html');">Menu </li>
-              <li>Cadastro</li>
-              <li>Configurações</li>
-              <li>Consultar</li>
-              <li>Fundo de Caixa</li>
-              <li>Sagria</li>
-              <li>Vendas</li>
-              <li>Encerrar</li>
-              <li>Relatórios</li>
+              <li onClick="direcionar('index.html');">Menu </li>              
             </ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-lg-12">           	       
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">FECHAR</button>            
           </div>
         </div>
       </div>
@@ -264,7 +381,42 @@ $("#codbbarras").focus(function(){
         }
     );
 });	
-</script><!-- InstanceEndEditable -->
+</script>
+<script src="../js/masck.js"></script>
+<script src="../js/valida_cpf_cnpj.js"></script>
+<script>
+	
+jQuery("input.qtd_itens_masck")
+.mask("9.999")
+.focusout(function (event) {  
+	var target, phone, element;  
+	target = (event.currentTarget) ? event.currentTarget : event.srcElement;  
+	phone = target.value.replace(/\D/g, '');
+	element = $(target);  
+	element.unmask();  
+	if(phone.length > 10) {  
+		element.mask("9.999");  
+	} else {  
+		element.mask("9.999");  
+	}  
+});
+jQuery("input.cep_masck")
+.mask("99.999-999")
+.focusout(function (event) {  
+	var target, phone, element;  
+	target = (event.currentTarget) ? event.currentTarget : event.srcElement;  
+	phone = target.value.replace(/\D/g, '');
+	element = $(target);  
+	element.unmask();  
+	if(phone.length > 10) {  
+		element.mask("99.999-999");  
+	} else {  
+		element.mask("99.999-999");  
+	}  
+});
+
+</script>
+<!-- InstanceEndEditable -->
 
 <div id="modal_conect_impressora" class="modal fade" data-backdrop="static" role="dialog" style="display: none;">
   <div class="modal-dialog modal_larg_95">

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Cadastro</title>
+<title>RELATÓRIOS</title>
 <!-- InstanceEndEditable -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="../css/chosen.css" rel="stylesheet">
@@ -32,7 +32,7 @@
   <!-- InstanceBeginEditable name="CONTENER_CENTRO" -->
 	<div class="col-lg-3 col-md-3 col-sm-3">
 		<ul class="lista_lateral">
-			<li id="li_set_cont_1" onClick="set_contener_cad(1)" class="ativo_contener_cad">Relatório Vendas</li>
+			<li id="li_set_cont_1" onClick="set_contener_cad(1);list_all_vendas();" class="ativo_contener_cad">Relatório Vendas</li>
 			<li id="li_set_cont_2" onClick="set_contener_cad(2)">Relatório Produtos</li>
 			<li id="li_set_cont_3" onClick="set_contener_cad(3)">Relatório Estornos</li>
 			<li id="li_set_cont_4" onClick="set_contener_cad(4)">Relatório Gráfico</li>			
@@ -41,7 +41,21 @@
 	<div class="col-lg-9 col-md-9 col-sm-9" style="height: 92%;overflow: auto;">
 	<div style="background: #f8f8f8;padding: 15px;">
 		<div id="contener_cadastro_1" class="marcador_conter_js_cad">
-			<h4 class="modal-title">Relatório Vendas</h4>			
+			<h4 class="modal-title">Relatório Vendas</h4>
+			<div class="divisoria_10"></div>
+			<table>
+				<thead>
+					<tr>
+						<th>Nº</th>
+						<th class="text_c">Situação</th>
+						<th class="text_c">Data</th>
+						<th class="text_c">Origem</th>
+						<th class="text_r">Valor</th>
+						<th class="text_c"></th>
+					</tr>
+				</thead>
+				<tbody id="list_all_vendas"></tbody>
+			</table>			
 		</div>
 		<div id="contener_cadastro_2" class="marcador_conter_js_cad" style="display: none">
 			<h4 class="modal-title">Relatório Produtos</h4>
@@ -175,7 +189,9 @@
     </div>
   </div>
 </div>
-<script>set_contener_cad(1);</script>
+<script>
+list_all_vendas();
+</script>
 <!-- InstanceEndEditable -->
 
 <div id="modal_conect_impressora" class="modal fade" data-backdrop="static" role="dialog" style="display: none;">

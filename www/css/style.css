@@ -443,3 +443,18 @@ table {
 #list_prod_card tr:nth-child(odd){
 	background: #b1b1b1;
 }
+.marq_line{
+	background: #f7e39a;
+}
+.f_pagto{
+	border: 1px solid #ddd;
+	padding: 10px;
+	cursor: pointer;
+}
+.f_pagto p{
+	margin: 10px 0 0 0 !important;
+	line-height: 1;
+}
+.f_pagto:hover{
+	background: #ddd;
+}

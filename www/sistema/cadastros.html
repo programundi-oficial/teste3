@@ -32,9 +32,9 @@
   <!-- InstanceBeginEditable name="CONTENER_CENTRO" -->
 	<div class="col-lg-3 col-md-3 col-sm-3">
 		<ul class="lista_lateral">
-			<li id="li_set_cont_1" onClick="set_contener_cad(1)" class="ativo_contener_cad">Produtos</li>
+			<li id="li_set_cont_1" onClick="set_contener_cad(1);list_produto_tladdprod();" class="ativo_contener_cad">Produtos</li>
 			<li id="li_set_cont_2" onClick="set_contener_cad(2)">Item Produto</li>
-			<li id="li_set_cont_3" onClick="set_contener_cad(3)">Categoria Produto</li>
+			<li id="li_set_cont_3" onClick="set_contener_cad(3);list_categoria();">Categoria Produto</li>
 			<li id="li_set_cont_4" onClick="set_contener_cad(4)">Marca Produto</li>
 			<li id="li_set_cont_5" onClick="set_contener_cad(5)">Fornecedor</li>			
 		</ul>
@@ -62,6 +62,16 @@
 		</div>
 		<div id="contener_cadastro_3" class="marcador_conter_js_cad" style="display: none">
 			<h4 class="modal-title">Categoria Produto</h4>
+			<table>
+			<thead>
+			  <tr>
+				<th>Categoria</th>
+				<th class="text_c">QTD Vinculos</th>
+				<th class="text-right">Ações</th>
+			  </tr>
+			</thead>
+			<tbody id="liscategpgprod"></tbody>
+		  </table>
 		</div>
 		<div id="contener_cadastro_4" class="marcador_conter_js_cad" style="display: none">
 			<h4 class="modal-title">Marca Produto</h4>
@@ -113,38 +123,38 @@
       </div>
       <div class="modal-body">
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-md-6 col-sm-6">
             <div class="form-group">
               <label for="txtMovieTitle">Cód. Barras</label>
               <input id="cod_barras_prod_add" type="number" class="form-control">
             </div>
           </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="form-group">
               <label for="txtMovieTitle">Nome</label>
               <input id="nome_prod_add" type="text" class="form-control">
             </div>
           </div>
-           <div class="col-lg-2">
+           <div class="col-lg-2 col-md-4 col-sm-4">
             <div class="form-group">
               <label for="txtMovieTitle">Tipo</label>
               <select id="tipoprodaddprod" class="form-control" onchange="selecedtipoaddprod()" onblur="selecedtipoaddprod()">
               	<option value="-1">SELECIONE</option>
-                <option value="1">NORMAL</option>
+                <option value="1" selected>NORMAL</option>
                 <option value="2">COMPOSTO</option>
               </select>
             </div>
           </div>
-          <div class="col-lg-2">
+          <div class="col-lg-2 col-md-4 col-sm-4">
             <div class="form-group">
               <label for="txtMovieTitle">Categoria</label>
               <select id="list_categori_addprod" class="form-control"></select>
             </div>
           </div>
-          <div class="col-lg-2">
+          <div class="col-lg-2 col-md-4 col-sm-4">
             <div class="form-group">
               <label for="txtMovieTitle">Valor</label>
-              <input id="vl_prod_add" type="text" class="form-control" onkeypress=" return(MascaraMoeda(this,'.',',',event))" onblur="return(MascaraMoeda(this,'.',',',event))" onfocus=" return(MascaraMoeda(this,'.',',',event))">
+              <input id="vl_prod_add" type="text" class="form-control text_r" onkeypress=" return(MascaraMoeda(this,'.',',',event))" onblur="return(MascaraMoeda(this,'.',',',event))" onfocus=" return(MascaraMoeda(this,'.',',',event))" value="0,00">
             </div>
           </div>
           <div class="brack"></div>        

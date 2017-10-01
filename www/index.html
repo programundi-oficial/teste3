@@ -66,27 +66,62 @@
 <div class="contener_03"></div>
 <script type="text/javascript"> app.initialize();</script>
 <!-- InstanceBeginEditable name="MODALS" -->
+<div id="modal_config_server" class="modal fade" data-backdrop="static" role="dialog" style="display: none;">
+  <div class="modal-dialog modal_larg_95">
+    <div class="modal-content">
+     <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">Configuração Server</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="form-group">
+				  <label for="txtMovieTitle">Server local</label>
+				  <input id="server_config_local" class="form-control" type="text">
+				</div>
+			</div>
+           <div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="form-group">
+				  <label for="txtMovieTitle">id empresa</label>
+				  <input id="id_empresa_config_local" class="form-control" type="text">
+				</div>
+			</div>
+            
+             <div class="brack"></div>
+             </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-lg-12">
+            <button type="button" id="" onclick="save_server_master();" class="btn btn-primary btn-sm">Salvar</button>
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div id="modal_04" class="modal fade" data-backdrop="static" role="dialog" style="display: none;">
   <div class="modal-dialog modal_larg_95">
     <div class="modal-content">
      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-title">Menu</h4>
+        <h4 class="modal-title">Configuração</h4>
       </div>
       <div class="modal-body">
         <div class="row">
           <div class="col-xs-12">
             <ul class="listulmenu">
-              <li>Menu </li>
-              <li>Cadastro</li>
-              <li onClick="rede_get();">Configurações rede</li>
-              <li>Consultar</li>
-              <li>Fundo de Caixa</li>
-              <li>Sagria</li>
-              <li>Vendas</li>
-              <li>Encerrar</li>
-              <li>Relatórios</li>
+              <li onClick="set_server_master();">Configurar Server</li>      
             </ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-lg-12">            
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Fechar</button>
           </div>
         </div>
       </div>
@@ -95,6 +130,19 @@
 </div>
 <script>
 	
+	function save_server_master(){		
+		localStorage.setItem("servermmt", $("#server_config_local").val()); 
+		localStorage.setItem("ide", $("#id_empresa_config_local").val()); 
+		alert("SALVO");
+	}
+	function set_server_master(){
+		$("#modal_04").modal("hide");
+		servercod=localStorage.getItem("servermmt");
+		$("#server_config_local").val(servercod);
+		servercod2=localStorage.getItem("ide");
+		$("#id_empresa_config_local").val(servercod2);
+		$("#modal_config_server").modal("show");
+	}
 	function rede_get(){
 		var os=require('os');
 		var ifaces=os.networkInterfaces();
