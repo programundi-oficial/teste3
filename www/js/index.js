@@ -1225,7 +1225,7 @@ function direct(){
 		},
 		dataType: "json",
 		type: "POST",
-		success: function(json) {    
+		success: function(json) {				
 			if(json!==null){
 				for (var i = 0; i < json.length; i++) {     
 					if(json[i].result !== "false"){	
@@ -1241,7 +1241,10 @@ function direct(){
 			else{
 				alert("VERIFIQUE SEU LOGIN");
 			}
-		}
+		},
+        error: function(XMLHttpRequest, textStatus, errorThrown) {            
+            alert("VERIFIQUE AS INFORMAÇÕES, E TENTE NOVAMENTE");                    
+        }
 	});		
 }
 function sair_sistema_web(){	
