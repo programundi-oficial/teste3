@@ -1213,7 +1213,7 @@ function list_produto_tladdprod(){
 function direct(){
 	log=$("#log").val();
 	senha=$("#pass").val();
-
+	y = localStorage.getItem("ide");
 	$.ajax({            
 		url: xurlq,
 		 data: {
@@ -1225,7 +1225,8 @@ function direct(){
 		},
 		dataType: "json",
 		type: "POST",
-		success: function(json) {				
+		success: function(json) {
+			
 			if(json!==null){
 				for (var i = 0; i < json.length; i++) {     
 					if(json[i].result !== "false"){	
