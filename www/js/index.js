@@ -1250,7 +1250,7 @@ function direct(){
 }
 function sair_sistema_web(){	
 	location.href='../index.html';
-    localStorage.removeItem("ide"); 
+    //localStorage.removeItem("ide"); 
 }
 function valid_login(){
 	vlo = localStorage.getItem("namee");  	
@@ -1361,7 +1361,7 @@ function finalizar_compra_cx2(){
 						printt_texto(formatar_texto(" ","c"));
 						for (var i3 = 0; i3 < j[i].p1[i2].list_itens.length; i3++) { 
 													
-							printt_texto(formatar_texto(("000"+j[i].p1[i2].list_itens[i3].seq).slice(-3)+" "+j[i].p1[i2].list_itens[i3].cod_barras+" "+j[i].p1[i2].list_itens[i3].nome,"e")); 
+							printt_texto(formatar_texto(("000"+j[i].p1[i2].list_itens[i3].seq).slice(-3)+" "+j[i].p1[i2].list_itens[i3].nome,"e")); 
 							printt_texto(formatar_texto(j[i].p1[i2].list_itens[i3].qtd+" unid "+convert_banco_moeda(j[i].p1[i2].list_itens[i3].valor)+" = "+convert_banco_moeda(j[i].p1[i2].list_itens[i3].vl_total),"e")); 
 						}
 						printt_texto(formatar_texto("--------------------------------","c"));
@@ -1375,7 +1375,9 @@ function finalizar_compra_cx2(){
 					printt_texto(formatar_texto(" ","c"));
 				}
 				
-            } 			
+            } 		
+			$("#modal_finalize_compra").modal("hide");
+			on_load_carga("off","#btn_finaly_compra_cx");
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             on_load_carga("off","#btn_finaly_compra_cx");
