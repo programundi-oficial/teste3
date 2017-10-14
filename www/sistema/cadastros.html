@@ -33,7 +33,7 @@
 	<div class="col-lg-3 col-md-3 col-sm-3">
 		<ul class="lista_lateral">
 			<li id="li_set_cont_1" onClick="set_contener_cad(1);list_produto_tladdprod();" class="ativo_contener_cad">Produtos</li>
-			<li id="li_set_cont_2" onClick="set_contener_cad(2)">Item Produto</li>
+			<!--<li id="li_set_cont_2" onClick="set_contener_cad(2)">Item Produto</li>-->
 			<li id="li_set_cont_3" onClick="set_contener_cad(3);list_categoria();">Categoria Produto</li>
 			<li id="li_set_cont_4" onClick="set_contener_cad(4)">Marca Produto</li>
 			<li id="li_set_cont_5" onClick="set_contener_cad(5)">Fornecedor</li>			
@@ -43,15 +43,16 @@
 	<div style="background: #f8f8f8;padding: 15px;">
 		<div id="contener_cadastro_1" class="marcador_conter_js_cad">
 			<h4 class="modal-title">Produtos</h4>
-			<button type="button" class="btn btn-sm btn-primary" onclick="btn_add('2');">Cadastrar</button>
+			<div class="divisoria_10"></div>
+			<button type="button" class="btn btn-sm btn-primary" onclick="btn_add('2');">ADICIONAR</button>
 			<table>
 				<thead>
-					<tr>
-						<th>Foto</th>
+					<tr>						
 						<th>Nome</th>
 						<th>Cod. Barras</th>
 						<th>Preço</th>
 						<th>Categoria</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody id="list_prod_card"></tbody>
@@ -62,6 +63,8 @@
 		</div>
 		<div id="contener_cadastro_3" class="marcador_conter_js_cad" style="display: none">
 			<h4 class="modal-title">Categoria Produto</h4>
+			<div class="divisoria_10"></div>
+			<button type="button" class="btn btn-sm btn-primary" onclick="btn_add('1');">ADICIONAR</button>
 			<table>
 			<thead>
 			  <tr>
@@ -193,6 +196,115 @@
           <div class="col-lg-12">
             <button type="button" id="btn_add_prod" onclick="add_prod();" class="btn btn-primary btn-sm">Cadastrar</button>
             <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>	
+<div id="modal_02_detalhe_edit" class="modal fade" role="dialog" style="display: none;">
+  <div class="modal-dialog modal_larg_95">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title" id="title_prod_edit" id_prod_edit="-1"></h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-2 col-md-4 col-sm-4">
+            <div class="form-group">
+              <label for="txtMovieTitle">Cód. Barras</label>
+              <input id="cod_barras_prod_add_edit" disabled type="number" class="form-control">
+            </div>
+          </div>
+        <div class="col-lg-4 col-md-8 col-sm-8">
+            <div class="form-group">
+              <label for="txtMovieTitle">Nome</label>
+              <input id="nome_prod_add_edit" type="text" class="form-control">
+            </div>
+          </div>
+           <div class="col-lg-2 col-md-4 col-sm-4">
+            <div class="form-group">
+              <label for="txtMovieTitle">Tipo</label>
+              <select id="tipoprodaddprod_edit" class="form-control" onchange="selecedtipoaddprod()" onblur="selecedtipoaddprod_edit()"></select>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-4">
+            <div class="form-group">
+              <label for="txtMovieTitle">Categoria</label>
+              <select id="list_categori_addprod_edit" class="form-control"></select>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-4">
+            <div class="form-group">
+              <label for="txtMovieTitle">Valor</label>
+              <input id="vl_prod_add_edit" type="text" class="form-control text_r" onkeypress=" return(MascaraMoeda(this,'.',',',event))" onblur="return(MascaraMoeda(this,'.',',',event))" onfocus=" return(MascaraMoeda(this,'.',',',event))" value="0,00">
+            </div>
+          </div>
+          <div class="brack"></div>        
+        <div class="divisoria_10"></div>
+           
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label for="txtMovieTitle">Descrição</label>
+              <textarea id="desc_prod_add_edit" type="text" style="height: 90px;" class="form-control"></textarea>
+            </div>
+          </div>
+         
+          <div class="brack"></div>
+          <div class="divisoria_10"></div>
+          <div class="col-lg-12" id="contene_compsicaoaddprod_edit" style="display:none">
+          <label for="txtMovieTitle">Composição</label><button type="button" id="" onclick="addlinecomposicaoprod();" class="btn btn-primary btn-xs">Adicionar</button>
+          <table style="width: 100%;white-space: nowrap;">
+          	<thead>
+            	<tr>
+               		<td>Descriçao</td>
+                	<td>Item de Produto</td>
+                   	<td>qtd</td>
+                    <td>Item Extra</td>
+                    <td>qtd</td>
+                    <td class="text-right">Ações</td>
+                </tr>
+            </thead>
+          	<tbody id="list_comp_cad_prod_edit"></tbody>
+          </table>
+         
+         </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-lg-12">
+            <button type="button" id="btn_edit_prod" onclick="edit_prod();" class="btn btn-primary btn-sm">Salvar</button>
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="modal_01" class="modal fade" role="dialog" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="btn_add('8');">×</button>
+        <h4 class="modal-title">Cadastrar Categoria</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label for="txtMovieTitle">Descrição</label>
+              <input id="desc_categ" type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-lg-12">
+            <button type="button" id="btn_new_categ" onclick="add_new_categ();" class="btn btn-primary btn-xs">Cadastrar</button>
+            <button type="button" class="btn btn-default btn-xs" onclick="btn_add('8');">Fechar</button>
           </div>
         </div>
       </div>
