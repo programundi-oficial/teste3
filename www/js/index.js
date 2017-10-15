@@ -193,12 +193,16 @@ function btn_add(idd){
 	/*ADD PRODUTO*/
 	if(idd==2){		
 		list_categoria_add_prod("#list_categori_addprod");
+		list_marca_prod_select_generic("#list_marcaprod_addprod");
+		list_fornecedor_prod_select_generic("#list_fornecedorprod_addprod");
 		$("#modal_02").modal("show");
 		setTimeout(function(){$("#cod_barras_prod_add").focus();},600);
 		
 		return false;
 	}
-	
+	if(idd==3){
+		$("#modal_add_marca_prod").modal("show");
+	}
 	if(idd==4){		
 		$("#modal_04").modal("show");	
 		return false;
@@ -233,6 +237,9 @@ function btn_add(idd){
 		$("#modal_conect_impressora").modal("show");
 		list_blutoo();
 		return false;
+	}
+	if(idd==11){
+		$("#modal_add_fornecedor_prod").modal("show");
 	}
 }
 function new_tr_prod(vr){
@@ -395,6 +402,8 @@ function listallcomposicaoaddprod(){
 	}
 }
 function list_categoria(){
+	el4="#liscategpgprod";
+    $(el4).html("");
 	$.ajax({            
         url: xurlq,
          data: {
@@ -404,8 +413,7 @@ function list_categoria(){
         },
         dataType: "json",
         type: "POST",
-        success: function(j) {   
-            el4="#liscategpgprod";
+        success: function(j) {             
             $(el4).html("");             
             for (var i = 0; i < j.length; i++) {                               
             	$(el4).append("<tr><td id='desc_categ_"+j[i].id+"'>"+j[i].descricao+"</td><td class='text_c'>"+j[i].qtd_utilizando+"</td><td class='text-right'><button style='display:none' type='button' class='btn_cate_list_edition2 btn btn-sm btn-primary btn_icon' onClick=''><img src='../img/up-arrow.png'></button><button style='margin-left: 3px;display:none' type='button' class='btn_cate_list_edition2 btn btn-sm btn-primary btn_icon' onClick=''><img src='../img/arrow-down.png'></button><button type='button' class='btn_cate_list_edition1 btn btn-sm btn-primary btn_icon' onClick='edit_cate_but("+j[i].id+");'><img src='../img/edit.png'></button><button style='margin-left: 3px;' id='btn_categ_dell_"+j[i].id+"' type='button' class='btn_cate_list_edition1 btn btn-sm btn-danger btn_icon' onClick='dell_categoria("+j[i].id+",\""+j[i].descricao+"\");'><img src='../img/trash.png'></button><button style='margin-left: 3px;display:none' title='SALVAR ALTERAÇÃO' type='button' class='btn_cate_list_edition2 btn btn-sm btn-primary btn_icon' onclick='save_categ_prod("+j[i].id+");'><img src='../img/save.png'></button><button style='margin-left: 3px;display:none' type='button' id='line_btn_dell_item_prod_"+j[i].id+"' title='CANCELAR OPERAÇÃO' class='btn_cate_list_edition2 btn btn-sm btn-danger btn_icon' onclick='list_categoria();'><img src='../img/close.png'></button></td></tr>");				               
@@ -430,6 +438,54 @@ function list_categoria_add_prod(el4a,p){
             }	
 			if(p!==undefined){
 				$(el4a).val(p);
+			}
+        }
+    });
+}
+function list_marca_prod_select_generic(el25a,p){
+	$(el25a).html("");
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "",
+            s: "25"
+        },
+        dataType: "json",
+        type: "POST",
+        success: function(json) {   
+			$(el25a).html("<option value='-1'>SELECIONE</option>");
+            for (var i = 0; i < json.length; i++) {   
+				if(json[i].id > 0){
+            		$(el25a).append("<option value="+json[i].id+">"+json[i].nome.toUpperCase()+"</option>");    
+				}
+            }	
+			if(p!==undefined){
+				$(el25a).val(p);
+			}
+        }
+    });
+}
+function list_fornecedor_prod_select_generic(el26a,p){
+	$(el26a).html("");
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "",
+            s: "26"
+        },
+        dataType: "json",
+        type: "POST",
+        success: function(json) {   
+			$(el26a).html("<option value='-1'>SELECIONE</option>");
+            for (var i = 0; i < json.length; i++) { 
+				if(json[i].id > 0){
+            		$(el26a).append("<option value="+json[i].id+">"+json[i].cpf_cnpj+" - "+json[i].nome_fantasia.toUpperCase()+"</option>");    
+				}
+            }	
+			if(p!==undefined){
+				$(el26a).val(p);
 			}
         }
     });
@@ -459,6 +515,10 @@ function add_prod(){
 	name=$("#nome_prod_add").val();
 	tp_prod=$("#tipoprodaddprod option:selected").val();
 	tp_categ=$("#list_categori_addprod option:selected").val();
+	
+	marca_prod=$("#list_marcaprod_addprod option:selected").val();
+	fornecedor_prod=$("#list_fornecedorprod_addprod option:selected").val();
+	
 	vl_prod=$("#vl_prod_add").val();
 	desc_prod=$("#desc_prod_add").val();
 	list_acomp_add="";
@@ -495,7 +555,9 @@ function add_prod(){
 			p4:tp_prod,
 			p5:tp_categ,
 			p6:codbb,
-			p7:list_acomp_add
+			p7:marca_prod,
+			p8:fornecedor_prod,
+			p9:list_acomp_add
         },
         type: "POST",
         success: function(a) {            
@@ -505,6 +567,8 @@ function add_prod(){
 				$("#nome_prod_add").val("");
 				$("#tipoprodaddprod").val("-1");
 				list_categoria_add_prod("#list_categori_addprod");
+				list_marca_prod_select_generic("#list_marcaprod_addprod");
+				list_fornecedor_prod_select_generic("#list_fornecedorprod_addprod");
 				$("#vl_prod_add").val("");
 				$("#desc_prod_add").val("");
 				$("#modal_02").modal("hide");
@@ -1026,11 +1090,13 @@ function list_prod_por_categ_tl_caixa(idcatg,descateg){
 					return false;
 				}
 				$("#title_vend_categ_caixa").html("<button type='button' onclick='set_tipo_consulta_caixa(2);' class='btn btn-primary btn-sm'>VOLTAR</button> Categoria: "+descateg);
+				
 				$("#list_categoria_tela_cx").append("<li><div class='col-lg-8 col-md-8 col-sm-8' style='padding: 0;overflow: auto;'>"+j[i].nome.toUpperCase()+"</div><div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0;text-align: right'><button type='button' class='btn btn-primary btn-sm' onclick='add_prod_get_qtd_categ(\""+j[i].cod_barras+"\",\""+j[i].nome.toUpperCase()+"\",\""+j[i].valor+"\",\""+j[i].idd+"\",\""+j[i].qtd_composicao+"\");'>ADD PRODUTO</button></div><div class='brack'></div></li>");			
 			}			
         },
 		error: function(XMLHttpRequest, textStatus, errorThrown) {			
-			on_load_carga("off","#codbbarras");			
+			on_load_carga("off","#codbbarras");	
+			
 		}
     });
 }
@@ -1780,6 +1846,8 @@ function detalhes_prod_adm(idprodd){
 				$("#desc_prod_add_edit").val(j[i].descricao);
 				list_categoria_add_prod("#list_categori_addprod_edit",j[i].id_cat);
 				list_tipo_prod_add_prod("#tipoprodaddprod_edit",j[i].id_tipo);
+				list_fornecedor_prod_select_generic("#list_fornecedorprod_addprod_edit",j[i].id_produto_fornecedor);
+				list_marca_prod_select_generic("#list_marcaprod_addprod_edit",j[i].id_produto_marca);
 			}				 
 			
         },
@@ -1799,7 +1867,11 @@ function edit_prod(){
 	
 	nome_prod_edit	=$("#nome_prod_add_edit").val();	
 	tp_prod_edit	=$("#tipoprodaddprod_edit option:selected").val();
-	tp_categ_edit	=$("#list_categori_addprod_edit option:selected").val();
+	tp_categ_edit	=$("#list_categori_addprod_edit option:selected").val();	
+	
+	marcaprod_edit	=$("#list_marcaprod_addprod_edit option:selected").val()	
+	fornecedor_edit	=$("#list_fornecedorprod_addprod_edit option:selected").val();
+	
 	valor_prod_edit	=$("#vl_prod_add_edit").val();	
 	desc_prod_edit	=$("#desc_prod_add_edit").val();	
 	
@@ -1816,7 +1888,9 @@ function edit_prod(){
 			p3: tp_prod_edit,
 			p4: tp_categ_edit,
 			p5: valor_prod_edit,
-			p6: desc_prod_edit
+			p6: desc_prod_edit,
+			p7: marcaprod_edit,
+			p8: fornecedor_edit
         },
 		dataType: "json",
         type: "POST",
@@ -1872,6 +1946,107 @@ function dell_categoria(idcateg,desc){
 			}
 		});
 	}
+}
+function listmarcaprod(){
+	el25="#listmarcaprod";
+    $(el25).html("");
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "",
+            s: "25"
+        },
+        dataType: "json",
+        type: "POST",
+        success: function(j) {             
+            $(el25).html("");             
+            for (var i = 0; i < j.length; i++) {                               
+            	$(el25).append("<tr><td id='desc_marcaprod_"+j[i].id+"'>"+j[i].nome+"</td><td class='text_c'>"+j[i].qtd+"</td><td class='text-right'><button type='button' class='btn_marcaprod_list_edition1 btn btn-sm btn-primary btn_icon' onClick='edit_marcaprod_but("+j[i].id+");'><img src='../img/edit.png'></button><button style='margin-left: 3px;' id='btn_marcaprod_dell_"+j[i].id+"' type='button' class='btn_marcaprod_list_edition1 btn btn-sm btn-danger btn_icon' onClick='dell_marcaprod("+j[i].id+",\""+j[i].nome+"\");'><img src='../img/trash.png'></button><button style='margin-left: 3px;display:none' title='SALVAR ALTERAÇÃO' type='button' class='btn_marcaprod_list_edition2 btn btn-sm btn-primary btn_icon' onclick='save_marcaprod_prod("+j[i].id+");'><img src='../img/save.png'></button><button style='margin-left: 3px;display:none' type='button' id='line_btn_dell_item_prod_"+j[i].id+"' title='CANCELAR OPERAÇÃO' class='btn_marcaprod_list_edition2 btn btn-sm btn-danger btn_icon' onclick='listmarcaprod();'><img src='../img/close.png'></button></td></tr>");				               
+            }            
+        }
+    });
+}
+function dell_marcaprod(idmarca,descmarc){
+	var r = confirm("DESEJA EXCLUIR "+descmarc+"?");       
+     
+    if(r == false) {
+        return false;  
+    }
+    if (r == true) {		
+		on_load_carga("on","#btn_marcaprod_dell_"+idmarca);
+		
+		$.ajax({            
+			url: xurlq,
+			 data: {
+				y: y,
+				u: "",
+				s: "28",
+				p1: idmarca
+			},
+			dataType: "json",
+			type: "POST",
+			success: function(j) {  
+				for (var i = 0; i < j.length; i++) { 
+					if(j[i].result=="true"){	
+						on_load_carga("off","#btn_marcaprod_dell_"+idmarca);
+						listmarcaprod();					
+					}	
+					else{
+						alert(j[i].p1);
+						console.log(j[i].p1);
+						on_load_carga("off","#btn_marcaprod_dell_"+idmarca);
+					}
+				}
+			}
+		});
+		
+	}
+}
+function edit_marcaprod_but(id_marc_prod){
+	
+}
+function add_new_marca_prod(){
+	descmarcanew=$("#desc_marca_prod").val();
+	
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "",
+            s: "27",
+			p1: descmarcanew
+        },
+		dataType: "json",
+        type: "POST",
+        success: function(j) {	
+						
+			for (var i = 0; i < j.length; i++) { 
+				if(j[i].result=="false"){					
+					alert("NÃO FOI POSSIVEL REALIZAR ESSA OPERAÇÃO");					
+					return false;
+				}
+				if(j[i].result=="true"){					
+					listmarcaprod();
+					var r = confirm("DESEJA CADASTRAR NOVA MARCA?");    
+					if(r == false) {
+						$("#modal_add_marca_prod").modal("hide");
+						return false;  
+					}
+					if (r == true) {
+						$("#desc_marca_prod").val("");
+						setTimeout(function(){$("#desc_marca_prod").focus();},300); 
+					}
+					
+					return false;
+				}
+			}				 
+			
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {			
+			alert("NÃO FOI POSSIVEL REALIZAR ESSA OPERAÇÃO");					
+		}
+    });
 }
 $(document).keypress(function(e) {
     if(e.which == 13) {

@@ -278,12 +278,12 @@ table {
 	display: block;
 	height: 10%;
 	background: #00acc1;
-	position: absolute;
+	position: fixed;
 	box-shadow: 2px 2px 9px #7b7878;
 	z-index: 1;
 }
 .contener_02 {
-	position: absolute;
+	position: fixed;
 	top: 10%;
 	background: #e1e2e4;
 	height: 80%;
@@ -295,7 +295,7 @@ table {
 	display: block;
 	height: 10%;
 	background: #00464e;
-	position: absolute;
+	position: fixed;
 	bottom: 0
 }
 .contener_01>.icon_settins {
