@@ -458,3 +458,6 @@ table {
 .f_pagto:hover{
 	background: #ddd;
 }
+#contener_cadastro_1,#contener_cadastro_3,#contener_cadastro_4,#contener_cadastro_5,#contener_cadastro_6{
+	overflow: auto;
+}

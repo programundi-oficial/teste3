@@ -187,6 +187,7 @@ function ligar_pesq_select(xx, text){
 function btn_add(idd){
 	/*ADD CATEGORIA*/
 	if(idd==1){		
+		setTimeout(function(){$("#desc_categ").focus();},600);
 		$("#modal_01").modal("show");
 		return false;
 	}
@@ -201,6 +202,7 @@ function btn_add(idd){
 		return false;
 	}
 	if(idd==3){
+		setTimeout(function(){$("#desc_marca_prod").focus();},600);
 		$("#modal_add_marca_prod").modal("show");
 	}
 	if(idd==4){		
@@ -239,7 +241,16 @@ function btn_add(idd){
 		return false;
 	}
 	if(idd==11){
+		list_cidade_generic("#cidade_fornecedor_prod","xxx");
+		list_estado_generic("#estado_fornecedor_prod");
+		setTimeout(function(){$("#nome_fantasia_fornecedor_prod").focus();},600);
 		$("#modal_add_fornecedor_prod").modal("show");
+	}
+	if(idd==12){
+		list_cidade_generic("#cidade_cliente_new","xxx");
+		list_estado_generic("#estado_cliente_new");
+		setTimeout(function(){$("#name_cliente_new").focus();},600);
+		$("#modal_add_cliente").modal("show");
 	}
 }
 function new_tr_prod(vr){
@@ -490,6 +501,32 @@ function list_fornecedor_prod_select_generic(el26a,p){
         }
     });
 }
+function list_fornecedor_prod_tela_config(){
+	el26="#listfornecedorprod";
+	$(el26).html("BUSCANDO LISTA");
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "",
+            s: "26"
+        },
+        dataType: "json",
+        type: "POST",
+        success: function(json) {   
+			$(el26).html("");
+            for (var i = 0; i < json.length; i++) {		
+				if(json[i].telefone==null){
+					teleffo="";
+				}
+				if(json[i].telefone!==null){
+					teleffo=json[i].telefone;
+				}
+            	$(el26).append("<tr><td>"+json[i].nome_fantasia+"</td><td>"+teleffo+"</td><td class='text_c'>"+json[i].qtd+"</td><td class='text_r'><button type='button' class='btn btn-sm btn-primary btn_icon' onclick='edit_fornecedor_but("+json[i].id+");'><img src='../img/edit.png'></button><button style='margin-left: 3px;' id='btn_fornecedorprod_dell_"+json[i].id+"' type='button' class='btn btn-sm btn-danger btn_icon' onclick='dell_fornecprod("+json[i].id+",\""+json[i].nome_fantasia+"\");'><img src='../img/trash.png'></button></td></tr>");				
+            }
+        }
+    });
+}
 function list_tipo_prod_add_prod(el22,p){
 	$.ajax({            
         url: xurlq,
@@ -571,11 +608,18 @@ function add_prod(){
 				list_fornecedor_prod_select_generic("#list_fornecedorprod_addprod");
 				$("#vl_prod_add").val("");
 				$("#desc_prod_add").val("");
-				$("#modal_02").modal("hide");
+				
 				list_produto_tladdprod();
 				$("#list_comp_cad_prod").html("");
 				on_load_carga("off","#btn_add_prod");
-				pergunta_if_new_prod();
+				var r = confirm("DESEJA CADASTRAR NOVO PRODUTO?");     
+				if(r == false) {
+					$("#modal_02").modal("hide");
+					return false;  
+				}
+				if (r == true) {
+					setTimeout(function(){$("#cod_barras_prod_add").focus();},600); 
+				}
             }	
 			else{
 				alert(a);
@@ -584,16 +628,6 @@ function add_prod(){
 			}
         }
     });
-}
-function pergunta_if_new_prod(){
-	var r = confirm("DESEJA CADASTRAR NOVO PRODUTO?");       
-     
-    if(r == false) {
-        return false;  
-    }
-    if (r == true) {
-	 	setTimeout(function(){$("#modal_02").modal("show");},1000); 
-	}
 }
 function list_produto_tladdprod(){
 	el2="#list_prod_card";
@@ -612,7 +646,7 @@ function list_produto_tladdprod(){
             for (var i = 0; i < j.length; i++) {       
 				vrl+="<tr class='tr_table_prod' idx='"+i+"' id='tr_prod_"+j[i].idprod_item+"'>";
 					vrl+="<td><img src='"+j[i].img_logo+"'></td>";
-					vrl+="<td>"+j[i].nome+"</td>";
+					vrl+="<td>"+j[i].nome+"</td>";					
 					vrl+="<td>"+j[i].cod_barras+"</td>";
 					vrl+="<td>R$ "+j[i].valor+"</td>";
 					vrl+="<td>"+j[i].desc_cat+"</td>";					
@@ -1297,6 +1331,7 @@ function list_produto_tladdprod(){
             for (var i = 0; i < j.length; i++) {       
 				vrl+="<tr class='tr_table_prod' idx='"+i+"' id='tr_prod_"+j[i].idprod_item+"'>";				
 					vrl+="<td>"+j[i].nome.toUpperCase()+"</td>";
+					vrl+="<td>"+j[i].marca+"</td>";
 					vrl+="<td>"+j[i].cod_barras+"</td>";
 					vrl+="<td>R$ "+convert_banco_moeda(j[i].valor)+"</td>";
 					vrl+="<td>"+j[i].desc_cat+"</td>";		
@@ -1310,6 +1345,8 @@ function list_produto_tladdprod(){
 function direct(){
 	log=$("#log").val();
 	senha=$("#pass").val();
+	linkserver_master 	= localStorage.getItem("servermmt"); 
+	var xurlq 			= linkserver_master+"/PROGRAMUNDI/API/api.php";
 	y = localStorage.getItem("ide");
 	$.ajax({            
 		url: xurlq,
@@ -1664,8 +1701,10 @@ function list_cliente_tela_pagto_cx(pp){
 				$(ele17).html("<option value='-1'>NÃO EXISTE CLIENTE</option>");
 				return false;
 			}
-            for (var i = 0; i < json.length; i++) {                               
-            	$(ele17).append("<option value='"+json[i].id+"'>"+json[i].nome+"</option>");        
+            for (var i = 0; i < json.length; i++) {     
+				if(json[i].id>0){
+            		$(ele17).append("<option value='"+json[i].id+"'>"+json[i].nome+"</option>");        
+				}
             } 
 			if(pp !== "xxx"){
 				$(ele17).val(pp);
@@ -1755,6 +1794,16 @@ function sele_cid_generic(ttpec){
 		$(".estadds option[uf='"+ufselec+"']").prop("selected", true);		
 	}
 }
+function sele_cid_generic2(ttpec){
+	if(ttpec=="e"){		
+		ufselec=$(".estadds2 option:selected").attr("uf");
+		list_cidade_generic("#cidade_fornecedor_prod",ufselec);
+	}
+	if(ttpec=="c"){
+		ufselec=$(".cidadds2 option:selected").attr("uf");		
+		$(".estadds2 option[uf='"+ufselec+"']").prop("selected", true);		
+	}
+}
 function save_new_cliente_cx(){
 	name_20		= $("#name_cliente_new").val();
 	cpf_20		= $("#cpf_cliente_new").val();
@@ -1763,6 +1812,11 @@ function save_new_cliente_cx(){
 	enderenc_20	= $("#ender_cliente_new").val();
 	num_20		= $("#num_cliente_new").val();
 	obs_20		= $("#obs_cliente_new").val();
+	
+	if(cidad_20=="-1"){
+		alert("INFORME A CIDADE");
+		return false;
+	}
 	
 	on_load_carga("on","#btn_add_new_cliente_cxx");
 	
@@ -1795,6 +1849,7 @@ function save_new_cliente_cx(){
 					$("#modal_add_cliente").modal("hide");
 					$("#modal_finalize_compra").modal("show");
 					list_cliente_tela_pagto_cx(json[i].p1);
+					list_cliente_prod_tela_config();
 					on_load_carga("off","#btn_add_new_cliente_cxx");
 				}
 				else{
@@ -2047,6 +2102,135 @@ function add_new_marca_prod(){
 			alert("NÃO FOI POSSIVEL REALIZAR ESSA OPERAÇÃO");					
 		}
     });
+}
+function list_cliente_prod_tela_config(){
+	el17="#list_cliente_prod";
+	$(el17).html("BUSCANDO LISTA");
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "",
+            s: "17"
+        },
+        dataType: "json",
+        type: "POST",
+        success: function(json) {   
+			$(el17).html("");
+            for (var i = 0; i < json.length; i++) {		
+				if(json[i].telefone==null){
+					teleffo2="";
+				}
+				if(json[i].telefone!==null){
+					teleffo2=json[i].telefone;
+				}
+            	$(el17).append("<tr><td>"+json[i].nome+"</td><td>"+teleffo2+"</td><td class='text_c'>"+json[i].count+"</td><td class='text_r'><button type='button' class='btn btn-sm btn-primary btn_icon' onclick='edit_fornecedor_but("+json[i].id+");'><img src='../img/edit.png'></button><button style='margin-left: 3px;' id='btn_clienteprod_dell_"+json[i].id+"' type='button' class='btn btn-sm btn-danger btn_icon' onclick='dell_clienteprod("+json[i].id+","+json[i].nome+");'><img src='../img/trash.png'></button></td></tr>");				
+            }
+        }
+    });
+}
+function dell_fornecprod(idfor,descfor){
+	var r = confirm("DESEJA EXCLUIR "+descfor+"?");       
+     
+    if(r == false) {
+        return false;  
+    }
+    if (r == true) {		
+		on_load_carga("on","#btn_fornecedorprod_dell_"+idfor);
+		
+		$.ajax({            
+			url: xurlq,
+			 data: {
+				y: y,
+				u: "",
+				s: "29",
+				p1: idfor
+			},
+			dataType: "json",
+			type: "POST",
+			success: function(j) {  
+				for (var i = 0; i < j.length; i++) { 
+					if(j[i].result=="true"){	
+						on_load_carga("off","#btn_fornecedorprod_dell_"+idfor);
+						list_fornecedor_prod_tela_config();					
+					}	
+					else{
+						alert(j[i].p1);
+						console.log(j[i].p1);
+						on_load_carga("off","#btn_fornecedorprod_dell_"+idfor);
+					}
+				}
+			}
+		});		
+	}
+}
+function add_new_fornecedor_prod(){
+	p1=$("#nome_fantasia_fornecedor_prod").val();
+	p2=$("#razao_social_fornecedor_prod").val();
+	p3=$("#cpf_cnpj_fornecedor_prod").val();
+	p4=$("#telefone_fornecedor_prod").val();
+	p5=$("#email_fornecedor_prod").val();
+	p6=$("#cep_fornecedor_prod").val();		
+	p7=$("#cidade_fornecedor_prod option:selected").val();	
+	p8=$("#endereco_fornecedor_prod").val();
+	p9=$("#num_fornecedor_prod").val();
+	
+	if(p7 == "-1"){
+		alert("INFORME A CIDADE");
+		return false;
+	}
+	on_load_carga("on","#btn_new_fornecedorprod");
+	
+	$.ajax({            
+		url: xurlq,
+		 data: {
+			y: y,
+			u: "",
+			s: "30",
+			p1: p1,
+			p2: p2,
+			p3: p3,
+			p4: p4,
+			p5: p5,
+			p6: p6,
+			p7: p7,
+			p8: p8,
+			p9: p9
+		},
+		dataType: "json",
+		type: "POST",
+		success: function(j) {  
+			for (var i = 0; i < j.length; i++) { 
+				if(j[i].result=="true"){	
+					on_load_carga("off","#btn_new_fornecedorprod");
+					list_fornecedor_prod_tela_config();	
+					$("#nome_fantasia_fornecedor_prod").val("");
+					$("#razao_social_fornecedor_prod").val("");
+					$("#cpf_cnpj_fornecedor_prod").val("");
+					$("#telefone_fornecedor_prod").val("");
+					$("#email_fornecedor_prod").val("");
+					$("#cep_fornecedor_prod").val("");		
+					list_cidade_generic("#cidade_fornecedor_prod","xxx");
+					$("#endereco_fornecedor_prod").val("");
+					$("#num_fornecedor_prod").val("");
+					
+					var r = confirm("DESEJA CADASTRAR UM NOVO FORNECEDOR?");    
+					if(r == false) {
+						$("#modal_add_fornecedor_prod").modal("hide");
+						return false;  
+					}
+					if (r == true) {	
+						setTimeout(function(){$("#nome_fantasia_fornecedor_prod").focus();},600);
+					}
+				}	
+				else{
+					alert(j[i].p1);
+					console.log(j[i].p1);
+					on_load_carga("off","#btn_new_fornecedorprod");
+				}
+			}
+		}
+	});
 }
 $(document).keypress(function(e) {
     if(e.which == 13) {
