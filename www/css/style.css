@@ -413,11 +413,13 @@ table {
 .ul_menu_super{
 	padding: 0;
 	height: 24px;
+	display: block;
+    float: right;
 }
 .ul_menu_super li {
 	display: block;
 	float: right;
-    margin: 0 2%;
+    margin: 0 15px;
 }
 .lista_lateral{
 	padding: 0;
@@ -460,4 +462,14 @@ table {
 }
 #contener_cadastro_1,#contener_cadastro_3,#contener_cadastro_4,#contener_cadastro_5,#contener_cadastro_6{
 	overflow: auto;
+}
+.title_menu{
+	float: left;margin: 0 15px;color: #fff;text-shadow: 1px 1px 1px #000;
+}
+.bs-example {
+    padding: 6px;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 4px 4px 0 0;
+    border-style: solid;
 }

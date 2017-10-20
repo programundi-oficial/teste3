@@ -196,6 +196,8 @@ function btn_add(idd){
 		list_categoria_add_prod("#list_categori_addprod");
 		list_marca_prod_select_generic("#list_marcaprod_addprod");
 		list_fornecedor_prod_select_generic("#list_fornecedorprod_addprod");
+		localStorage.setItem("setmm_item_prod_pp_1", "[]");
+		localStorage.setItem("setmm_item_prod_pp_2", "[]");
 		$("#modal_02").modal("show");
 		setTimeout(function(){$("#cod_barras_prod_add").focus();},600);
 		
@@ -252,6 +254,15 @@ function btn_add(idd){
 		setTimeout(function(){$("#name_cliente_new").focus();},600);
 		$("#modal_add_cliente").modal("show");
 	}
+	if(idd==13){
+		$(".classeditinfoemp").attr("disabled",false);
+		$("#btneditinfoempresa").hide();
+		$("#btnsaveinfoempresa").show();
+		idcidemp=$("#cidade_empresa").attr("idcidade");
+		$("#conttcidadinfoempresa").html("<select id='cidade_empresa_selec' class='form-control'></select>");
+		list_cidade_generic_f_cidade("#cidade_empresa_selec",idcidemp);
+	}
+	
 }
 function new_tr_prod(vr){
 	cont=$("#tr_prod_"+vr).html();
@@ -274,10 +285,48 @@ function down_tr_prod(vr){
 	}
 }
 function addlinecomposicaoprod(){
-	var vrvcon= '<tr><td><input id="desc_additenl_extra" value="DESCRIÇÃO" type="text" class="form-control"></td><td colspan="2"><div class="col-lg-10" style="padding:0;max-width: 250px;"><div class="form-group"><select id="list_acompadd" multiple class="form-control"></select></div></div><div class="col-lg-2" style="padding-right:0"><div class="form-group"><input id="qtd_additenl" type="number" class="form-control"></div></div><div class="brack"></div></td><td colspan="2"><div class="col-lg-10" style="padding:0;max-width: 250px;"><div class="form-group"><select multiple id="list_acompadd_extra" class="form-control"></select></div></div><div class="col-lg-2" style="padding-right:0"><div class="form-group"><input id="qtd_additenl_extra" type="number" class="form-control"></div></div><div class="brack"></div></td><td class="text-right"><button type="button" class="btn btn-sm btn-primary btn_icon" onclick="addlistcriatprodcompost();"><img src="../img/save.png"></button></td></tr>  '
+	var vrvcon= '<tr><td><input id="desc_additenl_extra" value="DESCRIÇÃO" type="text" class="form-control"></td><td><button type="button" onclick="add_item_parcial(1);" style="width: 100%;" class="btn btn-primary btn-xs">Adicionar</button><div class="brack"></div><table><tbody id="list_compparsial_n"></tbody></table></td><td><input id="qtd_additenl" type="number" class="form-control" value="1"></td><td><button type="button" onclick="add_item_parcial(2)" style="width: 100%;" class="btn btn-primary btn-xs">Adicionar</button><div class="brack"></div><table><tbody id="list_compparsial_e"></tbody></table></td><td><input id="qtd_additenl_extra" type="number" class="form-control" value="0"></td><td class="text-right"><button type="button" class="btn btn-sm btn-primary btn_icon" onclick="addlistcriatprodcompost();"><img src="../img/save.png"></button></td></tr>';
 	$("#list_comp_cad_prod").html(vrvcon);
-	list_acompanhamentos();
-	list_acompanhamentos_extra();
+}
+function add_item_parcial(typ){
+	if(typ == 1){
+		$("#modal_compitemmmp").modal("show");
+		$("#title_comp_modal").text("COMPOSIÇÃO DE PRODUTO");
+		$("#desc_item_comp_p").attr("tp_comp","1");
+		$("#desc_item_comp_p").val("");
+		$("#valor_item_comp_p").attr("disabled",true);
+		$("#valor_item_comp_p").val("0,00");list_parcial_comp_prod(1);
+	}
+	if(typ == 2){
+		$("#modal_compitemmmp").modal("show");
+		$("#title_comp_modal").text("COMPOSIÇÃO EXTRA DE PRODUTO");
+		$("#desc_item_comp_p").attr("tp_comp","2");
+		$("#desc_item_comp_p").val("");
+		$("#valor_item_comp_p").attr("disabled",false);
+		$("#valor_item_comp_p").val("0,00");		
+	}
+	setTimeout(function(){$("#desc_item_comp_p").focus();},600);
+	list_parcial_comp_prod(typ);
+}
+function list_parcial_comp_prod(typ0){
+	if(typ0 == 1){
+		$("#list_compparsial_n").html("");
+		listt = localStorage.getItem("setmm_item_prod_pp_1");		
+		dds = JSON.parse(listt);		
+		
+		for (var i = 0; i < dds.length; i++) {	
+			$("#list_compparsial_n").append("<tr><td>"+dds[i].desc+"</td><td style='width: 34px;'><button type='button' class='btn btn-sm btn-primary btn_icon' disabled onclick=''><img src='../img/edit.png'></button></td><td style='width: 34px;'><button type='button' disabled class='btn btn-sm btn-danger btn_icon' onclick=''><img src='../img/trash.png'></button></td></tr>");
+		}
+	}
+	if(typ0 == 2){
+		$("#list_compparsial_e").html("");
+		listt = localStorage.getItem("setmm_item_prod_pp_2");		
+		dds = JSON.parse(listt);		
+		
+		for (var i = 0; i < dds.length; i++) {	
+			$("#list_compparsial_e").append("<tr><td>"+dds[i].desc+"</td><td>"+convert_banco_moeda(dds[i].valor)+"</td><td style='width: 34px;'><button type='button' disabled class='btn btn-sm btn-primary btn_icon' onclick=''><img src='../img/edit.png'></button></td><td style='width: 34px;'><button disabled type='button' class='btn btn-sm btn-danger btn_icon' onclick=''><img src='../img/trash.png'></button></td></tr>");
+		}
+	}
 }
 function selecedtipoaddprod(){
 	v1=$("#tipoprodaddprod").val();
@@ -289,73 +338,13 @@ function selecedtipoaddprod(){
 		$("#contene_compsicaoaddprod").css("display","none");
 	}
 }
-function list_acompanhamentos(p){
-	$.ajax({            
-        url: xurlq,
-         data: {
-            y: y,
-            u: "",
-            s: "3"
-        },
-        dataType: "json",
-        type: "POST",
-        success: function(json) {   
-            el3="#list_acompadd";
-            $(el3).html("");             
-            for (var i = 0; i < json.length; i++) {                               
-            	$(el3).append("<option value='"+json[i].id+"'>"+json[i].descricao+" - 0,00</option>");                
-            }
-            if(p !== undefined){$(el3).val(p);}
-            //ligar_pesq_select(el3,"NÃO LOCALIZADA");
-        }
-    });
-}
-function list_acompanhamentos_extra(p){
-	$.ajax({            
-        url: xurlq,
-         data: {
-            y: y,
-            u: "",
-            s: "3"
-        },
-        dataType: "json",
-        type: "POST",
-        success: function(json) {   
-            el3="#list_acompadd_extra";
-            $(el3).html("");             
-            for (var i = 0; i < json.length; i++) {                               
-            	$(el3).append("<option value='"+json[i].id+"'>"+json[i].descricao+" - "+convert_banco_moeda(json[i].valor)+"</option>");                
-            }
-            if(p !== undefined){$(el3).val(p);}
-            //ligar_pesq_select(el3,"NÃO LOCALIZADA");
-        }
-    });
-}
+
 function addlistcriatprodcompost(){
-	listj01="";
-	virg01="";
-	$('#list_acompadd :selected').each(
-		function(i, selected){	
-			if(listj01!==""){virg01=",";}	 
-			listj01+=virg01+'{"id": "'+$(selected).val()+'","desc":"'+$(selected).text()+'"}';
-		}
-	); 
-	listacomp ="["+listj01+"]";   
     
 	qtd_n=$("#qtd_additenl").val();
 	if(qtd_n==""){
 		qtd_n=0;
-	}
-	listj02="";
-	virg02="";
-	$('#list_acompadd_extra :selected').each(
-		function(i, selected){	
-			if(listj02!==""){virg02=",";}	 
-			listj02+=virg02+'{"id": "'+$(selected).val()+'","desc":"'+$(selected).text()+'"}';
-		}
-	); 
-	listacomp_extra ="["+listj02+"]";
-	
+	}	
 	qtd_e=$("#qtd_additenl_extra").val();
 	if(qtd_e==""){
 		qtd_e=0;
@@ -364,12 +353,15 @@ function addlistcriatprodcompost(){
 		alert("VERIFIQUE AS INFORMAÇÕES CADASTRAS");
 		return false;
 	}
+	listacomp		=localStorage.getItem("setmm_item_prod_pp_1");
+	listacomp_extra	=localStorage.getItem("setmm_item_prod_pp_2");
 	if(listacomp=="[]" && listacomp_extra=="[]"){
 		alert("VERIFIQUE AS INFORMAÇÕES CADASTRAS");
 		return false;
 	}
 	desccomp=$("#desc_additenl_extra").val();	additem_acomp_addprod('{"item_d":"'+desccomp+'","item_n":'+listacomp+',"item_n_d":'+qtd_n+',"item_e":'+listacomp_extra+',"item_e_d":'+qtd_e+'}');	
-	
+	localStorage.setItem("setmm_item_prod_pp_1", "[]");
+	localStorage.setItem("setmm_item_prod_pp_2", "[]");
 }
 function additem_acomp_addprod(p1){
 	var dados = localStorage.getItem("listadd01");   
@@ -424,7 +416,9 @@ function list_categoria(){
         },
         dataType: "json",
         type: "POST",
-        success: function(j) {             
+        success: function(j) {   
+			/*console.log(j);
+			return false;*/
             $(el4).html("");             
             for (var i = 0; i < j.length; i++) {                               
             	$(el4).append("<tr><td id='desc_categ_"+j[i].id+"'>"+j[i].descricao+"</td><td class='text_c'>"+j[i].qtd_utilizando+"</td><td class='text-right'><button style='display:none' type='button' class='btn_cate_list_edition2 btn btn-sm btn-primary btn_icon' onClick=''><img src='../img/up-arrow.png'></button><button style='margin-left: 3px;display:none' type='button' class='btn_cate_list_edition2 btn btn-sm btn-primary btn_icon' onClick=''><img src='../img/arrow-down.png'></button><button type='button' class='btn_cate_list_edition1 btn btn-sm btn-primary btn_icon' onClick='edit_cate_but("+j[i].id+");'><img src='../img/edit.png'></button><button style='margin-left: 3px;' id='btn_categ_dell_"+j[i].id+"' type='button' class='btn_cate_list_edition1 btn btn-sm btn-danger btn_icon' onClick='dell_categoria("+j[i].id+",\""+j[i].descricao+"\");'><img src='../img/trash.png'></button><button style='margin-left: 3px;display:none' title='SALVAR ALTERAÇÃO' type='button' class='btn_cate_list_edition2 btn btn-sm btn-primary btn_icon' onclick='save_categ_prod("+j[i].id+");'><img src='../img/save.png'></button><button style='margin-left: 3px;display:none' type='button' id='line_btn_dell_item_prod_"+j[i].id+"' title='CANCELAR OPERAÇÃO' class='btn_cate_list_edition2 btn btn-sm btn-danger btn_icon' onclick='list_categoria();'><img src='../img/close.png'></button></td></tr>");				               
@@ -597,7 +591,8 @@ function add_prod(){
 			p9:list_acomp_add
         },
         type: "POST",
-        success: function(a) {            
+        success: function(a) { 
+			
 			if(a=="true"){
 				localStorage.removeItem("listadd01");
 				$("#cod_barras_prod_add").val("");
@@ -1187,6 +1182,7 @@ function get_prod_composto_caixa(iddp){
 				$("#name_prod_composto_pedido").text(j[i].nome);
 				get_next_composi_cx_pedido("1");
 				$("#modal_prod_composto_caixa").modal("show");
+
 			}			
         },
 		error: function(XMLHttpRequest, textStatus, errorThrown) {			
@@ -1360,7 +1356,6 @@ function direct(){
 		dataType: "json",
 		type: "POST",
 		success: function(json) {
-			
 			if(json!==null){
 				for (var i = 0; i < json.length; i++) {     
 					if(json[i].result !== "false"){	
@@ -1472,7 +1467,8 @@ function finalizar_compra_cx2(){
         },
         dataType: "json",
         type: "POST",
-        success: function(j) {			
+        success: function(j) {	
+			
             for (var i = 0; i < j.length; i++) { 
 				if(j[i].result=="false"){
 					alert(decode_text(j[i].pe));
@@ -1773,12 +1769,39 @@ function list_cidade_generic(ele_g_19,filtr19){
 				$(ele_g_19).html("<option value='-1'>NÃO EXISTE CLIENTE</option>");
 				return false;
 			}
-            for (var i = 0; i < json.length; i++) {    
+            for (var i = 0; i < json.length; i++) { 
 				if(filtr19 !== "xxx" && filtr19 == json[i].uf){
 					$(ele_g_19).append("<option value='"+json[i].id+"' uf='"+json[i].uf+"'>"+json[i].nome+"</option>"); 
 				}
 				if(filtr19 == "xxx"){
 					$(ele_g_19).append("<option value='"+json[i].id+"' uf='"+json[i].uf+"'>"+json[i].nome+"</option>"); 
+				}            	     
+            }            
+        }
+    });
+}
+function list_cidade_generic_f_cidade(ele_g_19,filtr19){	
+	$(ele_g_19).html("<option value='-1'>BUSCANDO LISTA</option>");
+	$.ajax({            
+        url: xurlq,
+         data: {
+            y: y,
+            u: "",
+            s: "19"
+        },
+        dataType: "json",
+        type: "POST",
+        success: function(json) {               
+            $(ele_g_19).html("<option value='-1'>SELECIONE</option>");  
+			if(json==null){
+				$(ele_g_19).html("<option value='-1'>NÃO EXISTE CLIENTE</option>");
+				return false;
+			}
+            for (var i = 0; i < json.length; i++) {				
+				$(ele_g_19).append("<option value='"+json[i].id+"' uf='"+json[i].uf+"'>"+json[i].nome+"</option>"); 
+				
+				if(filtr19 !== "xxx"){
+					$(ele_g_19).val(filtr19); 
 				}            	     
             }            
         }
@@ -2164,6 +2187,82 @@ function dell_fornecprod(idfor,descfor){
 		});		
 	}
 }
+function list_empresa_sist(){
+	$.ajax({            
+			url: xurlq,
+			 data: {
+				y: y,
+				u: "",
+				s: "32"
+			},
+			dataType: "json",
+			type: "POST",
+			success: function(j) {  
+				for (var i = 0; i < j.length; i++) { 
+					if(j[i].result!=="false"){	
+						$("#nome_empresa").val(j[i].nome);
+						$("#cnpj_empresa").val(j[i].cnpj);
+						$("#cep_empresa").val(j[i].cep);
+						$("#estado_empresa").val(j[i].uf);
+						$("#cidade_empresa").val(j[i].cidade);
+						$("#cidade_empresa").attr("idcidade",j[i].id_cidade);
+						$("#end_empresa").val(j[i].endereco);
+						$("#num_empresa").val(j[i].numero);
+						$("#tel1_empresa").val(j[i].telefone);
+						$("#tel2_empresa").val(j[i].telefone2);						
+					}	
+					else{
+						alert(j[i].p1);
+						console.log(j[i].p1);						
+					}
+				}
+			}
+		});	
+}
+function save_info_empresa(){
+	name_emp	=$("#nome_empresa").val();
+	cnpj_emp	=$("#cnpj_empresa").val();
+	cep_emp		=$("#cep_empresa").val();
+	cidade_emp	=$("#cidade_empresa_selec").val();
+	end_emp		=$("#end_empresa").val();
+	num_emp		=$("#num_empresa").val();
+	tel1_emp	=$("#tel1_empresa").val();
+	tel2_emp	=$("#tel2_empresa").val();
+	
+	on_load_carga("on","#btnsaveinfoempresa");
+	
+	$.ajax({            
+		url: xurlq,
+		 data: {
+			y: y,
+			u: "",
+			s: "33",
+			p1: name_emp,
+			p2: cnpj_emp,
+			p3: cep_emp,
+			p4: cidade_emp,
+			p5: end_emp,
+			p6: num_emp,
+			p7: tel1_emp,
+			p8: tel2_emp
+		},
+		dataType: "json",
+		type: "POST",
+		success: function(j) {  
+			for (var i = 0; i < j.length; i++) { 
+				if(j[i].result=="true"){	
+					on_load_carga("off","#btnsaveinfoempresa");
+					location.reload();
+				}	
+				else{
+					alert(j[i].p1);
+					console.log(j[i].p1);
+					on_load_carga("off","#btnsaveinfoempresa");
+				}
+			}
+		}
+	});	
+}
 function add_new_fornecedor_prod(){
 	p1=$("#nome_fantasia_fornecedor_prod").val();
 	p2=$("#razao_social_fornecedor_prod").val();
@@ -2231,6 +2330,34 @@ function add_new_fornecedor_prod(){
 			}
 		}
 	});
+}
+function add_mm_item_comp_p(){
+	tplcompp=$("#desc_item_comp_p").attr("tp_comp");
+	desc_compp=$("#desc_item_comp_p").val();
+	if(tplcompp == "1"){
+		var ddpcxya = localStorage.getItem("setmm_item_prod_pp_1");	   
+		dados = JSON.parse(ddpcxya);
+		var a = new Object();
+		a.desc = desc_compp;
+		dados.push(a);      
+		var b = JSON.stringify(dados, null, 0);
+		localStorage.setItem("setmm_item_prod_pp_1", b);		
+	}
+	if(tplcompp == "2"){
+		vlext=convert_moeda_banco($("#valor_item_comp_p").val());
+		var ddpcxyb = localStorage.getItem("setmm_item_prod_pp_2");	   
+		dados2 = JSON.parse(ddpcxyb);
+		var a = new Object();
+		a.desc = desc_compp;
+		a.valor = vlext;
+		dados2.push(a);      
+		var b2 = JSON.stringify(dados2, null, 0);
+		localStorage.setItem("setmm_item_prod_pp_2", b2);		
+	}
+	$("#desc_item_comp_p").val("");
+	$("#valor_item_comp_p").val("0,00");
+	setTimeout(function(){$("#desc_item_comp_p").focus();},600);
+	list_parcial_comp_prod(tplcompp);
 }
 $(document).keypress(function(e) {
     if(e.which == 13) {

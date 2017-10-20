@@ -24,7 +24,8 @@
 </head>
 
 <body>
-<div class="contener_01" >
+<div class="contener_01">
+<h3 class="vertical_alinha title_menu"></h3>
 <ul class="ul_menu_super vertical_alinha">	
 	<li><div onClick="btn_add(4)" class="icon_settins"></div></li>
 	<li><div onClick="btn_add()" class="icon_delivry_b"></div></li>
@@ -78,13 +79,13 @@
 			<div class="col-lg-12 col-md-12 col-sm-12">
 				<div class="form-group">
 				  <label for="txtMovieTitle">Server local</label>
-				  <input id="server_config_local" class="form-control" type="text">
+				  <input id="server_config_local" value="http://web.vendanex.com" class="form-control" type="text">
 				</div>
 			</div>
            <div class="col-lg-12 col-md-12 col-sm-12">
 				<div class="form-group">
 				  <label for="txtMovieTitle">id empresa</label>
-				  <input id="id_empresa_config_local" class="form-control" type="text">
+				  <input id="id_empresa_config_local" class="form-control" value="65" type="text">
 				</div>
 			</div>
             
@@ -128,8 +129,7 @@
     </div>
   </div>
 </div>
-<script>
-	
+<script>	
 	function save_server_master(){		
 		localStorage.setItem("servermmt", $("#server_config_local").val()); 
 		localStorage.setItem("ide", $("#id_empresa_config_local").val()); 
@@ -142,19 +142,6 @@
 		servercod2=localStorage.getItem("ide");
 		$("#id_empresa_config_local").val(servercod2);
 		$("#modal_config_server").modal("show");
-	}
-	function rede_get(){
-		var os=require('os');
-		var ifaces=os.networkInterfaces();
-		for (var dev in ifaces) {
-		  var alias=0;
-		  ifaces[dev].forEach(function(details){
-			if (details.family=='IPv4') {
-			  alert(dev+(alias?':'+alias:''),details.address);
-			  ++alias;
-			}
-		  });
-		}
 	}
 </script>
 <!-- InstanceEndEditable -->

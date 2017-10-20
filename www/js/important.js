@@ -1,6 +1,6 @@
 linkserver_master 	= localStorage.getItem("servermmt"); 
 var xurlq 			= linkserver_master+"/PROGRAMUNDI/API/api.php";
-var y = localStorage.getItem("ide");
+var y 				= localStorage.getItem("ide");
 
 var imgrel = "http://31.220.59.48:8080/imgprefeitura/"+decode_text(localStorage.getItem("xCy&@img"))+"_2.png";
 var get_url_relatorio 	= "../../../relatorios/gerenciadorrelatorio?y="+y+"&relatorio=";
