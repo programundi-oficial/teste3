@@ -30,8 +30,7 @@ function nottof(idpassado){
                             'Longitude: ' + position.coords.longitude     + '<br />' +
                             '<hr />'      + element.innerHTML;
 			alert('Latitude: '  + position.coords.latitude);
-    }
-	    
+    }	    
     function onError(error) {
         alert('code: '    + error.code    + '\n' +
               'message: ' + error.message + '\n');
@@ -401,7 +400,7 @@ function listallcomposicaoaddprod(){
 			if(listcoppne!==""){listcoppnev="<br>";}
 			listcoppne+=listcoppnev+dados[i].item_e[i2].desc;
 		}
-		$("#list_comp_cad_prod").append("<tr><td>"+dados[i].item_d+"</td><td>"+listcoppn+"</td><td>"+dados[i].item_n_d+"</td><td>"+listcoppne+"</td><td>"+dados[i].item_e_d+"</td><td></td></tr>");  
+		$("#list_comp_cad_prod").append("<tr><td>"+dados[i].item_d+"</td><td>"+listcoppn+"</td><td>"+dados[i].item_n_d+"</td><td>"+listcoppne+"</td><td>"+dados[i].item_e_d+"</td><td><button type='button' class='btn btn-sm btn-primary btn_icon' onclick=''><img src='../img/edit.png'></button><button style='margin-left: 3px;' type='button' class='btn btn-sm btn-danger btn_icon' onclick=''><img src='../img/trash.png'></button></td></tr>");  
 	}
 }
 function list_categoria(){
@@ -977,7 +976,7 @@ function mostrar_print(vva){
 function formatar_texto(texto,alinhamento){
 	tp_printt=localStorage.getItem("tp_impressora_t");
 	if(tp_printt==null){
-		localStorage.setItem("tp_impressora_t", 1);
+		localStorage.setItem("tp_impressora_t", 2);
 		return formatar_texto(texto,alinhamento);		
 	}
 	if(tp_printt=="1"){
@@ -1890,7 +1889,12 @@ function detalhes_prod_adm(idprodd){
 	$("#nome_prod_add_edit").val("");	
 	$("#vl_prod_add_edit").val("");	
 	$("#desc_prod_add_edit").val("");	
-	
+	list_categoria_add_prod("#list_categori_addprod_edit");
+	list_tipo_prod_add_prod("#tipoprodaddprod_edit");
+	list_fornecedor_prod_select_generic("#list_fornecedorprod_addprod_edit");
+	list_marca_prod_select_generic("#list_marcaprod_addprod_edit");
+
+	on_load_carga("on","#");	
 	$.ajax({            
         url: xurlq,
          data: {
@@ -1907,7 +1911,7 @@ function detalhes_prod_adm(idprodd){
 						
 			for (var i = 0; i < j.length; i++) { 
 				if(j[i].result=="false"){					
-					alert("PRODUTO NÃO LOCALIZADO");					
+					alert("PRODUTO NÃO LOCALIZADO "+j[i].p1);					
 					return false;
 				}
 				$("#title_prod_edit").html(j[i].nome);
@@ -1923,14 +1927,23 @@ function detalhes_prod_adm(idprodd){
 				$("#vl_prod_add_edit").val(convert_banco_moeda(j[i].valor));	
 				$("#desc_prod_add_edit").val(j[i].descricao);
 				list_categoria_add_prod("#list_categori_addprod_edit",j[i].id_cat);
-				list_tipo_prod_add_prod("#tipoprodaddprod_edit",j[i].id_tipo);
+				list_tipo_prod_add_prod("#tipoprodaddprod_edit",j[i].id_tipo);				
 				list_fornecedor_prod_select_generic("#list_fornecedorprod_addprod_edit",j[i].id_produto_fornecedor);
 				list_marca_prod_select_generic("#list_marcaprod_addprod_edit",j[i].id_produto_marca);
-			}				 
-			
+				if(j[i].id_tipo == "1"){
+					$("#contene_compsicaoaddprod_edit").hide();
+				}
+				if(j[i].id_tipo == "2"){					
+					$("#contene_compsicaoaddprod_edit").show();
+					localStorage.setItem("listeditcomposity", JSON.stringify(j[i].composicao, null, 0));						
+					list_composicao_edit_prod();	
+				}	
+				on_load_carga("off","#");				
+			}		
         },
 		error: function(XMLHttpRequest, textStatus, errorThrown) {			
-			alert("erro");					
+			alert("erro");		
+			on_load_carga("off","#");				
 		}
     });
 	
@@ -2367,3 +2380,72 @@ $(document).keypress(function(e) {
 		}
     }
 });
+function list_composicao_edit_prod(){	
+	llk = localStorage.getItem("listeditcomposity");       
+    a = JSON.parse(llk);    
+    eleeditp="#list_comp_cad_prod_edit";
+    $(eleeditp).html("");
+    if(a == null){
+    	console.log("null");
+    }                
+    for (var i = 0; i < a.length; i++) {                        
+        $(eleeditp).append("<tr><td id='element_desc_edit_prod_comp_"+i+"'>"+a[i].desc+"</td><td style='vertical-align: sub;'><button disabled type='button' onclick='' style='width: 100%;' class='btn btn-primary btn-xs btn_disabled_edit_prod_comp_"+i+"'>Adicionar</button><table><tbody id='list_edit_comp_n_"+i+"'></tbody></table></td><td id='qtd_n_edit_prod_comp_"+i+"'>"+a[i].qtd_n+"</td><td style='vertical-align: sub;'><button disabled type='button' onclick='' style='width: 100%;' class='btn btn-primary btn-xs btn_disabled_edit_prod_comp_"+i+"'>Adicionar</button><table><tbody id='list_edit_comp_e_"+i+"'></tbody></table></td><td id='qtd_e_edit_prod_comp_"+i+"'>"+a[i].qtd_e+"</td><td style='width: 85px;' class='text_r'><button id='btn_edit_edit_comp_prod_"+i+"' type='button' class='btn btn-sm btn-primary btn_icon' onclick='edit_acomp_prod_json("+i+")'><img src='../img/edit.png'></button><button id='btn_dell_edit_comp_prod_"+i+"' style='margin-left: 3px;' type='button' class='btn btn-sm btn-danger btn_icon' onclick='delet_acomp_prod_json("+i+")'><img src='../img/trash.png'></button><button id='btn_save_edit_comp_prod_"+i+"' title='SALVAR ALTERAÇÃO' style='display:none;' type='button' class='btn btn-sm btn-primary btn_icon' onclick=''><img src='../img/save.png'></button><button id='btn_cancel_save_edit_comp_prod_"+i+"' style='margin-left: 3px;display:none' type='button' title='CANCELAR OPERAÇÃO' class='btn btn-sm btn-danger btn_icon' onclick=''><img src='../img/close.png'></button></td><tr>");
+        for (var i2 = 0; i2 < a[i].list_n.length; i2++) {        	
+        	$("#list_edit_comp_n_"+i).append("<tr><td id='element_desc_item_edit_prod_comp_"+i+i2+"'>"+a[i].list_n[i2].desc+"</td><td style='width: 85px;' class='text_r'><button disabled type='button' class='btn btn-sm btn-primary btn_icon btn_disabled_edit_prod_comp_"+i+"' onclick='btn_edit_item_comp_prod("+i+","+i2+")'><img src='../img/edit.png'></button><button disabled style='margin-left: 3px;' type='button' class='btn btn-sm btn-danger btn_icon btn_disabled_edit_prod_comp_"+i+"' onclick=''><img src='../img/trash.png'></button></td></tr>");        	
+        }
+    }
+}
+function btn_edit_item_comp_prod(elent1,elent2){
+	$("#element_desc_item_edit_prod_comp_"+elent1+elent2).html("<input id='element_desc_item_edit_prod_comp_input_"+elent1+elent2+"' type='text' class='form-control' value='"+$("#element_desc_item_edit_prod_comp_"+elent1+elent2).text()+"'>");
+}
+function edit_acomp_prod_json(nelent){
+	$(".btn_disabled_edit_prod_comp_"+nelent).attr("disabled",false);
+	$("#btn_edit_edit_comp_prod_"+nelent).hide();
+	$("#btn_dell_edit_comp_prod_"+nelent).hide();
+	$("#btn_save_edit_comp_prod_"+nelent).show();
+	$("#btn_cancel_save_edit_comp_prod_"+nelent).show();
+
+	$("#element_desc_edit_prod_comp_"+nelent).html("<input id='element_desc_edit_prod_comp_input_"+nelent+"' type='text' class='form-control' value='"+$("#element_desc_edit_prod_comp_"+nelent).text()+"'>");
+	$("#qtd_n_edit_prod_comp_"+nelent).html("<input style='width: 50px;' id='qtd_n_edit_prod_comp_input_"+nelent+"' type='number' class='form-control' value='"+$("#qtd_n_edit_prod_comp_"+nelent).text()+"'>");
+	$("#qtd_e_edit_prod_comp_"+nelent).html("<input style='width: 50px;' id='qtd_e_edit_prod_comp_input_"+nelent+"' type='number' class='form-control' value='"+$("#qtd_e_edit_prod_comp_"+nelent).text()+"'>")
+}	
+function dell_item_prod_acomp(id,element){   
+    var dados = decode_text(localStorage.getItem(element));
+    
+    dados = JSON.parse(dados);  
+    delete dados[id];
+    var novoDados = [];
+    var j = 0;  
+    for (var i =0; i < dados.length; i++) {
+        if (dados[i] != null) {
+            novoDados[j] = dados[i];
+            j++;
+        }
+    }   
+    novoDados = JSON.stringify(novoDados, null, 0);
+    localStorage.setItem(element, encode_text(novoDados));
+    return true; 
+
+    /*
+	dados=localStorage.getItem("listeditcomposity");
+	dados = JSON.parse(dados);  
+	delete dados[0].list_n[0];
+	console.log(JSON.stringify(dados, null, 0));
+    */  
+
+    /*
+	x2 = localStorage.getItem("listeditcomposity");
+	dados2 = JSON.parse(x2);
+	var a = new Object();
+	a.seq = "1";
+	a.id_composicao_item = "5";
+	a.id_composicao = "11";
+	a.dell = "1";
+	a.new_element = "0";
+	a.desc = "teste";
+	a.valor = "0";          
+	dados2[0].list_n.push(a);     
+	var b = JSON.stringify(dados2, null, 0);
+	console.log(b);
+    */ 
+}
