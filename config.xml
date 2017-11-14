@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.phonegap.helloworld" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.vendanex.adm" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>VENDANEX ADM</name>
     <description>
         Seu aplicativo de administração de sua empresa.
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
+    <author email="contato@vendanex.com" href="http://phonegap.com">
         VENDANEX
     </author>
     <content src="index.html" />
