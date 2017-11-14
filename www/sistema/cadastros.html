@@ -327,7 +327,7 @@
           <div class="col-lg-12" id="contene_compsicaoaddprod_edit" style="display:none">
           <label for="txtMovieTitle">Composição</label>
           <div class="brack"></div>
-          <button type="button" id="" onclick="addlinecomposicaoprod_edit();" class="btn btn-primary btn-xs">Adicionar</button>
+          <button type="button" id="" onclick="addlinecomposicaoprod();" class="btn btn-primary btn-xs">Adicionar</button>
           <table style="width: 100%;white-space: nowrap;">
           	<thead>
             	<tr>
@@ -593,40 +593,6 @@
         <div class="row">
           <div class="col-lg-12">
             <button type="button" id="btn_mm_item_comp_p" onclick="add_mm_item_comp_p();" class="btn btn-primary btn-xs">Cadastrar</button>
-            <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">Fechar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="modal_compitemmmp_edit" class="modal fade" role="dialog" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-title" id="title_comp_modal_edit"></h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-lg-9 col-md-9 col-xs-9">
-            <div class="form-group">
-              <label for="txtMovieTitle">Descrição</label>
-              <input id="desc_item_comp_p_edit" type="text" class="form-control">
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-3 col-xs-3">
-            <div class="form-group">
-              <label for="txtMovieTitle">Valor</label>
-              <input id="valor_item_comp_p_edit" type="text" class="form-control text_r" onkeypress=" return(MascaraMoeda(this,'.',',',event))" onblur="return(MascaraMoeda(this,'.',',',event))" onfocus=" return(MascaraMoeda(this,'.',',',event))">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <div class="row">
-          <div class="col-lg-12">
-            <button type="button" id="btn_mm_item_comp_p_edit" onclick="add_mm_item_comp_p_edit();" class="btn btn-primary btn-xs">Cadastrar</button>
             <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">Fechar</button>
           </div>
         </div>
