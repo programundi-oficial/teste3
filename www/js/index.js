@@ -294,7 +294,8 @@ function add_item_parcial(typ){
 		$("#desc_item_comp_p").attr("tp_comp","1");
 		$("#desc_item_comp_p").val("");
 		$("#valor_item_comp_p").attr("disabled",true);
-		$("#valor_item_comp_p").val("0,00");list_parcial_comp_prod(1);
+		$("#valor_item_comp_p").val("0,00");
+		list_parcial_comp_prod(1);
 	}
 	if(typ == 2){
 		$("#modal_compitemmmp").modal("show");
@@ -653,7 +654,7 @@ function list_produto_tladdprod(){
 						vrl+="<button type='button' iid='line_btndelladd_"+j[i].idprod_item+"' class='btn btn-sm btn-danger btn_icon' onclick='btn_dell_prod_cad(\""+j[i].idprod_item+"\");'><img src='../img/trash.png'></button>";
 					vrl+="</td>";
 				vrl+="</tr>";            								  				               
-            }  
+            }              
 			$(el2).html(vrl);
         }
     });
@@ -1333,6 +1334,8 @@ function list_produto_tladdprod(){
 				vrl+="<td class='text_r'><button type='button' class='btn btn-sm btn-primary btn_icon' onclick='detalhes_prod_adm("+j[i].id_prod+");'><img src='../img/edit.png'></button><button style='margin-left: 3px;' type='button' class='btn btn-sm btn-danger btn_icon' onclick='btn_dell_prod_cad(\""+j[i].id_prod+"\",\""+j[i].nome+"\");'><img src='../img/trash.png'></button></td>";
 				vrl+="</tr>";            								  				               
             }  
+            $("#list_comp_cad_prod_edit").attr("idprodd","-1");
+            localStorage.removeItem("listeditcomposity"); 
 			$(el2).html(vrl);
         }
     });
@@ -1889,6 +1892,8 @@ function detalhes_prod_adm(idprodd){
 	$("#nome_prod_add_edit").val("");	
 	$("#vl_prod_add_edit").val("");	
 	$("#desc_prod_add_edit").val("");	
+	$("#list_comp_cad_prod_edit").html("");
+	$("#list_comp_cad_prod_edit").attr("idprodd",idprodd);
 	list_categoria_add_prod("#list_categori_addprod_edit");
 	list_tipo_prod_add_prod("#tipoprodaddprod_edit");
 	list_fornecedor_prod_select_generic("#list_fornecedorprod_addprod_edit");
@@ -1908,7 +1913,7 @@ function detalhes_prod_adm(idprodd){
 		dataType: "json",
         type: "POST",
         success: function(j) {	
-						
+
 			for (var i = 0; i < j.length; i++) { 
 				if(j[i].result=="false"){					
 					alert("PRODUTO NÃO LOCALIZADO "+j[i].p1);					
@@ -1956,17 +1961,15 @@ function edit_prod(){
 		return false;
 	}
 	
-	nome_prod_edit	=$("#nome_prod_add_edit").val();	
-	tp_prod_edit	=$("#tipoprodaddprod_edit option:selected").val();
-	tp_categ_edit	=$("#list_categori_addprod_edit option:selected").val();	
-	
-	marcaprod_edit	=$("#list_marcaprod_addprod_edit option:selected").val()	
-	fornecedor_edit	=$("#list_fornecedorprod_addprod_edit option:selected").val();
-	
-	valor_prod_edit	=$("#vl_prod_add_edit").val();	
-	desc_prod_edit	=$("#desc_prod_add_edit").val();	
-	
-	valor_prod_edit = convert_moeda_banco(valor_prod_edit);
+	nome_prod_edit			= $("#nome_prod_add_edit").val();	
+	tp_prod_edit			= $("#tipoprodaddprod_edit option:selected").val();
+	tp_categ_edit			= $("#list_categori_addprod_edit option:selected").val();	
+	marcaprod_edit			= $("#list_marcaprod_addprod_edit option:selected").val()	
+	fornecedor_edit			= $("#list_fornecedorprod_addprod_edit option:selected").val();	
+	valor_prod_edit			= $("#vl_prod_add_edit").val();	
+	desc_prod_edit			= $("#desc_prod_add_edit").val();
+	list_itens_prod_edit 	= localStorage.getItem("listeditcomposity"); 	
+	valor_prod_edit 		= convert_moeda_banco(valor_prod_edit);
 	
 	$.ajax({            
         url: xurlq,
@@ -1981,12 +1984,14 @@ function edit_prod(){
 			p5: valor_prod_edit,
 			p6: desc_prod_edit,
 			p7: marcaprod_edit,
-			p8: fornecedor_edit
+			p8: fornecedor_edit,
+			p9: list_itens_prod_edit
         },
-		dataType: "json",
+		//dataType: "json",
         type: "POST",
         success: function(j) {	
-						
+			console.log(j);
+			return false;		
 			for (var i = 0; i < j.length; i++) { 
 				if(j[i].result=="false"){					
 					alert("PRODUTO NÃO ALTERADO");					
@@ -2389,14 +2394,18 @@ function list_composicao_edit_prod(){
     	console.log("null");
     }                
     for (var i = 0; i < a.length; i++) {                        
-        $(eleeditp).append("<tr><td id='element_desc_edit_prod_comp_"+i+"'>"+a[i].desc+"</td><td style='vertical-align: sub;'><button disabled type='button' onclick='' style='width: 100%;' class='btn btn-primary btn-xs btn_disabled_edit_prod_comp_"+i+"'>Adicionar</button><table><tbody id='list_edit_comp_n_"+i+"'></tbody></table></td><td id='qtd_n_edit_prod_comp_"+i+"'>"+a[i].qtd_n+"</td><td style='vertical-align: sub;'><button disabled type='button' onclick='' style='width: 100%;' class='btn btn-primary btn-xs btn_disabled_edit_prod_comp_"+i+"'>Adicionar</button><table><tbody id='list_edit_comp_e_"+i+"'></tbody></table></td><td id='qtd_e_edit_prod_comp_"+i+"'>"+a[i].qtd_e+"</td><td style='width: 85px;' class='text_r'><button id='btn_edit_edit_comp_prod_"+i+"' type='button' class='btn btn-sm btn-primary btn_icon' onclick='edit_acomp_prod_json("+i+")'><img src='../img/edit.png'></button><button id='btn_dell_edit_comp_prod_"+i+"' style='margin-left: 3px;' type='button' class='btn btn-sm btn-danger btn_icon' onclick='delet_acomp_prod_json("+i+")'><img src='../img/trash.png'></button><button id='btn_save_edit_comp_prod_"+i+"' title='SALVAR ALTERAÇÃO' style='display:none;' type='button' class='btn btn-sm btn-primary btn_icon' onclick=''><img src='../img/save.png'></button><button id='btn_cancel_save_edit_comp_prod_"+i+"' style='margin-left: 3px;display:none' type='button' title='CANCELAR OPERAÇÃO' class='btn btn-sm btn-danger btn_icon' onclick=''><img src='../img/close.png'></button></td><tr>");
+        $(eleeditp).append("<tr><td id='element_desc_edit_prod_comp_"+i+"'>"+a[i].desc+"</td><td style='vertical-align: sub;'><button disabled type='button' onclick='add_compsicao_prod_edit(1,"+i+")' style='width: 100%;' class='btn btn-primary btn-xs btn_disabled_edit_prod_comp_"+i+"'>Adicionar</button><table><tbody id='list_edit_comp_n_"+i+"'></tbody></table></td><td id='qtd_n_edit_prod_comp_"+i+"'>"+a[i].qtd_n+"</td><td style='vertical-align: sub;'><button disabled type='button' onclick='add_compsicao_prod_edit(2,"+i+")' style='width: 100%;' class='btn btn-primary btn-xs btn_disabled_edit_prod_comp_"+i+"'>Adicionar</button><table><tbody id='list_edit_comp_e_"+i+"'></tbody></table></td><td id='qtd_e_edit_prod_comp_"+i+"'>"+a[i].qtd_e+"</td><td style='width: 85px;' class='text_r'><button id='btn_edit_edit_comp_prod_"+i+"' type='button' class='btn btn-sm btn-primary btn_icon' onclick='edit_acomp_prod_json("+i+")'><img src='../img/edit.png'></button><button id='btn_dell_edit_comp_prod_"+i+"' style='margin-left: 3px;' type='button' class='btn btn-sm btn-danger btn_icon' onclick='delet_acomp_prod_json_click("+i+")'><img src='../img/trash.png'></button><button id='btn_save_edit_comp_prod_"+i+"' title='SALVAR ALTERAÇÃO' style='display:none;' type='button' class='btn btn-sm btn-primary btn_icon' onclick='save_edit_compisao_prod("+i+");'><img src='../img/save.png'></button><button id='btn_cancel_save_edit_comp_prod_"+i+"' style='margin-left: 3px;display:none' type='button' title='CANCELAR OPERAÇÃO' class='btn btn-sm btn-danger btn_icon' onclick='list_composicao_edit_prod()'><img src='../img/close.png'></button></td><tr>");
         for (var i2 = 0; i2 < a[i].list_n.length; i2++) {        	
-        	$("#list_edit_comp_n_"+i).append("<tr><td id='element_desc_item_edit_prod_comp_"+i+i2+"'>"+a[i].list_n[i2].desc+"</td><td style='width: 85px;' class='text_r'><button disabled type='button' class='btn btn-sm btn-primary btn_icon btn_disabled_edit_prod_comp_"+i+"' onclick='btn_edit_item_comp_prod("+i+","+i2+")'><img src='../img/edit.png'></button><button disabled style='margin-left: 3px;' type='button' class='btn btn-sm btn-danger btn_icon btn_disabled_edit_prod_comp_"+i+"' onclick=''><img src='../img/trash.png'></button></td></tr>");        	
+        	$("#list_edit_comp_n_"+i).append("<tr><td p1='"+a[i].list_n[i2].seq+"' p2='"+a[i].list_n[i2].id_composicao_item+"' p3='"+a[i].list_n[i2].id_composicao+"' p4='"+a[i].list_n[i2].dell+"' p5='"+a[i].list_n[i2].new_element+"' id='element_desc_item_edit_prod_comp_"+i+i2+"'>"+a[i].list_n[i2].desc+"</td><td style='width: 85px;' class='text_r'><button id='edit_item_prod_comp_"+i+i2+"' disabled type='button' class='btn btn-sm btn-primary btn_icon btn_disabled_edit_prod_comp_"+i+"' onclick='btn_edit_item_comp_prod("+i+","+i2+")'><img src='../img/edit.png'></button><button id='delet_item_prod_comp_"+i+i2+"' disabled style='margin-left: 3px;' type='button' class='btn btn-sm btn-danger btn_icon btn_disabled_edit_prod_comp_"+i+"' onclick='dell_item_prod_acomp_click("+i+","+i2+");'><img src='../img/trash.png'></button><button id='save_item_prod_comp_"+i+i2+"' title='SALVAR ALTERAÇÃO' style='display:none;' type='button' class='btn btn-sm btn-primary btn_icon' onclick='save_edit_item_comp_prod("+i+","+i2+")'><img src='../img/save.png'></button><button id='cancel_item_prod_comp_"+i+i2+"' style='margin-left: 3px;display:none' type='button' title='CANCELAR OPERAÇÃO' class='btn btn-sm btn-danger btn_icon' onclick='list_cancel_item_produ_comp("+i+");'><img src='../img/close.png'></button></td></tr>");        	
         }
     }
 }
 function btn_edit_item_comp_prod(elent1,elent2){
 	$("#element_desc_item_edit_prod_comp_"+elent1+elent2).html("<input id='element_desc_item_edit_prod_comp_input_"+elent1+elent2+"' type='text' class='form-control' value='"+$("#element_desc_item_edit_prod_comp_"+elent1+elent2).text()+"'>");
+	$("#edit_item_prod_comp_"+elent1+elent2).hide();
+	$("#delet_item_prod_comp_"+elent1+elent2).hide();
+	$("#save_item_prod_comp_"+elent1+elent2).show();
+	$("#cancel_item_prod_comp_"+elent1+elent2).show();
 }
 function edit_acomp_prod_json(nelent){
 	$(".btn_disabled_edit_prod_comp_"+nelent).attr("disabled",false);
@@ -2409,43 +2418,316 @@ function edit_acomp_prod_json(nelent){
 	$("#qtd_n_edit_prod_comp_"+nelent).html("<input style='width: 50px;' id='qtd_n_edit_prod_comp_input_"+nelent+"' type='number' class='form-control' value='"+$("#qtd_n_edit_prod_comp_"+nelent).text()+"'>");
 	$("#qtd_e_edit_prod_comp_"+nelent).html("<input style='width: 50px;' id='qtd_e_edit_prod_comp_input_"+nelent+"' type='number' class='form-control' value='"+$("#qtd_e_edit_prod_comp_"+nelent).text()+"'>")
 }	
-function dell_item_prod_acomp(id,element){   
-    var dados = decode_text(localStorage.getItem(element));
+function list_cancel_item_produ_comp(ele_listind){
+	llk2 = localStorage.getItem("listeditcomposity");       
+    a = JSON.parse(llk2);        
+    $("#list_edit_comp_n_"+ele_listind).html("");
     
-    dados = JSON.parse(dados);  
-    delete dados[id];
-    var novoDados = [];
+    listorden = a[ele_listind].list_n;
+
+   	for (var i2 = 0; i2 < listorden.length; i2++) {        	
+    	$("#list_edit_comp_n_"+ele_listind).append("<tr><td p1='"+listorden[i2].seq+"' p2='"+listorden[i2].id_composicao_item+"' p3='"+listorden[i2].id_composicao+"' p4='"+listorden[i2].dell+"' p5='"+listorden[i2].new_element+"' id='element_desc_item_edit_prod_comp_"+ele_listind+i2+"'>"+listorden[i2].desc+"</td><td style='width: 85px;' class='text_r'><button id='edit_item_prod_comp_"+ele_listind+i2+"' type='button' class='btn btn-sm btn-primary btn_icon btn_disabled_edit_prod_comp_"+ele_listind+"' onclick='btn_edit_item_comp_prod("+ele_listind+","+i2+")'><img src='../img/edit.png'></button><button id='delet_item_prod_comp_"+ele_listind+i2+"' style='margin-left: 3px;' type='button' class='btn btn-sm btn-danger btn_icon btn_disabled_edit_prod_comp_"+ele_listind+"' onclick='dell_item_prod_acomp_click("+ele_listind+","+i2+");'><img src='../img/trash.png'></button><button id='save_item_prod_comp_"+ele_listind+i2+"' title='SALVAR ALTERAÇÃO' style='display:none;' type='button' class='btn btn-sm btn-primary btn_icon' onclick='save_edit_item_comp_prod("+ele_listind+","+i2+")'><img src='../img/save.png'></button><button id='cancel_item_prod_comp_"+ele_listind+i2+"' style='margin-left: 3px;display:none' type='button' title='CANCELAR OPERAÇÃO' class='btn btn-sm btn-danger btn_icon' onclick='list_cancel_item_produ_comp("+ele_listind+");'><img src='../img/close.png'></button></td></tr>");        	
+    }    
+}
+function list_cancel_item_produ_comp_ex(ele_listind){
+	llk2 = localStorage.getItem("listeditcomposity");       
+    a = JSON.parse(llk2);        
+    $("#list_edit_comp_e_"+ele_listind).html("");
+    
+    listorden = a[ele_listind].list_e;
+
+   	for (var i2 = 0; i2 < listorden.length; i2++) {        	
+    	$("#list_edit_comp_e_"+ele_listind).append("<tr><td p1='"+listorden[i2].seq+"' p2='"+listorden[i2].id_composicao_item+"' p3='"+listorden[i2].id_composicao+"' p4='"+listorden[i2].dell+"' p5='"+listorden[i2].new_element+"' id='element_desc_item_edit_prod_comp_ex_"+ele_listind+i2+"'>"+listorden[i2].desc+"</td><td id='element_valor_item_edit_prod_comp_ex_"+ele_listind+i2+"'>"+listorden[i2].valor+"</td><td style='width: 85px;' class='text_r'><button id='edit_item_prod_comp_ex_"+ele_listind+i2+"' type='button' class='btn btn-sm btn-primary btn_icon btn_disabled_edit_prod_comp_"+ele_listind+"' onclick='btn_edit_item_comp_prod_ex_("+ele_listind+","+i2+")'><img src='../img/edit.png'></button><button id='delet_item_prod_comp_ex_"+ele_listind+i2+"' style='margin-left: 3px;' type='button' class='btn btn-sm btn-danger btn_icon btn_disabled_edit_prod_comp_"+ele_listind+"' onclick='dell_item_prod_acomp_click_ex_("+ele_listind+","+i2+");'><img src='../img/trash.png'></button><button id='save_item_prod_comp_ex_"+ele_listind+i2+"' title='SALVAR ALTERAÇÃO' style='display:none;' type='button' class='btn btn-sm btn-primary btn_icon' onclick='save_edit_item_comp_prod_ex_("+ele_listind+","+i2+")'><img src='../img/save.png'></button><button id='cancel_item_prod_comp_ex_"+ele_listind+i2+"' style='margin-left: 3px;display:none' type='button' title='CANCELAR OPERAÇÃO' class='btn btn-sm btn-danger btn_icon' onclick='list_cancel_item_produ_comp_ex("+ele_listind+");'><img src='../img/close.png'></button></td></tr>");        	
+    }    
+}
+function save_edit_item_comp_prod(elesave,elesave2){
+
+	save_p1=$("#element_desc_item_edit_prod_comp_"+elesave+elesave2).attr("p1");
+	save_p2=$("#element_desc_item_edit_prod_comp_"+elesave+elesave2).attr("p2");
+	save_p3=$("#element_desc_item_edit_prod_comp_"+elesave+elesave2).attr("p3");
+	save_p4=$("#element_desc_item_edit_prod_comp_"+elesave+elesave2).attr("p4");
+	save_p5=$("#element_desc_item_edit_prod_comp_"+elesave+elesave2).attr("p5");
+	save_p6=$("#element_desc_item_edit_prod_comp_input_"+elesave+elesave2).val();
+
+	if(dell_item_prod_acomp(elesave,elesave2) == "true"){
+		if(add_item_prod_acomp(elesave,save_p1,save_p2,save_p3,save_p4,save_p5,save_p6) == "true"){
+			list_cancel_item_produ_comp(elesave);
+		}
+		else{
+			alert("ERRO ADD");
+		}
+	}
+	else{
+		alert("ERRO");
+	}
+}
+function dell_item_prod_acomp_click(delclic_ele,delclic_ele2){
+	if(dell_item_prod_acomp(delclic_ele,delclic_ele2) == "true"){
+		list_cancel_item_produ_comp(delclic_ele);
+	}
+	else{
+		alert("ERRO");
+	}
+}
+function dell_item_prod_acomp(eledell,eledell2){   
+   	dadosdel = JSON.parse(localStorage.getItem("listeditcomposity"));  
+	delete dadosdel[eledell].list_n[eledell2];
+	var novoDados = [];
     var j = 0;  
-    for (var i =0; i < dados.length; i++) {
-        if (dados[i] != null) {
-            novoDados[j] = dados[i];
+    for (var i =0; i < dadosdel[eledell].list_n.length; i++) {
+        if (dadosdel[eledell].list_n[i] != null) {
+            novoDados[j] = dadosdel[eledell].list_n[i];
             j++;
         }
     }   
-    novoDados = JSON.stringify(novoDados, null, 0);
-    localStorage.setItem(element, encode_text(novoDados));
-    return true; 
+    dadosdel[eledell].list_n=novoDados;   
+    localStorage.setItem("listeditcomposity", JSON.stringify(dadosdel, null, 0));
 
-    /*
-	dados=localStorage.getItem("listeditcomposity");
-	dados = JSON.parse(dados);  
-	delete dados[0].list_n[0];
-	console.log(JSON.stringify(dados, null, 0));
-    */  
+    return "true";
+}
+function reordenarlist_item_comp_prod(elereord){
+	dadosreorde = JSON.parse(localStorage.getItem("listeditcomposity")); 
+	
+	var novoDados2 = [];
+    var j = 0;  
+    newlistorde = OrdenaJson(dadosreorde[elereord].list_n,"seq","ASC");
 
-    /*
+    for (var i =0; i < newlistorde.length; i++) {
+        if (newlistorde[i] != null) {
+            novoDados2[j] = newlistorde[i];
+            j++;
+        }
+    }   
+    dadosreorde[elereord].list_n=novoDados2;   
+    localStorage.setItem("listeditcomposity", JSON.stringify(dadosreorde, null, 0));
+
+    return "true";
+}
+function reordenarlist_item_comp_prod_ex(elereord){
+	dadosreorde = JSON.parse(localStorage.getItem("listeditcomposity")); 
+	
+	var novoDados2 = [];
+    var j = 0;  
+    newlistorde = OrdenaJson(dadosreorde[elereord].list_e,"seq","ASC");
+
+    for (var i =0; i < newlistorde.length; i++) {
+        if (newlistorde[i] != null) {
+            novoDados2[j] = newlistorde[i];
+            j++;
+        }
+    }   
+    dadosreorde[elereord].list_e=novoDados2;   
+    localStorage.setItem("listeditcomposity", JSON.stringify(dadosreorde, null, 0));
+
+    return "true";
+}
+function add_item_prod_acomp(addele,p1,p2,p3,p4,p5,p6){
 	x2 = localStorage.getItem("listeditcomposity");
 	dados2 = JSON.parse(x2);
 	var a = new Object();
-	a.seq = "1";
-	a.id_composicao_item = "5";
-	a.id_composicao = "11";
-	a.dell = "1";
-	a.new_element = "0";
-	a.desc = "teste";
+	a.seq = p1;
+	a.id_composicao_item = p2;
+	a.id_composicao = p3;
+	a.dell = p4;
+	a.new_element = p5;
+	a.desc = p6;
 	a.valor = "0";          
-	dados2[0].list_n.push(a);     
-	var b = JSON.stringify(dados2, null, 0);
-	console.log(b);
-    */ 
+	dados2[addele].list_n.push(a);    	
+	localStorage.setItem("listeditcomposity", JSON.stringify(dados2, null, 0));
+
+	if(reordenarlist_item_comp_prod(addele) == "true"){
+    	return "true";
+    }
+    else{
+    	alert("ERRO");
+    }
+}
+function add_item_prod_acomp_ex(addele,p1,p2,p3,p4,p5,p6,p7){
+	x2 = localStorage.getItem("listeditcomposity");
+	dados2 	 				= JSON.parse(x2);
+	var a 					= new Object();
+	a.seq 					= p1;
+	a.id_composicao_item 	= p2;
+	a.id_composicao 		= p3;
+	a.dell 					= p4;
+	a.new_element 			= p5;
+	a.desc 					= p6;
+	a.valor 				= p7;          
+	dados2[addele].list_e.push(a);    	
+	localStorage.setItem("listeditcomposity", JSON.stringify(dados2, null, 0));
+
+	if(reordenarlist_item_comp_prod_ex(addele) == "true"){
+    	return "true";
+    }
+    else{
+    	alert("ERRO");
+    }
+}
+function OrdenaJson(lista, chave, ordem) {
+    return lista.sort(function(a, b) {
+        var x = a[chave]; var y = b[chave];
+        if (ordem === 'ASC' ) { return ((x < y) ? -1 : ((x > y) ? 1 : 0)); }
+        if (ordem === 'DESC') { return ((x > y) ? -1 : ((x < y) ? 1 : 0)); }
+    });
+}
+function delet_acomp_prod_json_click(dell_acompele){
+	if(delet_acomp_prod_json(dell_acompele) == "true"){
+		list_composicao_edit_prod();
+	}
+}
+function delet_acomp_prod_json(dell_acompele){
+	dadosdel = JSON.parse(localStorage.getItem("listeditcomposity"));  
+	delete dadosdel[dell_acompele];
+	var novoDados = [];
+    var j = 0;  
+    for (var i =0; i < dadosdel.length; i++) {
+        if (dadosdel[i] != null) {
+            novoDados[j] = dadosdel[i];
+            j++;
+        }
+    }   
+    dadosdel=novoDados;       
+    localStorage.setItem("listeditcomposity", JSON.stringify(dadosdel, null, 0));
+
+    return "true";
+}
+function add_compsicao_prod_edit(tplx,idaddele){
+	if(tplx == "1"){
+		$("#title_comp_modal_edit").text("COMPOSIÇÃO DE PRODUTO");	
+		$("#valor_item_comp_p_edit").attr("disabled", true);	
+	}
+	if(tplx == "2"){
+		$("#title_comp_modal_edit").text("COMPOSIÇÃO EXTRA DE PRODUTO");	
+		$("#valor_item_comp_p_edit").attr("disabled", false);	
+	}
+	$("#desc_item_comp_p_edit").attr("indic_list",idaddele);
+	$("#desc_item_comp_p_edit").attr("tp_comp", tplx);
+	$("#desc_item_comp_p_edit").val("");	
+	$("#valor_item_comp_p_edit").val("0,00");
+	$("#modal_compitemmmp_edit").modal("show");
+}
+function add_mm_item_comp_p_edit(){
+
+	tpedit 		=$("#desc_item_comp_p_edit").attr("tp_comp");
+	indexlist 	=$("#desc_item_comp_p_edit").attr("indic_list");
+	desc 		=$("#desc_item_comp_p_edit").val();
+	
+	if(tpedit == "1"){		
+		seq=get_next_sequencia_memory_comp_prod(tpedit,indexlist);
+		if(add_item_prod_acomp(indexlist,seq,"0","0","0","1",desc) == "true"){
+			list_cancel_item_produ_comp(indexlist);
+			$("#desc_item_comp_p_edit").attr("indic_list","");
+			$("#desc_item_comp_p_edit").attr("tp_comp","");
+			$("#modal_compitemmmp_edit").modal("hide");
+			school_modal("#modal_02_detalhe_edit");
+		}
+	}
+	if(tpedit == "2"){		
+		valor_item_e 		=$("#valor_item_comp_p_edit").val();
+		seq=get_next_sequencia_memory_comp_prod(tpedit,indexlist);
+		console.log("add tp 2");
+		if(add_item_prod_acomp_ex(indexlist,seq,"0","0","0","1",desc,valor_item_e) == "true"){
+			console.log("add tp 2 if");
+			list_cancel_item_produ_comp_ex(indexlist);
+			$("#desc_item_comp_p_edit").attr("indic_list","");
+			$("#desc_item_comp_p_edit").attr("tp_comp","");
+			$("#modal_compitemmmp_edit").modal("hide");
+			school_modal("#modal_02_detalhe_edit");
+		}
+	}
+}
+function school_modal(vrele){
+	$(vrele).css("overflow-x", "hidden");
+    $(vrele).css("overflow-y", "auto");
+}
+function get_next_sequencia_memory_comp_prod(tpcmp,indexlist){
+	if(tpcmp == "1"){
+		dadosdel = JSON.parse(localStorage.getItem("listeditcomposity"));
+		if(parseInt(dadosdel[indexlist].list_n.length) > 0){			
+			return (parseInt(dadosdel[indexlist].list_n[(parseInt(dadosdel[indexlist].list_n.length) - parseInt(1))].seq)+parseInt(1));	
+		}		
+		if(parseInt(dadosdel[indexlist].list_n.length) <= 0){			
+			return "1";
+		}	
+	}
+	if(tpcmp == "2"){
+		dadosdel = JSON.parse(localStorage.getItem("listeditcomposity"));	
+		if(parseInt(dadosdel[indexlist].list_e.length) > 0){		
+			return (parseInt(dadosdel[indexlist].list_e[(parseInt(dadosdel[indexlist].list_e.length) - parseInt(1))].seq)+parseInt(1));		
+		}
+		if(parseInt(dadosdel[indexlist].list_e.length) <= 0){			
+			return "1";
+		}
+	}
+}
+function get_next_sequencia_memory_comp_prod_p(){	
+	dadosdel = JSON.parse(localStorage.getItem("listeditcomposity"));		
+	return (parseInt(dadosdel[(parseInt(dadosdel.length) - parseInt(1))].seq)+parseInt(1));			
+}
+function save_edit_compisao_prod(idedit){
+	descnw   =$("#element_desc_edit_prod_comp_input_"+idedit).val();
+	newqtd_n =$("#qtd_n_edit_prod_comp_input_"+idedit).val();
+	newqtd_e =$("#qtd_e_edit_prod_comp_input_"+idedit).val();
+
+	get_itensn_e 			= JSON.parse(localStorage.getItem("listeditcomposity"));  
+	get_itens_n 			= get_itensn_e[idedit].list_n;
+	get_itens_e 			= get_itensn_e[idedit].list_e;
+	get_itens_seq 			= get_itensn_e[idedit].seq;
+	get_itens_id_composicao = get_itensn_e[idedit].id_composicao;
+	get_itens_new_element   = get_itensn_e[idedit].new_element;
+	
+	if(delet_acomp_prod_json(idedit) == "true"){
+		if(add_prod_acomp(get_itens_seq,get_itens_id_composicao,get_itens_new_element,descnw,newqtd_n,newqtd_e,get_itens_n,get_itens_e) == "true"){
+			list_composicao_edit_prod();
+		}
+	}
+
+	console.log("seq-> "+get_itens_seq);
+
+}
+function add_prod_acomp(p1,p2,p3,p4,p5,p6,p7,p8){
+	x2 = localStorage.getItem("listeditcomposity");
+	dados2 			= JSON.parse(x2);
+	var a 			= new Object();
+	a.seq 			= p1;
+	a.id_composicao = p2;
+	a.dell 			= "0";
+	a.new_element 	= p3;
+	a.desc 			= p4;
+	a.qtd_n 		= p5;
+	a.qtd_e 		= p6;   
+	a.list_n 		= p7;
+	a.list_e 		= p8;       
+	dados2.push(a);    	
+	localStorage.setItem("listeditcomposity", JSON.stringify(dados2, null, 0));
+
+	if(reordenarlist_comp_prod() == "true"){
+    	return "true";
+    }
+    else{
+    	alert("ERRO");
+    }
+}
+function reordenarlist_comp_prod(){
+	dadosreorde = JSON.parse(localStorage.getItem("listeditcomposity")); 
+	
+	var novoDados2 = [];
+    var j = 0;  
+    newlistorde = OrdenaJson(dadosreorde,"seq","ASC");
+
+    for (var i =0; i < newlistorde.length; i++) {
+        if (newlistorde[i] != null) {
+            novoDados2[j] = newlistorde[i];
+            j++;
+        }
+    }   
+    dadosreorde=novoDados2;   
+    localStorage.setItem("listeditcomposity", JSON.stringify(dadosreorde, null, 0));
+
+    return "true";
+}
+function addlinecomposicaoprod_edit(){
+	if(add_prod_acomp(get_next_sequencia_memory_comp_prod_p(),"0","1","INFORME DESCRIÇÃO","1","0",JSON.parse("[]"),JSON.parse("[]")) == "true"){
+		list_composicao_edit_prod();
+	}
 }
