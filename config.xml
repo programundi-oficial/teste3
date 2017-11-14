@@ -2,10 +2,10 @@
 <widget id="com.phonegap.helloworld" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>VENDANEX ADM</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Seu aplicativo de administração de sua empresa.
     </description>
     <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+        VENDANEX
     </author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
@@ -114,7 +114,6 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-    <plugin name="de.appplant.cordova.plugin.local-notification" spec="https://github.com/katzer/cordova-plugin-local-notifications.git" />
-    <plugin name="cordova-plugin-bluetooth-serial" spec="~0.4.7" />
+    
     <plugin name="cordova-plugin-bluetooth-printer" spec="https://github.com/programundi-oficial/bb.git" />
 </widget>
