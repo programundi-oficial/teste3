@@ -1,183 +1,243 @@
 <!doctype html>
-<html><!-- InstanceBegin template="/Templates/APP_VENDAS_ADM.dwt" codeOutsideHTMLIsLocked="false" -->
-<head>
-<meta charset="utf-8">
-<!-- InstanceBeginEditable name="doctitle" -->
-<title>HOME</title>
-<!-- InstanceEndEditable -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="../css/chosen.css" rel="stylesheet">
-<link href="../css/bootstrap.css" rel="stylesheet">
-<link href="../css/style.css" rel="stylesheet">
-<script src="../js/jquery-2.1.1.min.js"></script>
-<script src="../js/bootstrap.js"></script>
-<script src="../js/chosen.jquery.js" type="text/javascript"></script>
-<script src="../js/important.js"></script>
-<script type="text/javascript" src="../cordova.js"></script>
-<script src="../js/index.js"></script>
-<!-- InstanceBeginEditable name="head" -->
-<!-- InstanceEndEditable -->
-</head>
-
-<body>
-<div class="contener_01">
-<h3 class="vertical_alinha title_menu"></h3>
-<ul class="ul_menu_super vertical_alinha">	
-	<li><div onClick="btn_add(4)" class="icon_settins"></div></li>
-	<li><div onClick="btn_add()" class="icon_delivry_b"></div></li>
-	<li><div onClick="btn_add(10)" class="icon_print"></div></li>	
-</ul> 
-</div>
-<div class="contener_02">
-  <div class="divisoria"></div>
-  <!-- InstanceBeginEditable name="CONTENER_CENTRO" -->
-  <div style="height: 92%;overflow: auto">
-	<div class="col-xs-4 col-lg-4 col-md-4">
-		<div class="btn_menu_princ" onClick="direcionar('cadastros.html');">
-		<ul>
-			<li><img src="../img/icon_cadastre.png"> </li>
-			<li>Cadastros</li>
-			</ul>
-		</div>
-	</div>
-	<div class="col-xs-4 col-lg-4 col-md-4">
-		<div class="btn_menu_princ" onClick="direcionar('configurar.html');">
-		<ul>
-			<li><img src="../img/settings_2_64px.png"> </li>
-			<li>Configurações</li>
-			</ul>
-		</div>
-	</div>
-	<div class="col-xs-4 col-lg-4 col-md-4">
-		<div class="btn_menu_princ" onClick="direcionar('consulta.html');">
-		<ul>
-			<li><img src="../img/search.png"> </li>
-			<li>Consultas</li>
-			</ul>
-		</div>
-	</div>
-	<div class="brack"></div>
-	<div class="divisoria"></div>
-	<div class="col-xs-4 col-lg-4 col-md-4">
-		<div class="btn_menu_princ" onClick="direcionar('fundocx_sangria.html');">
-		<ul>
-			<li><img src="../img/change.png"> </li>
-			<li>Fundo de Caixa / Sangria</li>
-			</ul>
-		</div>
-	</div>
-	<div class="col-xs-4 col-lg-4 col-md-4">
-		<div class="btn_menu_princ" onClick="direcionar('cancelamentos.html');">
-		<ul>
-			<li><img src="../img/credit-card_cancel.png"> </li>
-			<li>Cancelamentos</li>
-			</ul>
-		</div>
-	</div>
-	<div class="col-xs-4 col-lg-4 col-md-4">
-		<div class="btn_menu_princ" onClick="direcionar('tela_vendas_app.html');">
-		<ul>
-			<li><img src="../img/cash-register.png"> </li>
-			<li>Vendas</li>
-			</ul>
-		</div>
-	</div>
-	<div class="brack"></div>
-	<div class="divisoria"></div>
-	<div class="col-xs-4 col-lg-4 col-md-4">
-		<div class="btn_menu_princ" onClick="direcionar('encerrar_cx.html');">
-			<ul>
-			<li><img src="../img/money-bag.png"> </li>
-			<li>Abrir / Encerrar Caixa</li>
-			</ul>
-		</div>
-	</div>
-	<div class="col-xs-4 col-lg-4 col-md-4">
-		<div class="btn_menu_princ" onClick="direcionar('relatorios.html');">
-		<ul>
-			<li><img src="../img/ipo.png"> </li>
-			<li>Relatórios</li>
-			</ul>
-		</div>
-	</div>
-	<div class="col-xs-4 col-lg-4 col-md-4">
-		<div class="btn_menu_princ" onclick="sair_sistema_web();">
-			<ul>
-			<li><img src="../img/logout.png"> </li>
-			<li>Sair</li>
-			</ul>
-		</div>
-	</div>
-	</div>
-	<!-- InstanceEndEditable -->
-  
-  <div class="brack"></div>
-</div>
-<div class="contener_03"></div>
-<script type="text/javascript"> app.initialize();</script>
-<!-- InstanceBeginEditable name="MODALS" -->
-<div id="modal_04" class="modal fade" data-backdrop="static" role="dialog" style="display: none;">
-  <div class="modal-dialog modal_larg_95">
-    <div class="modal-content">
-     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-title">Menu</h4>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Pagamento</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="../css/bootstrap.css" rel="stylesheet">
+      <link href="../css/chosen.css" rel="stylesheet">
+      <script src="../js/jquery-2.1.1.min.js"></script>
+      <script src="../js/bootstrap.js"></script>
+      <script src="../js/chosen.jquery.js"></script>
+      <script src="../js/index.js"></script>
+      <script src="../js/jquery.mask.min.js"></script>
+   </head>
+   <style>
+      *{
+      margin: 0;
+      padding: 0;
+      }	
+      .font_sist{
+      font-size: 18px;
+      }	
+      .grid{		
+      width: 100%;
+      height: 50px;      
+      position: absolute;
+	  background: #000;
+      top: 0;
+      }
+	   .grid div{
+		 height: 50px;  
+	   }
+      .grid_b{
+      width: 100%;
+      height: 50px;
+      background: #000;
+      position: absolute;
+      bottom: 0;
+      }
+      .grid_c{
+      background: #EBEBEB;
+      width: 100%;
+      display: block;
+      top: 50px;
+      bottom: 50px;
+      position: absolute;
+      padding: 15px 0;
+	  overflow: auto;
+      }
+      .bs-example {
+      padding: 10px;
+      border-color: #ddd;
+      border-width: 1px;		
+      border-style: solid;
+      background: #fff;
+      }
+      .divisoria_15{
+      width: 100%;
+      height: 15px;
+      display: block;
+      }
+	   .brack{
+		   clear: both;
+	   }
+	   .table td{
+		   vertical-align: middle !important;
+	   }
+	   .vertical_alinha {
+			top: 50%;
+    		transform: translateY(-50%);
+    		position: relative;
+			-o-transform: translateY(-50%);
+			-moz-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+			-webkit-transform: translateY(-50%);
+		}
+	   .menu_lateral{
+			background: white;
+			height: calc(100% - 50px);
+			position: absolute;
+			width: 40%;
+			top: 50px;
+			border-right: 1px solid #ddd;
+			display: none;
+		   z-index: 9;
+	   }
+	   .menu_lateral ul{
+		   padding: 0;
+	   }
+	   .menu_lateral ul>li{
+		   display: block;
+			padding: 8px 15px;
+			border-bottom: 1px solid #ddd;
+		   cursor: pointer;
+	   }
+	   .menu_lateral ul>li:hover{
+		   background: #ddd;
+	   }
+	   .menu_lateral_back{
+		   position: absolute;
+			width: 100%;
+			height: calc(100% - 50px);
+		   top: 50px;
+		   background: #0006;
+		   display: none;
+	   }
+   </style>
+   <body>
+      <div class="grid">
+      	  <div class="col-xs-2 col-sm-2">
+      	  	<img class="vertical_alinha" style="height: 32px;" onClick="on_menu_lateral();" src="../img/menu.png">
+		  </div>
+		  <div class="col-xs-8 col-sm-8">
+		  	<h2 class="vertical_alinha" style="color: #fff;">SISTEMA DE TRIBUTAÇÃO</h2>
+		  </div>
+     	  <div class="col-xs-2 col-sm-2">
+     	  
+		  </div>
       </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-xs-12">
-            <ul class="listulmenu">
-              <li>Menu </li>
-              <li>Cadastro</li>
-              <li onClick="direcionar('index_teste.html');">Configurações teste</li>
-              <li>Consultar</li>
-              <li>Fundo de Caixa</li>
-              <li>Sagria</li>
-              <li>Vendas</li>
-              <li>Encerrar</li>
-              <li>Relatórios</li>
-            </ul>
+      <div class="grid_c">
+        <div class="col-lg-12">
+         <div class="bs-example">
+            <div class="">
+               <div class="form-group">
+                  <label for="txtMovieTitle">Contribuinte</label>
+                  <select id="list_contribuinte" class="form-control font_sist">
+                     <option value="-1">SELECIONE</option>
+                  </select>
+               </div>
+            </div>
+            <div class="divisoria_15"></div>
+            <div class="">
+               <div class="form-group">
+                  <label for="txtMovieTitle">Contribuição</label>
+                  <div class="brack"></div>
+                  <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7" style="padding: 0">
+                  	<select id="list_tipo_contribuicao" class="form-control font_sist">
+                     <option value="-1">SELECIONE</option>
+                  </select>
+                  </div> 
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding-right: 0">
+                  	<input id="valor_cont" type="text" class="form-control font_sist dinheiro" placeholder="VALOR" value="" style="text-align: right;">          
+				   </div>                 
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding-right: 0">
+                  	<button class="btn btn-primary btn-xs" onClick="set_contribuicao_json();">ADICIONAR</button>                
+                  </div> 
+                  <div class="brack"></div>                
+               </div>
+            </div>
+            <div class="brack"></div>
+            <div class="divisoria_15"></div>
+            <div class="bs-example">
+            <div class="">
+               <div class="form-group">
+                  <label for="txtMovieTitle">Lista Contribuição</label>
+                  <table class="table table-bordered" style="margin-bottom: 0">
+                     <thead style="background: #EBEBEB">
+                        <tr>
+                           <th>Contribuição</th>
+                           <th style="text-align: right">Valor</th>
+                           <th style="width: 50px;"></th>
+                        </tr>
+                     </thead>
+                     <tbody id="list_contri_selecionadas"></tbody>
+                  </table>
+               </div>
+            </div>
+			 </div>
+         	<div class="brack"></div>
+            <div class="divisoria_15"></div>
+            <div class="divisoria_15"></div>
+            <div style="text-align: right">
+            	<button class="btn btn-primary" id="btn_pagto" onClick="confirmar_pagamento();">CONFIRMAR PAGAMENTO</button>
+            </div>
+         </div>
+         </div>
+      </div>
+      <div class="grid_b">
+      </div>
+      <div class="menu_lateral">
+      	<ul>
+      		<li>Histórico de Pagamento</li>
+      		<li>Contribuinte</li>
+      		<li>Tipo Contribuição</li>
+      		<li>Usuários</li>
+      		<li onClick="config_impressora();">Configurações de Impressora</li>
+      		<li>Sair</li>
+      	</ul>
+      </div>
+	   <div class="menu_lateral_back" onClick="on_menu_lateral();"></div>
+     <div id="modal_config_blue" class="modal fade" role="dialog">
+	  <div class="modal-dialog modal-lg">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h4 class="modal-title">Classificação das despesas</h4>
+		  </div>
+		  <div class="modal-body">
+			<div class="bs-example" data-example-id="striped-table">
+          <div class="row">
+            <div class="col-lg-3" id="contener_perido_modal_relatorio_financeiro">
+              <div class="form-group">
+                <label for="txtMovieTitle">Período</label>
+                <table>
+                	<tbody id="list_bb"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-lg-3" id="contener_mes_relatorio_financeiro_modal_p" style="display:none;">
+              <div class="form-group">
+                <label for="txtMovieTitle">Mês</label>
+                <select id="date_r_f_modal_p" class="form-control">
+                  <option value="">SELECIONE</option>
+                  <option value="1">JANEIRO</option>
+                  <option value="2">FEVEREIRO</option>
+                  <option value="3">MARÇO</option>
+                  <option value="4">ABRIL</option>
+                  <option value="5">MAIO</option>
+                  <option value="6">JUNHO</option>
+                  <option value="7">JULHO</option>
+                  <option value="8">AGOSTO</option>
+                  <option value="9">SETEMBRO</option>
+                  <option value="10">OUTUBRO</option>
+                  <option value="11">NOVEMBRO</option>
+                  <option value="12">DEZEMBRO</option>
+                </select>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <div class="row">
-          <div class="col-lg-12">           	        
-            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">FECHAR</button>            
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<script>setTimeout(valid_login,500);$(".title_menu").text("Menu Principal");</script>
-<!-- InstanceEndEditable -->
-
-<div id="modal_conect_impressora" class="modal fade" data-backdrop="static" role="dialog" style="display: none;">
-  <div class="modal-dialog modal_larg_95">
-    <div class="modal-content">
-     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-title">Configurar Impressora</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-xs-12">
-            <ul class="listulmenu" id="config_print_list">
-              
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <div class="row">
-          <div class="col-lg-12">           	        
-            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">FECHAR</button>            
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</body>
-<!-- InstanceEnd --></html>
+        </div>					
+		  </div>
+		  <div class="modal-footer">
+			  <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+			</div>	
+		</div>
+	  </div>
+	</div>
+      <script>
+         set_tela("1");	
+		  $('.dinheiro').mask('#.##0,00', {reverse: true});
+      </script>
+   </body>
+</html>

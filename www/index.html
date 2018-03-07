@@ -1,176 +1,39 @@
-<!doctype html>
-<html><!-- InstanceBegin template="/Templates/APP_VENDAS_ADM.dwt" codeOutsideHTMLIsLocked="false" -->
-<head>
-<meta charset="utf-8">
-<!-- InstanceBeginEditable name="doctitle" -->
-<title>HOME</title>
-<link rel="stylesheet" href="css/main.css">
-<style>
-    .contener_02{ background: url(img/pattern3.png),linear-gradient(to right,#bdcecc 0,#445158 100%) #d0d1d4!important;}
-</style>
-<!-- InstanceEndEditable -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="css/chosen.css" rel="stylesheet">
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<script src="js/jquery-2.1.1.min.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/chosen.jquery.js" type="text/javascript"></script>
-<script src="js/important.js"></script>
-<script type="text/javascript" src="cordova.js"></script>
-<script src="js/index.js"></script>
-<!-- InstanceBeginEditable name="head" -->
-<!-- InstanceEndEditable -->
-</head>
-
-<body>
-<div class="contener_01">
-<h3 class="vertical_alinha title_menu"></h3>
-<ul class="ul_menu_super vertical_alinha">	
-	<li><div onClick="btn_add(4)" class="icon_settins"></div></li>
-	<li><div onClick="btn_add()" class="icon_delivry_b"></div></li>
-	<li><div onClick="btn_add(10)" class="icon_print"></div></li>	
-</ul> 
-</div>
-<div class="contener_02">
-  <div class="divisoria"></div>
-  <!-- InstanceBeginEditable name="CONTENER_CENTRO" -->
-  	
-<div class="page-center alinha_v" style="margin-top: -2%;">
-  <div class="page-center-in">
-    <div class="container-fluid">
-      <form class="sign-box" >
-      <header class="sign-title">Faça seu Login</header>               
-        <div class="form-group">
-          <input type="text" class="form-control" title="Informe E-mail ou Telefone" required="required" id="log" name="p1" placeholder="Login" autocomplete="off"/>
-        </div>
-        <div class="form-group">
-          <input type="password" class="form-control" required="required" id="pass" name="p2" placeholder="Senha" autocomplete="off"/>
-        </div>
-        <div class="form-group">
-          <div class="checkbox float-left">
-            <input type="checkbox" id="signed-in"/>
-            <label for="signed-in">Mantenha-me conectado</label>
-          </div>
-          <div style="clear: both;"> <a href="#">Esqueci a senha</a></div>
-        </div>
-        <button onClick="direct();" type="button" class="btn btn-rounded">Entrar</button>       
-      </form>
-    </div>
-  </div>
-</div>
-	
-	<!-- InstanceEndEditable -->
-  
-  <div class="brack"></div>
-</div>
-<div class="contener_03"></div>
-<script type="text/javascript"> app.initialize();</script>
-<!-- InstanceBeginEditable name="MODALS" -->
-<div id="modal_config_server" class="modal fade" data-backdrop="static" role="dialog" style="display: none;">
-  <div class="modal-dialog modal_larg_95">
-    <div class="modal-content">
-     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-title">Configuração Server</h4>
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <title>LOGIN</title>
+      <style>.sign-box{background:rgba(255,255,255,0.81) !important;}</style>
+      <script src="data_login/jquery-2.1.1.min.js.download"></script>
+      <link rel="icon" href="" sizes="32x32">
+      <script src="data_login/important.js"></script>     
+      <style>
+         body{ background: url(data_login/pattern3.png),linear-gradient(to right,#bdcecc 0,#445158 100%) #d0d1d4!important;}
+      </style>
+      <link rel="stylesheet" href="data_login/font-awesome.min.css">
+      <link rel="stylesheet" href="data_login/main.css">
+   </head>
+   <body style="height: 100%;position: absolute;width: 100%;">
+      <div class="page-center alinha_v">
+         <div class="page-center-in">
+            <div class="container-fluid">
+               <form class="sign-box">
+                  <header class="sign-title">Faça seu Login</header>                 
+                  <div class="form-group">
+                     <input type="text" class="form-control" required="required" id="log" name="p1" placeholder="Login" autocomplete="off">
+                  </div>
+                  <div class="form-group">
+                     <input type="password" class="form-control" required="required" id="pass" name="p2" placeholder="Senha" autocomplete="off">
+                  </div>
+                  <div class="form-group">                     
+                     <div style="clear: both;"> <a href="#">Esqueci a senha</a></div>
+                  </div>
+                  <button onclick="direct();" type="button" class="btn btn-rounded">Entrar</button>       
+               </form>
+            </div>
+         </div>
       </div>
-      <div class="modal-body">
-        <div class="row">
-			<div class="col-lg-12 col-md-12 col-sm-12">
-				<div class="form-group">
-				  <label for="txtMovieTitle">Server local</label>
-				  <input id="server_config_local" value="http://web.vendanex.com" class="form-control" type="text">
-				</div>
-			</div>
-           <div class="col-lg-12 col-md-12 col-sm-12">
-				<div class="form-group">
-				  <label for="txtMovieTitle">id empresa</label>
-				  <input id="id_empresa_config_local" class="form-control" value="65" type="text">
-				</div>
-			</div>
-            
-             <div class="brack"></div>
-             </div>
-      </div>
-      <div class="modal-footer">
-        <div class="row">
-          <div class="col-lg-12">
-            <button type="button" id="" onclick="save_server_master();" class="btn btn-primary btn-sm">Salvar</button>
-            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Fechar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="modal_04" class="modal fade" data-backdrop="static" role="dialog" style="display: none;">
-  <div class="modal-dialog modal_larg_95">
-    <div class="modal-content">
-     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-title">Configuração</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-xs-12">
-            <ul class="listulmenu">
-              <li onClick="set_server_master();">Configurar Server</li>      
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <div class="row">
-          <div class="col-lg-12">            
-            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Fechar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<script>	
-	function save_server_master(){		
-		localStorage.setItem("servermmt", $("#server_config_local").val()); 
-		localStorage.setItem("ide", $("#id_empresa_config_local").val()); 
-		alert("SALVO");
-	}
-	function set_server_master(){
-		$("#modal_04").modal("hide");
-		servercod=localStorage.getItem("servermmt");
-		$("#server_config_local").val(servercod);
-		servercod2=localStorage.getItem("ide");
-		$("#id_empresa_config_local").val(servercod2);
-		$("#modal_config_server").modal("show");
-	}
-</script>
-<!-- InstanceEndEditable -->
-
-<div id="modal_conect_impressora" class="modal fade" data-backdrop="static" role="dialog" style="display: none;">
-  <div class="modal-dialog modal_larg_95">
-    <div class="modal-content">
-     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-title">Configurar Impressora</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-xs-12">
-            <ul class="listulmenu" id="config_print_list">
-              
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <div class="row">
-          <div class="col-lg-12">           	        
-            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">FECHAR</button>            
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</body>
-<!-- InstanceEnd --></html>
+   </body>
+</html>

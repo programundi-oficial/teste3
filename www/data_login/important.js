@@ -1,9 +1,4 @@
-linkserver_master 	= localStorage.getItem("servermmt"); 
-var xurlq 			= linkserver_master+"/PROGRAMUNDI/API/api.php";
-var y 				= localStorage.getItem("ide");
-
-var imgrel = "http://31.220.59.48:8080/imgprefeitura/"+decode_text(localStorage.getItem("xCy&@img"))+"_2.png";
-var get_url_relatorio 	= "../../../relatorios/gerenciadorrelatorio?y="+y+"&relatorio=";
+var xurlq 			= "http://programundi.com.br/loteria/API/api.php";
 function click() {
 	if (event.button==2||event.button==3) {
 		oncontextmenu='return false';
@@ -61,31 +56,31 @@ function get_url(n) {
 dfgr = "color:white;background:red;font-size:36px;border: 1px solid black;";
 dfgr2 = "color:black;font-size:18px;";
 console.log("%c CUIDADO! ", dfgr);
-console.log("%cEste é um recurso de navegador voltado para desenvolvedores.\nDúvidas entre em contato conosco.\nE-mail: contato@vendanex.com\nFone: 81 991.119.106\nVENDANEX.COM", dfgr2);
+console.log("%cEste é um recurso de navegador voltado para desenvolvedores.\nDúvidas entre em contato conosco.\nE-mail: contato@programundi.com.br", dfgr2);
 document.onkeyup=function(e){if(e.which == 123){alert("f12");}}
-function xxcbskjdn(){	
-	p1 = localStorage.getItem("xzoper"); 
-	if(u == false){
-		alert("Não está logado!");
-		location.href='http://sicapsolucoes.com.br/contabilidade/';
-		localStorage.removeItem("xzoper");	
-	}
+function direct(){	
+	p1 = $("#log").val(); 
+	p2 = $("#pass").val();
+	
 	$.ajax({
 		url: xurlq,
-         data: {
-            y: y,
-			u: u,
-            s: "251",
-			p1: p1			
-		},       
+         data: {		
+            s: "5",
+			p1: p1,
+			p2: p2			
+		},    
+		dataType: "json",
 		type: "POST",
-        success: function(a) {
-			//console.log(a);
- 	    	if(a == "off"){
-				alert("Não está logado!");
-				location.href='http://sicapsolucoes.com.br/contabilidade/';
-				localStorage.removeItem("xzoper");	
-			}			
+        success: function(a) {			
+ 	    	for (var i = 0; i < a.length; i++) {                
+                if(a[i].result == "true"){                       
+                    localStorage.setItem("token", a[i].p1);    
+					location.href='sistema/index.html';
+                }
+                else{
+                    alert(a[i].p1);                    
+                }
+            }			
        	}
     });
 }
